@@ -4,27 +4,56 @@
 # Author: Smirk <smirk dot cao at gmail dot com>
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 
 class Tree(object):
-    def __init__(self, eps, feas, name=None):
+    # TODO: CART build_tree
+    # TODO: CART pruning
+
+    def __init__(self,
+                 eps,
+                 feas,
+                 name=None,
+                 criterion="entropy"):
+
         self.tree_ = dict()
         self.feas = feas
         self.eps = eps
+        self.criterion = criterion
         if not name:
             self.name = "Decision Tree"
         else:
             self.name = name
 
     def fit(self, x, y):
-        self.tree_ = self.build_tree(x, y, self.eps)
+        self.tree_ = self._build_tree(x, y, self.eps)
         return self.tree_
 
-    def predict(self, x):
-        label = str(x) + self.eps
-        return label
+    def predict(self, x, x_tree=None):
 
-    def build_tree(self, x, y, eps):
+        if len(x.shape) == 2:
+            rst = []
+            for x_ in x:
+                rst.append(self.predict(x_))
+            return rst
+
+        if not x_tree:
+            x_tree = self.tree_
+        tree_key = list(x_tree.keys())[0]
+        x_fea = tree_key.split("__")[0]
+        x_idx = clf.feas.index(x_fea)
+        x_tree = x_tree[tree_key]
+        for key in x_tree.keys():
+            if key.split("__")[0] == x[x_idx]:
+                tree_key = key
+                x_tree = x_tree[tree_key]
+        if type(x_tree) == dict:
+            return self.predict(x, x_tree)
+        else:
+            return x_tree
+
+    def _build_tree(self, x, y, eps):
         feas = np.arange(x.shape[1])
         labels = y
         # step1: same label
@@ -40,18 +69,21 @@ class Tree(object):
 
         # step3: feature selection
         max_fea = 0
-        max_gda = 0
+        max_criterion = 0
         D = labels
         for fea in feas:
             A = x[:, fea]
-            gda = gain(A, D)
+            if self.criterion == "entropy":
+                gda = gain(A, D)
+            elif self.criterion == "gr":
+                gda = gain_ratio(A, D)
             # uncomment this line for ex 5.3 gda result check
             # print(gda)
-            if max_gda < gda:
-                max_gda, max_fea = gda, fea
+            if max_criterion < gda:
+                max_criterion, max_fea = gda, fea
 
         # step4: eps
-        if max_gda < eps:
+        if max_criterion < eps:
             return max_label
         T = dict()
         sub_T = dict()
@@ -60,7 +92,7 @@ class Tree(object):
             sub_x = x[x[:, max_fea] == x_A, :]
             sub_x = np.delete(sub_x, max_fea, 1)
             # step6:
-            sub_T[str(x_A) + "__" + str(sub_D.shape[0])] = self.build_tree(sub_x, sub_D, eps)
+            sub_T[str(x_A) + "__" + str(sub_D.shape[0])] = self._build_tree(sub_x, sub_D, eps)
         # step5: T
         # self.tree_[max_fea] = sub_tree
         T[str(self.feas[max_fea]) + "__" + str(D.shape[0])] = sub_T
@@ -72,13 +104,12 @@ class Tree(object):
             tree = self.tree_
         for fea_idx in tree.keys():
             tmp = dict()
-            if (type(tree[fea_idx]) == dict):
-                tmp["name"] = fea_idx.split("__")[0]
-                tmp["value"] = fea_idx.split("__")[1]
+            tmp["name"] = fea_idx.split("__")[0]
+            tmp["value"] = fea_idx.split("__")[1]
+            if (type(tree[fea_idx])==dict):
                 tmp["children"] = self.describe_tree(tree[fea_idx])
             else:
-                tmp["name"] = tree[fea_idx]
-                tmp["value"] = 10
+                tmp["children"] = [{"name": tree[fea_idx], "value": 10}]
             rst.append(tmp)
         return rst
 
@@ -90,6 +121,23 @@ class Tree(object):
         treemap.use_theme("dark")
         treemap.add(self.name, data, is_label_show=True, label_pos='inside', treemap_left_depth=depth)
         return treemap
+
+    def pruning(self):
+        # TODO: Pruning
+        pass
+
+
+def gini(x):
+    """
+
+    :param x:
+    :return: gini index
+    """
+    x_values = list(set(x))
+    p = 1
+    for x_value in x_values:
+        p += (x[x == x_value].shape[0]/x.shpae[0])**2
+    return 1-p
 
 
 def cal_ent(x):
@@ -148,15 +196,19 @@ if __name__ == '__main__':
 
     # print(df.head())
     # print(cal_ent(df["类别"]))
-    cols = df.columns
+    cols = df.columns.tolist()
     # for col in cols[:-1]:
     #     print(col, "gain", gain(df[col], df[cols[-1]]))
     #     print(col, "gain_ratio", gain_ratio(df[col], df[cols[-1]]))
     X = df[cols[:-1]].values
     y = df[cols[-1]].values
-
-    clf = Tree(eps=0.02, feas=cols)
-    clf.fit(X, y)
-    print(clf.tree_)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    clf = Tree(eps=0.02, feas=cols, criterion="gr")
+    clf.fit(X_train, y_train)
+    # print(clf.tree_)
     clf.describe_tree(clf.tree_)
+
+    print(clf.predict(X_test))
+    # for x_test in X_test:
+    #     print(clf.predict(x_test))
 
