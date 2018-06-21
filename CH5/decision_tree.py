@@ -8,8 +8,6 @@ from sklearn.model_selection import train_test_split
 
 
 class Tree(object):
-    # TODO: CART build_tree
-    # TODO: CART pruning
 
     def __init__(self,
                  eps,
@@ -77,6 +75,8 @@ class Tree(object):
                 gda = gain(A, D)
             elif self.criterion == "gr":
                 gda = gain_ratio(A, D)
+            elif self.criterion == "gini":
+                pass
             # uncomment this line for ex 5.3 gda result check
             # print(gda)
             if max_criterion < gda:
@@ -122,22 +122,74 @@ class Tree(object):
         treemap.add(self.name, data, is_label_show=True, label_pos='inside', treemap_left_depth=depth)
         return treemap
 
+    def _choose_best_fea(self, x_, y_):
+        rst = []
+        for i in range(x_.shape[1]):
+            for s_value in set(x_[:, i]):
+                rst.append((i, s_value, gini(x_[:, i], y_=y_, s_=s_value)))
+        rst.sort(key=lambda x: x[2])
+        return rst[0] if rst != [] else rst
+
+    def _build_cart(self, x_, y_):
+        """
+
+        :param x_:
+        :param y_:
+        :return: cart_tree
+        """
+        cart = dict()
+        fea = self._choose_best_fea(x_, y_)
+        if len(fea) > 0:
+            key = fea[:2]
+            idx_l = x_[:, fea[0]] == fea[1]
+            idx_r = x_[:, fea[0]] != fea[1]
+            if len(set(y_)) == 1:
+                cart = y_[0]
+            elif fea[2] == 0:
+                cart[key] = {"left": y_[idx_l][0], "right": y_[idx_r][0]}
+            else:
+
+                if x_.shape[1] > 1:
+                    x_l = x_[idx_l, :]
+                    x_r = x_[idx_r, :]
+                else:
+                    x_l = x_[idx_l]
+                    x_r = x_[idx_r]
+                y_l = y_[idx_l]
+                y_r = y_[idx_r]
+                cart[key] = {"left": self._build_cart(x_l, y_l),
+                             "right": self._build_cart(x_r, y_r)}
+        else:
+            pass
+        return cart
+
+    def create_cart(self, x_, y_):
+        return self._build_cart(x_, y_)
+
     def pruning(self):
         # TODO: Pruning
         pass
 
 
-def gini(x):
+def gini(x_, y_=None, s_=None):
     """
 
-    :param x:
-    :return: gini index
+    :param x_: Feature A
+    :param y_: Class D
+    :param s_: split threshold
+    :return: gini(y,x) or gini(y)
     """
-    x_values = list(set(x))
-    p = 1
-    for x_value in x_values:
-        p += (x[x == x_value].shape[0]/x.shpae[0])**2
-    return 1-p
+    if y_ is None:
+        x_values = list(set(x_))
+        p = 0
+        for x_value in x_values:
+            p += (x_[x_ == x_value].shape[0] / x_.shape[0]) ** 2
+        return 1 - p
+    else:
+        D1 = y_[x_ == s_]
+        D2 = y_[x_ != s_]
+        rst = D1.shape[0]/y_.shape[0]*gini(D1)+D2.shape[0]/y_.shape[0]*gini(D2)
+        return rst
 
 
 def cal_ent(x):
@@ -205,10 +257,16 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
     clf = Tree(eps=0.02, feas=cols, criterion="gr")
     clf.fit(X_train, y_train)
-    # print(clf.tree_)
+    # test ID3 fit predict
+    print(clf.tree_)
     clf.describe_tree(clf.tree_)
 
     print(clf.predict(X_test))
     # for x_test in X_test:
     #     print(clf.predict(x_test))
+
+    # test cart build EX5.4
+    # cart_tree = clf.create_cart(X, y)
+    # print(cart_tree)
+
 
