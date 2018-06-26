@@ -57,13 +57,14 @@ def test_grident_decent():
     clf.g = g
     rst_w, rst_cols = clf.gradient_descent(x, y)
 
+    # coef_.shape is (10, 784)
     time_1 = time.time()
     rst = np.array([rst_cols[idx] for idx in [np.argmax(rst) for rst in 1-sigmoid(np.dot(x, rst_w.T))]])
     rst = np.vstack([rst, y])
     time_2 = time.time()
     print('predict cost ', time_2 - time_1, ' second', '\n')
-
     print(rst.T)
+
 
 
 def test_lr():
