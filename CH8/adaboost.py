@@ -3,6 +3,7 @@
 # Filename: adaboost
 # Author: 😏 <smirk dot cao at gmail dot com>
 
+from sklearn.metrics import accuracy_score
 import numpy as np
 
 
@@ -82,14 +83,43 @@ class BiSection(object):
 
 class AdaBoost(object):
 
-    def __init__(self):
-        pass
+    def __init__(self, ds, max_iter=10):
+        self.ds_ = ds
+        self.fs = []
+        self.d_ = None
+        self.max_iter_ = max_iter
+        self.clfs_ = []
 
     def fit(self, x_, y_):
-        pass
+        self.d_ = np.ones(x_.size)/x_.size
+        for m in range(self.max_iter_):
+            clf = self.ds_()
+            clf.fs = self.fs
+            v, fv, err_his_f = clf.fit(x_, y_, d_=self.d_)
+            # print(v, fv)
+            G_ = clf.predict(x_)
+            e_ = np.sum(self.d_[G_ != y_])
+            e_ = np.round(e_, 4)
+            alpha_ = np.log((1 - e_) / e_) / 2
+            alpha_ = np.round(alpha_, 4)
+            # print(alpha_, e_, self.d_)
+            self.d_ = self.d_ * np.exp(-alpha_ * y_ * G_) / np.sum(self.d_ * np.exp(-alpha_ * y_ * G_))
+            self.d_ = np.round(self.d_, 5)
+            # f_ = alpha_ * clf.predict(x_)
+            # f_ = np.round(f_, 4)
+            # sign_f_ = np.sign(alpha_ * clf.predict(x_))
+            self.clfs_.append((alpha_, clf))
+            print(accuracy_score(self.predict(x_), y_))
+            # alpha
+            # res
+            #
 
     def predict(self, x_):
-        pass
+        res = 0
+        for clf in self.clfs_:
+            res += clf[0]*clf[1].predict(x_)
+            # print(id(clf), clf[0], clf[1].predict(x_))
+        return np.sign(res)
 
 
 if __name__ == '__main__':

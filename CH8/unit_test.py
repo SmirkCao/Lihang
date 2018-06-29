@@ -64,6 +64,7 @@ def test_adaboost_algo():
     d2 = np.round(d2, 5)
     print("d2=", d2)
     f1 = alpha1 * clf1.predict(x)
+    f1 = np.round(f1, 4)
     print("f1=", f1)
     sign_f1 = np.sign(alpha1 * clf1.predict(x))
     print("sign_f1=", sign_f1)
@@ -83,9 +84,10 @@ def test_adaboost_algo():
     alpha2 = np.round(alpha2, 4)
     print("alpha2=", alpha2)
     d3 = d2 * np.exp(-alpha2 * y * G2) / np.sum(d2 * np.exp(-alpha2 * y * G2))
-    d3 = np.round(d3, 5)
+    d3 = np.round(d3, 4)
     print("d3=", d3)
     f2 = alpha1 * clf1.predict(x) + alpha2 * clf2.predict(x)
+    f2 = np.round(f2, 4)
     print("f2=", f2)
     sign_f2 = np.sign(alpha1 * clf1.predict(x) + alpha2 * clf2.predict(x))
     print("sign_f2=", sign_f2)
@@ -99,20 +101,48 @@ def test_adaboost_algo():
     G3 = clf3.predict(x)
     print("G3=", G3)
     e3 = np.sum(d3[G3 != y])
-    e3 = np.round(e3, 3)
+    e3 = np.round(e3, 4)
     print("e3=", e3)
     alpha3 = np.log((1 - e3) / e3) / 2
     alpha3 = np.round(alpha3, 4)
     print("alpha3=", alpha3)
     d4 = d3 * np.exp(-alpha3 * y * G3) / np.sum(d3 * np.exp(-alpha3 * y * G3))
-    d4 = np.round(d4, 5)
+    d4 = np.round(d4, 4)
     print("d4=", d4)
     f3 = alpha3 * clf3.predict(x) + alpha2 * clf2.predict(x) + alpha1 * clf1.predict(x)
+    f3 = np.round(f3, 4)
     print("f3=", f3)
     sign_f3 = np.sign(f3)
     print("sign_f3=", sign_f3)
     acc3 = accuracy_score(sign_f3, y)
     print("acc3=", acc3)
+
+    # for markdown table
+    def to_table(x_, name_):
+        return "|"+name_+"|"+"|".join(map(str, x_.tolist()))+"|"
+    print(to_table(d1, "d1"))
+    print(to_table(G1, "G1"))
+    print(to_table(d2, "d2"))
+    print(to_table(f1, "f1"))
+    print(to_table(sign_f1, "sign_f1"))
+    print(to_table(G2, "G2"))
+    print(to_table(d3, "d3"))
+    print(to_table(f2, "f2"))
+    print(to_table(sign_f2, "sign_f2"))
+    print(to_table(G3, "G3"))
+    print(to_table(d4, "d4"))
+    print(to_table(f3, "f3"))
+    print(to_table(sign_f3, "sign_f3"))
+
+
+def test_adaboost():
+    x, y = load_data()
+
+    clf = AdaBoost(BiSection, max_iter=3)
+    clf.fs = [clf_great_than_, clf_less_than_]
+    clf.fit(x, y)
+    y_pred = clf.predict(x)
+    print("final accuracy : ", accuracy_score(y_pred, y))
 
 
 def test_gen_threshold_lst():
@@ -122,4 +152,5 @@ def test_gen_threshold_lst():
 if __name__ == '__main__':
     # test_predict()
     # test_fit()
-    test_adaboost_algo()
+    # test_adaboost_algo()
+    test_adaboost()
