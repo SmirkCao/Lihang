@@ -106,7 +106,7 @@ class Tree(object):
             tmp = dict()
             tmp["name"] = fea_idx.split("__")[0]
             tmp["value"] = fea_idx.split("__")[1]
-            if (type(tree[fea_idx])==dict):
+            if type(tree[fea_idx]) == dict:
                 tmp["children"] = self.describe_tree(tree[fea_idx])
             else:
                 tmp["children"] = [{"name": tree[fea_idx], "value": 10}]
@@ -117,10 +117,10 @@ class Tree(object):
         from pyecharts import TreeMap
 
         data = self.describe_tree(self.tree_)
-        treemap = TreeMap(self.name, "", width=800, height=500)
-        treemap.use_theme("dark")
-        treemap.add(self.name, data, is_label_show=True, label_pos='inside', treemap_left_depth=depth)
-        return treemap
+        tree_map = TreeMap(self.name, "", width=800, height=500)
+        tree_map.use_theme("dark")
+        tree_map.add(self.name, data, is_label_show=True, label_pos='inside', treemap_left_depth=depth)
+        return tree_map
 
     def _choose_best_fea(self, x_, y_):
         rst = []
