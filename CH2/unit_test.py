@@ -2,7 +2,7 @@
 # Project: CH2  
 # Filename: unit_test
 # Author: 😏 <smirk dot cao at gmail dot com>
-from percentron import *
+from perceptron import *
 import numpy as np
 
 

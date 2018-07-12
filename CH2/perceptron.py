@@ -1,11 +1,10 @@
 # -*-coding:utf-8-*-
 # Project: CH2  
-# Filename: percentron
+# Filename: perceptron
 # Author: 😏 <smirk dot cao at gmail dot com>
 import pandas as pd
 import numpy as np
 import random
-import time
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
