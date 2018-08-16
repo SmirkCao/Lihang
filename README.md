@@ -19,12 +19,16 @@
 - 朴素贝叶斯法是基于贝叶斯定理与特征条件独立假设的分类方法.
 1. IID->输入输出的联合概率分布
 1. Bayes->后验概率最大的输出
-- 平滑处理方案, lambda = 1 对应拉普拉斯平滑
+- x的某种组合在先验中没有出现的情况, 会出现概率为0的情况, 对应平滑处理方案
+$$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c_k)}+\lambda}{\sum_{i=1}^{N}{I(y_i=c_k)+S_j\lambda}}$$
+1. lambda = 0 对应极大似然估计
+1. lambda = 1 对应拉普拉斯平滑
 
 ## CH5 决策树
 [Decision Tree](CH5/README.md)
 - 决策树是一种基本的分类与回归方法
 ## CH6 逻辑斯谛回归与最大熵模型
+
 [Logistic regression and Maximum Entropy](CH6/README.md)
 - 逻辑斯谛回归是统计学中的经典分类方法
 - 最大熵是概率模型学习的一个准则, 将其推广到分类问题得到最大熵模型
