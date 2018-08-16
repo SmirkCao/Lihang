@@ -11,7 +11,7 @@ import nb
 class TestnbMethods(unittest.TestCase):
 
     def test_e41(self):
-        data = pd.read_csv("./Input/data_4_1.txt", header=None, sep=",")
+        data = pd.read_csv("./Input/data_4-1.txt", header=None, sep=",")
         x = data[data.columns[0:2]]
         y = data[data.columns[2]]
         clf = nb.NB(1)
@@ -20,7 +20,7 @@ class TestnbMethods(unittest.TestCase):
         self.assertEqual(rst, -1)
 
     def _test_e42(self):
-        data = pd.read_csv("./Input/data_4_1.txt", header=None, sep=",")
+        data = pd.read_csv("./Input/data_4-1.txt", header=None, sep=",")
         x = data[data.columns[0:2]].values
         y = data[data.columns[2]].values
         clf = nb.NB(1)
