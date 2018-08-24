@@ -29,9 +29,15 @@ $$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c
 - 决策树是一种基本的分类与回归方法
 ## CH6 逻辑斯谛回归与最大熵模型
 
-[Logistic regression and Maximum Entropy](CH6/README.md)
+[Logistic Regression and Maximum Entropy](CH6/README.md)
 - 逻辑斯谛回归是统计学中的经典分类方法
 - 最大熵是概率模型学习的一个准则, 将其推广到分类问题得到最大熵模型
+为什么LR和ME要放在一章
+- 都属于对数线性模型
+- 都可用于二分类和多分类
+- 两种模型的学习方法一般采用极大似然估计, 或正则化的极大似然估计. 可以形式化为无约束最优化问题, 求解方法有IIS, GD, BFGS等.
+
+在<机器学习, 周志华>中, 这两个算法是分开的, LR在线性模型部分, 被称为对数几率回归, ME算法在贝叶斯分类器部分.
 
 ## CH7 支持向量机
 [Support Vector Machines, SVM](CH7/README.md)

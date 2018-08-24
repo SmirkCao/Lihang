@@ -5,6 +5,17 @@
 
 
 from logistic_regression import *
+from maximum_entropy import *
+import unittest
+
+
+class TestMEMethods(unittest.TestCase):
+
+    def test_e61(self):
+        pass
+
+    def test_e62(self):
+        pass
 
 
 def test_load_data(path_='./Input/train.csv'):
@@ -13,7 +24,7 @@ def test_load_data(path_='./Input/train.csv'):
     return X, y
 
 
-def test_grident_decent():
+def test_gradient_decent():
     x, y = test_load_data()
 
     x = x[:100]
@@ -66,7 +77,6 @@ def test_grident_decent():
     print(rst.T)
 
 
-
 def test_lr():
     x, y = test_load_data()
 
@@ -85,5 +95,6 @@ def test_lr():
 if __name__ == '__main__':
     # test_lr()
     # X, y = test_load_data(path_='./Input/train_10.csv')
-    # test_grident_decent()
+    # test_gradient_decent()
     test_lr()
+    unittest.main()
