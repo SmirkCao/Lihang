@@ -66,7 +66,7 @@
 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 |
 | - | - | - | - | - | - |
 |$\therefore$ | \therefore | $\because$ | \because  | $\min \limits_{f \in {H}}$ | \min \limits_{f \in {H}} |
-| $\leqslant$ | \leqslant | $\geqslant$ | \geqslant |  |  |
+| $\leqslant$ | \leqslant | $\geqslant$ | \geqslant | $\cal {C} \equiv 1$ | \equiv |
 | $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim |  |  |
 | $\neq$ | \neq | $\in$ | \in |  |  |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} |  |  |
@@ -85,6 +85,28 @@
 | $\sf{ABCdefXYZ}$   | \sf{ABCdefXYZ}   | 等线体 |
 | $\mit{ABCdefXYZ}$  | \mit{ABCdefXYZ}  | 数字斜体 |
 | $\tt{ABCdefXYZ}$   | \tt{ABCdefXYZ}   | 打印机字体 |
+
+### 表9: 分段函数
+
+示例
+$$
+f(x,y) = \begin{cases}
+1 & x与y满足某一事实\\
+0 & 否则
+\end{cases}
+$$
+
+```latex
+# 代码
+f(x,y) = \begin{cases}
+1 & x与y满足某一事实\
+0 & 否则
+\end{cases}
+```
+
+
+
+
 
 ## Refs
 
