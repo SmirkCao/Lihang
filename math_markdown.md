@@ -63,16 +63,16 @@
 
 ### 表 7: 其他常用符号
 
-| 示例 | 代码 | 示例 | 代码 |
-| - | - | - | - |
-|$\therefore$ | \therefore | $\because$ | \because  |
-| $\leqslant$ | \leqslant | $\geqslant$ | \geqslant |
-| $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim |
-| $\neq$ | \neq | $\in$ | \in |
-| $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} |
-| $\bot $ | \bot | $\angle$ | \angle |
+| 示例 | 代码 | 示例 | 代码 | 示例 | 代码 |
+| - | - | - | - | - | - |
+|$\therefore$ | \therefore | $\because$ | \because  | $\min \limits_{f \in {H}}$ | \min \limits_{f \in {H}} |
+| $\leqslant$ | \leqslant | $\geqslant$ | \geqslant |  |  |
+| $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim |  |  |
+| $\neq$ | \neq | $\in$ | \in |  |  |
+| $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} |  |  |
+| $\bot $ | \bot | $\angle$ | \angle |  |  |
 
-## 表8: 使用字体
+### 表8: 使用字体
 
 {\rm text}
 
