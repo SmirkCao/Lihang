@@ -41,15 +41,15 @@
 
 ### 表 5: 运算符
 
-| 示例 | 代码 | 示例 | 代码 |
-| - | - | - | - |
-| $\sum$ | \sum | $\prod$ | \prod |
-| $\bigcup$ | \bigcup | $\bigoplus$ | \bigoplus |
-| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap|
-| $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus |
-| $\bigotimes$ | \bigotimes | $\oint$ | \oint |
-| $\int$ | \int | $\bigsqcup$ | \bigsqcup |
-| $\coprod$ | \coprod | $\bigodot$ | \bigodot  |
+| 示例 | 代码 | 示例 | 代码 | 示例 | 代码 |
+| - | - | - | - | - | - |
+| $\sum$ | \sum | $\prod$ | \prod | $x\cdot{y}$ | x\cdot{y} |
+| $\bigcup$ | \bigcup | $\bigoplus$ | \bigoplus | $x\times {y}$ | x\times {y} |
+| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| | |
+| $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus |  |  |
+| $\bigotimes$ | \bigotimes | $\oint$ | \oint |  |  |
+| $\int$ | \int | $\bigsqcup$ | \bigsqcup |  |  |
+| $\coprod$ | \coprod | $\bigodot$ | \bigodot  |   |   |
 
 ### 表 6: 常用箭头
 
@@ -86,7 +86,7 @@
 | $\mit{ABCdefXYZ}$  | \mit{ABCdefXYZ}  | 数字斜体 |
 | $\tt{ABCdefXYZ}$   | \tt{ABCdefXYZ}   | 打印机字体 |
 
-### 表9: 分段函数
+### 表9: 分段函数与公式对齐
 
 示例
 $$
@@ -104,7 +104,19 @@ f(x,y) = \begin{cases}
 \end{cases}
 ```
 
+$$
+\begin{aligned}
+L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
+\end{aligned}
+$$
 
+```latex
+# 代码
+# 通过\begin{aligned}\end{aligned}控制对齐, 使用&表示对齐点.
+\begin{aligned}
+L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
+\end{aligned}
+```
 
 
 
