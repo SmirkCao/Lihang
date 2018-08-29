@@ -5,17 +5,51 @@
 
 
 from logistic_regression import *
-from maximum_entropy import *
+from maxent import *
 import unittest
+from sympy import *
 
 
 class TestMEMethods(unittest.TestCase):
 
     def test_e61(self):
-        pass
+        # 1 constrains
+        P1, P2, P3, P4, P5, w0, w1, w2 = symbols("P1, P2, P3, P4, P5, w0, w1, w2", real=True)
+        L = P1 * log(P1) + P2 * log(P2) + P3 * log(P3) + P4 * log(P4) + P5 * log(P5) \
+            + w0 * (P1 + P2 + P3 + P4 + P5 - 1)
+        P1_e = (solve(diff(L, P1), P1))[0]
+        P2_e = (solve(diff(L, P2), P2))[0]
+        P3_e = (solve(diff(L, P3), P3))[0]
+        P4_e = (solve(diff(L, P4), P4))[0]
+        P5_e = (solve(diff(L, P5), P5))[0]
+        L = L.subs({P1: P1_e, P2: P2_e, P3: P3_e, P4: P4_e, P5: P5_e})
+        w = (solve([diff(L, w0)], [w0]))[0]
+        P = [P1_e.subs({w0: w[0]}),
+             P2_e.subs({w0: w[0]}),
+             P3_e.subs({w0: w[0]}),
+             P4_e.subs({w0: w[0]}),
+             P5_e.subs({w0: w[0]})]
+        self.assertEqual([round(p, 5) for p in P], [round(p, 5) for p in [1/5, 1/5, 1/5, 1/5, 1/5]])
 
     def test_e62(self):
-        pass
+        # 2 constrains
+        P1, P2, P3, P4, P5, w0, w1, w2 = symbols("P1, P2, P3, P4, P5, w0, w1, w2", real=True)
+        L = P1 * log(P1) + P2 * log(P2) + P3 * log(P3) + P4 * log(P4) + P5 * log(P5) \
+            + w1 * (P1 + P2 - 3 / 10) \
+            + w0 * (P1 + P2 + P3 + P4 + P5 - 1)
+        P1_e = (solve(diff(L, P1), P1))[0]
+        P2_e = (solve(diff(L, P2), P2))[0]
+        P3_e = (solve(diff(L, P3), P3))[0]
+        P4_e = (solve(diff(L, P4), P4))[0]
+        P5_e = (solve(diff(L, P5), P5))[0]
+        L = L.subs({P1: P1_e, P2: P2_e, P3: P3_e, P4: P4_e, P5: P5_e})
+        w = (solve([diff(L, w1), diff(L, w0)], [w0, w1]))[0]
+        P = [P1_e.subs({w0: w[0], w1: w[1]}),
+             P2_e.subs({w0: w[0], w1: w[1]}),
+             P3_e.subs({w0: w[0], w1: w[1]}),
+             P4_e.subs({w0: w[0], w1: w[1]}),
+             P5_e.subs({w0: w[0], w1: w[1]})]
+        self.assertEqual([round(p, 5) for p in P], [round(p, 5) for p in [3/20, 3/20, 7/30, 7/30, 7/30]])
 
 
 def test_load_data(path_='./Input/train.csv'):
@@ -96,5 +130,5 @@ if __name__ == '__main__':
     # test_lr()
     # X, y = test_load_data(path_='./Input/train_10.csv')
     # test_gradient_decent()
-    test_lr()
+    # test_lr()
     unittest.main()
