@@ -12,7 +12,7 @@
 
 |示例|代码|示例|代码|示例|代码|示例|代码|
 |-|-|-|-|-|-|-|-|
-| $\alpha$ | \alpha | $\theta$ | \theta | $\upsilon$ | \upsilon | $o $ | o |
+| $\alpha$ | \alpha | $\theta$ | **\theta** | $\upsilon$ | \upsilon | $o $ | o |
 | $\beta$ | **\beta** | $\vartheta$ | **\vartheta** | $\pi$ | **\pi** | $\phi$   | **\phi** |
 | $\gamma$ | **\gamma** | $\iota$ | **\iota** | $\varpi$ | **\varpi** | $\varphi$ | **\varphi** |
 | $\delta$ | **\delta** | $\kappa$ | **\kappa** | $\rho$ | **\rho** | $\chi$ | **\chi** |
@@ -46,8 +46,8 @@
 | $\sum$ | \sum | $\prod$ | \prod | $x\cdot{y}$ | x\cdot{y} |
 | $\bigcup$ | \bigcup | $\bigoplus$ | \bigoplus | $x\times {y}$ | x\times {y} |
 | $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| | |
-| $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus |  |  |
-| $\bigotimes$ | \bigotimes | $\oint$ | \oint |  |  |
+| $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
+| $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
 | $\int$ | \int | $\bigsqcup$ | \bigsqcup |  |  |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  |   |   |
 
@@ -67,7 +67,7 @@
 | - | - | - | - | - | - |
 |$\therefore$ | \therefore | $\because$ | \because  | $\min \limits_{f \in {H}}$ | \min \limits_{f \in {H}} |
 | $\leqslant$ | \leqslant | $\geqslant$ | \geqslant | $\cal {C} \equiv 1$ | \equiv |
-| $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim |  |  |
+| $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
 | $\neq$ | \neq | $\in$ | \in |  |  |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} |  |  |
 | $\bot $ | \bot | $\angle$ | \angle |  |  |
@@ -123,4 +123,5 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\lim
 ## Refs
 
 1. [Markdown 数学符号速查](https://www.cnblogs.com/blog4ljy/p/9066624.html)
+2. [Cmd Markdown公式指导手册](https://www.zybuluo.com/codeep/note/163962)
 
