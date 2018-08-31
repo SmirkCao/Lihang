@@ -15,9 +15,11 @@
 
 在Refs中列出了部分参考文献, 有些参考文献对于理解书中的内容是非常有帮助的, 关于这些文件的描述和解释会在对应的[README.md](Refs/README.md) 中补充.
 
-另外, 李航老师的这本书, 真的很薄, 但是几乎每句话都会带出很多点, 需要反复研读. 
+另外, 李航老师的这本书, 真的很薄, 但是几乎每句话都会带出很多点, 值得反复研读. 
 
 书中在目录之后有个符号表, 解释了符号定义, 所以如果有不理解的符号可以过来查表. 另外, 每个算法,示例结束之后会有一个◼️, 表示这个算法或者例子到此结束.
+
+读书的时候经常会有关于对数底数是多少的问题, 因为有换底公式, 所以, 底具体是什么关系不是太大, 差异在于一个常系数. 但是选用不同的底会有物理意义和处理问题方面的考虑, 关于这个问题的分析, 看PRML 1.6中关于熵的讨论.
 
 ## CH2 感知机
 [Perceptron](CH2/README.md)
@@ -51,8 +53,14 @@ $$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c
 
 那么, **为什么LR和Maxent要放在一章**
 - 都属于对数线性模型
+
 - 都可用于二分类和多分类
-- 两种模型的学习方法一般采用极大似然估计, 或正则化的极大似然估计. 可以形式化为无约束最优化问题, 求解方法有IIS, GD, BFGS等.
+
+- 两种模型的学习方法一般采用极大似然估计, 或正则化的极大似然估计. 可以形式化为无约束最优化问题, 求解方法有IIS, GD, BFGS等
+
+- 在[Logistic regression](http://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)中有如下描述,
+
+  > Logistic regression, despite its name, is a linear model for classification rather than regression. Logistic regression is also known in the literature as logit regression, maximum-entropy classification (MaxEnt) or the log-linear classifier. In this model, the probabilities describing the possible outcomes of a single trial are modeled using a [logistic function](https://en.wikipedia.org/wiki/Logistic_function).
 
 ## CH7 支持向量机
 
@@ -62,6 +70,7 @@ $$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c
 - 基本模型是定义在特征空间上的间隔最大化的线性分类器, 间隔最大使他有别于[感知机](CH2/README.md)
 
 ## CH8 提升方法
+
 [Boosting](CH8/README.md)
 - 提升方法是一种常用的统计学习方法, 应用广泛且有效.
 
