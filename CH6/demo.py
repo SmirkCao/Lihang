@@ -77,6 +77,7 @@ class MaxEnt:
             for x in X:
                 if (x, y) in self._numXY:
                     s += self._w[self._xyID[(x, y)]]
+            # 如果x, y不存在, 那么掉不到这个if里面来, s 保持0, ZX变成计数
             ZX += math.exp(s)
         return ZX
 
@@ -94,7 +95,7 @@ class MaxEnt:
                 #     s += self._w[self._xyID[(x, y)]]
                 def f(x, y):
                     return 1 if (x, y) in self._numXY else 0
-
+                # 注意这里, 如果xy的组合没有出现过, f(x,y) = 0, 这时w取得xyID=0时的值, 但
                 s += self._w[self._xyID[(x, y)]] * f(x, y)
             pyx = 1 / ZX * math.exp(s)
             results.append((y, pyx))
@@ -144,3 +145,5 @@ if __name__ == "__main__":
     print(maxent.predict("sunny\thot\thigh\tFALSE"))
     print(maxent.predict("overcast\thot\thigh\tFALSE"))
     print(maxent.predict("sunny\tcool\thigh\tTRUE"))
+    print(maxent.predict("111\t1111\t2222\t1111"))
+    print(maxent.predict("111\tcoll\thigh\t1111"))
