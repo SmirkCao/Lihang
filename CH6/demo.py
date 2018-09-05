@@ -5,6 +5,7 @@
 2. 代码中提到的公式:https://vimsky.com/article/714.html
 3. 增加部分注释方便理解
 4. Python3 语法
+5. 回头看这代码路子挺清晰的, (sample_ep, Zx-> pyx->model_ep)->sigma
 """
 
 from collections import defaultdict
@@ -61,15 +62,24 @@ class MaxEnt:
         return True
 
     def _sample_ep(self):
-        # 样本期望, 特征函数f(x, y)关于经验分布\tilde p(x,y)的期望
+        """
+        样本期望, 特征函数f(x, y)关于经验分布\tilde p(x,y)的期望
+        每个样本的直方图, 这个采用了稀疏存储, 实际上这里对应(m,n)的二维数组, 对应了不同的y情况下的特征直方图.
+        :return:
+        """
         self._ep_ = [0] * self._n
         # 计算方法参见公式(20)
-        # 遍历词表求均值
+        # 遍历特征求均值
         for i, xy in enumerate(self._numXY):
             self._ep_[i] = self._numXY[xy] * 1 / self._N
-            self._xyID[xy] = i
+            self._xyID[xy] = i   # 在这里绑定了特征index和xy的关系
 
     def _zx(self, X):
+        """
+        因为后面利用最大熵模型计算条件概率分布pyx的时候,需要归一化, 所以求解Zx
+        :param X:
+        :return:
+        """
         # calculate Z(X), 计算方法参见公式(15)
         ZX = 0
         for y in self._Y:
@@ -82,6 +92,11 @@ class MaxEnt:
         return ZX
 
     def _pyx(self, X):
+        """
+        注意这个里面X没有去重, 所以, 如果有个特征出现了两次, 会加两次.
+        :param X:
+        :return:
+        """
         # 针对单一样本进行预测
         # calculate p(y|x), 计算方法参见公式(22)
         ZX = self._zx(X)
@@ -95,18 +110,23 @@ class MaxEnt:
                 #     s += self._w[self._xyID[(x, y)]]
                 def f(x, y):
                     return 1 if (x, y) in self._numXY else 0
-                # 注意这里, 如果xy的组合没有出现过, f(x,y) = 0, 这时w取得xyID=0时的值, 但
+                # 注意这里, 如果xy的组合没有出现过, f(x,y) = 0, 这时w取得xyID=0时的值, f(x,y)相当于一个mask, 对w做了选择
                 s += self._w[self._xyID[(x, y)]] * f(x, y)
             pyx = 1 / ZX * math.exp(s)
             results.append((y, pyx))
         return results
 
     def _model_ep(self):
+        """
+        注意这里, 考虑到不同的样本都在刷这个_ep,
+        :return:
+        """
         # 参见公式(21)
         self._ep = [0] * self._n
         for sample in self._samples:
             X = sample[1:]
             pyx = self._pyx(X)
+            # 遍历特征, 针对出现过的特征做计算.
             for y, p in pyx:
                 for x in X:
                     def f(x, y):
@@ -147,3 +167,5 @@ if __name__ == "__main__":
     print(maxent.predict("sunny\tcool\thigh\tTRUE"))
     print(maxent.predict("111\t1111\t2222\t1111"))
     print(maxent.predict("111\tcoll\thigh\t1111"))
+    print(maxent.predict("high\thigh\thigh\t1111"))
+    print(maxent.predict("FALSE\tFALSE\tFALSE\tFALSE"))
