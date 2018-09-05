@@ -112,11 +112,12 @@ class Maxent(object):
             # sigmas = []
             self._EPx()
             self.M = 1000  # 书91页那个M，但实际操作中并没有用那个值
+            # TODO: 理解f^\#
             with np.errstate(divide='ignore', invalid='ignore'):
                 tmp = np.true_divide(self.EPxy, self.EPx)
                 tmp[tmp == np.inf] = 0
                 tmp = np.nan_to_num(tmp)
-            sigmas = np.where(tmp != 0, 1/self.M*np.log(tmp), 0)
+            sigmas = np.where(tmp != 0, 1/self.M*np.log(tmp), 0)  # TODO: 还有除零的异常, 有空再看下
             self.coef_ = self.coef_ + sigmas
             i += 1
         return self
@@ -172,7 +173,7 @@ if __name__ == '__main__':
     imgs, labels = load_data(args["path"])
     train_features, test_features, train_labels, test_labels = train_test_split(imgs, labels,
                                                                                 test_size=0.33,
-                                                                                random_state=23323,
+                                                                                random_state=2018,
                                                                                 stratify=labels)
 
     logger.info("train test features %d, %d, %s" % (len(train_features), len(test_features), train_features[0]))
