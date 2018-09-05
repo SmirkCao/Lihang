@@ -68,7 +68,7 @@
 |$\therefore$ | \therefore | $\because$ | \because  | $\min \limits_{f \in {H}}$ | \min \limits_{f \in {H}} |
 | $\leqslant$ | \leqslant | $\geqslant$ | \geqslant | $\cal {C} \equiv 1$ | \equiv |
 | $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
-| $\neq$ | \neq | $\in$ | \in |  |  |
+| $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} |  |  |
 | $\bot $ | \bot | $\angle$ | \angle |  |  |
 
@@ -124,4 +124,5 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\lim
 
 1. [Markdown 数学符号速查](https://www.cnblogs.com/blog4ljy/p/9066624.html)
 2. [Cmd Markdown公式指导手册](https://www.zybuluo.com/codeep/note/163962)
+3. [Equals_Sign](https://en.wikipedia.org/wiki/Equals_sign#Other_related_symbols)
 
