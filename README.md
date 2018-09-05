@@ -62,6 +62,10 @@ $$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c
 
   > Logistic regression, despite its name, is a linear model for classification rather than regression. Logistic regression is also known in the literature as logit regression, maximum-entropy classification (MaxEnt) or the log-linear classifier. In this model, the probabilities describing the possible outcomes of a single trial are modeled using a [logistic function](https://en.wikipedia.org/wiki/Logistic_function).
 
+- 还有[这样的描述](https://www.csie.ntu.edu.tw/~cjlin/papers/maxent_journal.pdf)
+
+  >Logistic regression is a special case of maximum entropy with two labels +1 and −1.
+
 ## CH7 支持向量机
 
 [Support Vector Machines, SVM](CH7/README.md)
