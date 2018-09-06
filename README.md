@@ -21,9 +21,9 @@
 
 读书的时候经常会有关于对数底数是多少的问题, 因为有换底公式, 所以, 底具体是什么关系不是太大, 差异在于一个常系数. 但是选用不同的底会有物理意义和处理问题方面的考虑, 关于这个问题的分析, 看PRML 1.6中关于熵的讨论.
 
-## CH1 统计学习方法概论
+## CH01 统计学习方法概论
 
-[Introduction](./CH1/README.md)
+[Introduction](CH01/README.md)
 
 统计学习方法三要素:
 
@@ -31,18 +31,19 @@
 - 策略
 - 算法
 
-## CH2 感知机
+## CH02 感知机
 
-[Perceptron](CH2/README.md)
+[Perceptron](CH02/README.md)
 - 感知机是二类分类的线性分类模型
 - 感知机对应于特征空间中将实例划分为正负两类的分离超平面.
-## CH3 k近邻法
+## CH03 k近邻法
 
-[kNN](CH3/README.md)
+[kNN](CH03/README.md)
 - kNN是一种基本的分类与回归方法
 - k值的选择, 距离度量及分类决策规则是kNN的三个基本要素.
-## CH4 朴素贝叶斯法
-[NB](CH4/README.md)
+## CH04 朴素贝叶斯法
+
+[NB](CH04/README.md)
 - 朴素贝叶斯法是基于贝叶斯定理与特征条件独立假设的分类方法.
 1. IID->输入输出的联合概率分布
 1. Bayes->后验概率最大的输出
@@ -51,12 +52,13 @@ $$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c
 1. lambda = 0 对应极大似然估计
 1. lambda = 1 对应拉普拉斯平滑
 
-## CH5 决策树
-[Decision Tree](CH5/README.md)
-- 决策树是一种基本的分类与回归方法
-## CH6 逻辑斯谛回归与最大熵模型
+## CH05 决策树
 
-[Logistic Regression and Maxent](CH6/README.md)
+[Decision Tree](CH05/README.md)
+- 决策树是一种基本的分类与回归方法
+## CH06 逻辑斯谛回归与最大熵模型
+
+[Logistic Regression and Maxent](CH06/README.md)
 
 - 逻辑斯谛回归是统计学中的经典分类方法
 - 最大熵是概率模型学习的一个准则, 将其推广到分类问题得到最大熵模型
@@ -78,21 +80,21 @@ $$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c
 
   >Logistic regression is a special case of maximum entropy with two labels +1 and −1.
 
-## CH7 支持向量机
+## CH07 支持向量机
 
-[Support Vector Machines, SVM](CH7/README.md)
+[Support Vector Machines, SVM](CH07/README.md)
 
 - 支持向量机是一种二分类模型.
-- 基本模型是定义在特征空间上的间隔最大化的线性分类器, 间隔最大使他有别于[感知机](CH2/README.md)
+- 基本模型是定义在特征空间上的间隔最大化的线性分类器, 间隔最大使他有别于[感知机](CH02/README.md)
 
-## CH8 提升方法
+## CH08 提升方法
 
-[Boosting](CH8/README.md)
+[Boosting](CH08/README.md)
 - 提升方法是一种常用的统计学习方法, 应用广泛且有效.
 
-## CH9 EM算法及其推广
+## CH09 EM算法及其推广
 
-[EM](./CH9/README.md)
+[EM](CH09/README.md)
 
 - EM算法是一种迭代算法, 用于含有隐变量的概率模型参数**极大似然估计**, 或者极大后验概率估计. (这里的极大似然估计和极大后验概率估计是**学习策略**)
 - 如果概率模型的变量都是观测变量, 那么给定数据, 可以直接用极大似然估计法, 或贝叶斯估计法估计模型参数.
