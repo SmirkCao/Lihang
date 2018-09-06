@@ -48,7 +48,7 @@
 | $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| | |
 | $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
-| $\int$ | \int | $\bigsqcup$ | \bigsqcup |  |  |
+| $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup |  |  |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  |   |   |
 
 ### 表 6: 常用箭头
