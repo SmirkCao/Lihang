@@ -125,5 +125,5 @@ $$
 ## 参考
 
 1. 
-2. [Sklearn Gaussian Mixed Model](http://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture)
+2. [Sklearn Gaussian Mixed Model](http://scikit-learn.org/stable/modules/mixture.html)
 
