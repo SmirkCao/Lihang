@@ -69,7 +69,7 @@
 | $\leqslant$ | \leqslant | $\geqslant$ | \geqslant | $\cal {C} \equiv 1$ | \equiv |
 | $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
 | $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
-| $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} |  |  |
+| $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} | $\geq \leq$ | \geq \leq |
 | $\bot $ | \bot | $\angle$ | \angle |  |  |
 
 ### 表8: 使用字体
@@ -116,6 +116,24 @@ $$
 \begin{aligned}
 L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
 \end{aligned}
+```
+
+另外注意到前面的分段函数自动变好了, 但是上面多行对齐的公式没有自动编号, 如果需要**自动**编号, 外面嵌入equation
+$$
+\begin{equation}
+\begin{aligned}
+L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
+\end{aligned}
+\end{equation}
+$$
+代码如下
+
+```latex
+\begin{equation}
+\begin{aligned}
+L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
+\end{aligned}
+\end{equation}
 ```
 
 
