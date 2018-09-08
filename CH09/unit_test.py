@@ -11,6 +11,7 @@ import unittest
 
 class TestMEMethods(unittest.TestCase):
     def test_e91(self):
+        # 这个是个伯努利分布, 例子讲的是EM算法, 不是GMM. 理解这里的关系
         X = [1, 1, 0, 1, 0, 0, 1, 0, 1, 1]
         gmm = GMM()
         gmm.fit(X)
