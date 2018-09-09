@@ -38,7 +38,9 @@ def gmm(X):
 
     X_ = np.reshape(np.tile(X, 2), (-1, 2), order="F")
     for n_iter in range(1000):
-        numerator_ = np.exp(-1.0 * np.power((X_ - mu_.T), 2) / (np.sqrt(2.0 * np.pi) * sigma_.T))
+        # numerator_ = np.exp(-1.0 * np.power((X_ - mu_.T), 2) / (np.sqrt(2.0 * np.pi) * sigma_.T))
+        # 迭代过程中, 常数的计算不是特别重要, 这里去掉之后更容易收敛
+        numerator_ = np.exp(-1.0 * np.power((X_ - mu_.T), 2) / sigma_.T)
         numerator_ = np.multiply(numerator_, alpha_.T)
         dominator_ = np.sum(numerator_, axis=1)
         # \hat\gamma_{jk}
