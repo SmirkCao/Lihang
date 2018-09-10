@@ -4,125 +4,64 @@
 # Filename: gmm
 # Date: 9/5/18
 # Author: 😏 <smirk dot cao at gmail dot com>
+
 import numpy as np
-import argparse
-import logging
-import warnings
-import functools
-import copy
 
-
-class GMM(object):
-
-    def __init__(self,
-                 n_components=1,
-                 tol=1e-3,
-                 max_iter=100,
-                 random_state=None,
-                 verbose=0,
-                 verbose_interval=10,
-                 weight = None,
-                 means = None,
-                 covariances = None
-                 ):
-        self.n_components = n_components
-        self.tol = tol
-        self.max_iter = max_iter
-        self.random_state = random_state
-        self.verbose = verbose
-        self.verbose_interval = verbose_interval
-        self.converged_ = False
-        self.n_iter_ = 0
-        self.weights_ = weight if weight is not None else np.random.rand(self.n_components)
-        self.means_ = means if means is not None else np.random.rand(self.n_components)
-        self.covariances_ = covariances if covariances is not None else np.random.rand(self.n_components)
-        self.resp_ = None
-        self.X_ = None
-        self.sum0 = functools.partial(np.sum, axis=0)
-        self.sum1 = functools.partial(np.sum, axis=1)
-        if self.verbose:
-            logger.info("Init: weights %s, means %s, covariances %s" % (self.weights_, self.means_, self.covariances_))
-
-    def _gaussian_density(self, means, covariances, X=None):
-        """
-        Eq: 9.25
-        :param X:
-        :param means:
-        :param covariances:
-        :return:
-        """
-        if X is None:
-            # rst = (1/np.sqrt(2*np.pi)/covariances)*np.exp(-(self.X_-means)**2/2/covariances/covariances)
-            rst = (1/2/covariances)*np.exp(-(self.X_-means)**2/2/covariances/covariances)
-        return rst
-
-    def _e_step(self):
-        sum1 = self.sum1
-
-        resp = self.weights_*self._gaussian_density(means=self.means_, covariances=self.covariances_)
-        Z = sum1(resp)
-        resp = resp/np.reshape(np.tile(Z, self.n_components), (-1, 2), order="F")
-        return resp
-
-    def _m_step(self, resp):
-        sum0 = self.sum0
-
-        Z = sum0(resp)
-        self.covariances_ = sum0(resp*(self.X_-self.means_)**2)/Z
-        self.weights_ = Z/X.shape[0]
-        self.means_ = sum0(resp*self.X_)/Z
-        return self
-
-    def fit(self, X):
-        self.converged_ = False
-        self.X_ = np.reshape(np.tile(X, self.n_components), (-1, self.n_components), order="F")
-
-        for n_iter in range(self.max_iter):
-            resp = self._e_step()
-            self._m_step(resp)
-            if self.resp_ is not None:
-                delta = np.min(resp-self.resp_)
-                if abs(delta) < self.tol:
-                    self.converged_ = True
-                    break
-            self.resp_ = copy.deepcopy(resp)
-
-        if not self.converged_:
-            warnings.warn("Try different init parameters,"
-                          "or increase max_iter, tol")
-
-    def predict(self, X):
-        labels = None
-        return labels
-
-    def predict_proba(self, X):
-        pass
+tol = 0.0001
 
 
 def get_dummy():
-    np.random.seed(0)
-    n_samples = 1000
-    mu1 = 3
-    mu2 = 4
+    mu1 = 2
+    mu2 = 6
     sigma1 = 0.1
-    sigma2 = 0.3
-    alpha1 = 0.3
-    alpha2 = 0.7
-    dummy_data = np.hstack([np.random.normal(mu1, sigma1, np.int64(alpha1*n_samples)),
-                            np.random.normal(mu2, sigma2, np.int64(alpha2*n_samples))])
-    logger.info("Dummy data: weights %s, means %s, covariances %s" % ([alpha1, alpha2], [mu1, mu2], [sigma1, sigma2]))
-    return dummy_data
+    sigma2 = 0.5
+    alpha1 = 0.4
+    alpha2 = 0.6
+
+    N = 4000
+    X = np.hstack([np.random.normal(mu1, sigma1, int(alpha1*N)), np.random.normal(mu2, sigma2, int(alpha2*N))])
+    return np.mat(X)
+
+
+def gmm(X):
+    """
+    todo: 封装, 输入检测, 使用矩阵操作要比循环快很多, 一两个数量级的差异, 可以做个对比
+    :param X:
+    :return:
+    """
+    k = 2
+    N = X.shape[1]
+    mu_ = np.random.rand(k, 1)
+    sigma_ = np.random.rand(k, 1)
+    alpha_ = np.random.rand(k, 1)
+    print('init mu= \n%s \n init sigma=\n%s \n init alpha=\n%s' % (mu_, sigma_, alpha_))
+
+    X_ = np.reshape(np.tile(X, 2), (-1, 2), order="F")
+    for n_iter in range(1000):
+        # numerator_ = np.exp(-1.0 * np.power((X_ - mu_.T), 2) / (np.sqrt(2.0 * np.pi) * sigma_.T))
+        # 迭代过程中, 常数的计算不是特别重要, 这里去掉之后更容易收敛
+        numerator_ = np.exp(-1.0 * np.power((X_ - mu_.T), 2) / sigma_.T)
+        numerator_ = np.multiply(numerator_, alpha_.T)
+        dominator_ = np.sum(numerator_, axis=1)
+        # \hat\gamma_{jk}
+        posterior_ = numerator_/dominator_
+
+        mu_last = mu_
+        alpha_last = alpha_
+        sigma_last = sigma_
+
+        Z = np.sum(posterior_, axis=0).T
+        alpha_ = Z/N
+        sigma_ = np.sqrt(np.sum(np.multiply(posterior_, np.power((X_ - mu_.T), 2)), axis=0)/Z.T).T
+        mu_ = (np.sum(np.multiply(posterior_, X_), axis=0)/Z.T).T
+        if ((abs(mu_ - mu_last)).sum() < tol) and \
+                ((abs(alpha_ - alpha_last)).sum() < tol) and \
+                ((abs(sigma_ - sigma_last)).sum() < tol):
+            print('init mu= \n%s \n init sigma=\n%s \n init alpha=\n%s' % (mu_, sigma_, alpha_))
+            print(n_iter)
+            break
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    logger = logging.getLogger(__name__)
-
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-p", "--path", required=False, help="path to input data")
-    args = vars(ap.parse_args())
-
     X = get_dummy()
-    gmm = GMM(n_components=2, verbose=1)
-    gmm.fit(X)
-    logger.info("weights %s, means %s, covariances %s" % (gmm.weights_, gmm.means_, gmm.covariances_))
+    gmm(X)
