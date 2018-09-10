@@ -70,7 +70,7 @@
 | $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
 | $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} | $\geq \leq$ | \geq \leq |
-| $\bot $ | \bot | $\angle$ | \angle |  |  |
+| $\bot $ | \bot | $\angle$ | \angle | $\varpropto$ | \varpropto |
 
 ### 表8: 使用字体
 
