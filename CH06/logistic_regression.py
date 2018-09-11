@@ -1,13 +1,14 @@
 # -*-coding:utf-8-*-
-# Project: CH6  
+# Project: CH06
 # Filename: logistic_regression
 # Author: 😏 <smirk dot cao at gmail dot com>
 
-import time
-import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+import pandas as pd
+import numpy as np
+import time
+#todo: review code, check score function.
 
 
 class LogisticRegression(object):
