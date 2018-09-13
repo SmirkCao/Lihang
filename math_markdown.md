@@ -136,6 +136,14 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\lim
 \end{equation}
 ```
 
+### 表X:Emoji
+
+| :smirk: smirk          | :smile:smile | :laughing:laughing | :blush:blush       | :smiley:smiley | :heart_eyes:heart_eyes |
+| ---------------------- | ------------ | ------------------ | ------------------ | -------------- | ---------------------- |
+| 😘kissing_heart         | :wink:wink   | :kissing:kissing   | :confused:confused | :sweat:sweat   | :joy:joy               |
+| :sob:sob               | :cry:cry     | :angry:angry       | :yum:yum           | :mask:mask     | :sunglasses:sunglasses |
+| :heartpulse:heartpulse | :alien:alien | :cupid:cupid       | :+1:+1             | :cn:cn         | :shit:shit             |
+
 
 
 ## Refs
@@ -143,4 +151,5 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\lim
 1. [Markdown 数学符号速查](https://www.cnblogs.com/blog4ljy/p/9066624.html)
 2. [Cmd Markdown公式指导手册](https://www.zybuluo.com/codeep/note/163962)
 3. [Equals_Sign](https://en.wikipedia.org/wiki/Equals_sign#Other_related_symbols)
+4. [Emoji](https://gist.github.com/rxaviers/7360908)
 
