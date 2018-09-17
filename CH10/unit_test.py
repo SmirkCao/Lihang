@@ -60,9 +60,36 @@ class TestMEMethods(unittest.TestCase):
         logger.info(np.dot(pi*B[..., O[0]], A)*B[..., O[1]])
         logger.info(np.dot(np.dot(pi*B[..., O[0]], A)*B[..., O[1]], A)*B[..., O[2]])
         logger.info(np.sum(np.dot(np.dot(pi*B[..., O[0]], A)*B[..., O[1]], A)*B[..., O[2]]))
+        # backward
+        logger.info(np.dot(A, B[..., O[2]]))
 
     def test_e103(self):
-        pass
+        logger.info("Exercise 10.3")
+        raw_data = pd.read_csv("./Input/data_10-2.txt", header=0, index_col=0, na_values="None")
+        O = [0, 1, 0]
+        # 以上为已知
+        T= len(O)
+        Q = set(raw_data.columns[-1-len(raw_data):-1])
+        N = len(Q)
+        V = set(raw_data.columns[:-1-len(raw_data)])
+        M = len(V)
+        A = raw_data[raw_data.columns[-1-len(raw_data):-1]].values
+        B = raw_data[raw_data.columns[:-1 - len(raw_data)]].values
+        B = B / np.sum(B, axis=1).reshape((-1, 1))
+        B
+        if raw_data[["pi"]].apply(np.isnan).values.flatten().sum() > 1:
+            pi = [raw_data[["pi"]].apply(np.isnan).values.flatten().sum()]*N
+        else:
+            pi = raw_data[["pi"]].values.flatten()
+        logger.info("\nT\n%s\nA\n%s\nB\n%s\npi\n%s\nM\n%s\nN\n%s\nO\n%s\nQ\n%s\nV\n%s"
+                    % (T, A, B, pi, M, N, O, Q, V))
+        # forward
+        logger.info(pi*B[..., O[0]])
+        logger.info(np.dot(pi*B[..., O[0]], A)*B[..., O[1]])
+        logger.info(np.dot(np.dot(pi*B[..., O[0]], A)*B[..., O[1]], A)*B[..., O[2]])
+        logger.info(np.sum(np.dot(np.dot(pi*B[..., O[0]], A)*B[..., O[1]], A)*B[..., O[2]]))
+        # backward
+        logger.info(np.dot(A, B[..., O[2]]))
 
 
 if __name__ == '__main__':
