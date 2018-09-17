@@ -60,7 +60,7 @@ graph TD
 	end
 ```
 
-
+另外, 注意一点, 在李老师这本书上介绍的HMM, 涉及到举例子的, 给的都是观测概率矩阵是离散的情况, 对应了MultinominalHMM. 而这个观测概率矩阵是可以为连续的分布的, 比如高斯模型, 对应了GaussianHMM. 具体课可以参考hmmlearnb库[^2].
 
 ## 概念
 
@@ -243,6 +243,7 @@ $$
 >
 >
 >
+>
 
 #### 小结
 
@@ -328,6 +329,10 @@ $$
 ## 参考
 
 1. [^1]: [数学之美-CH05隐含马尔可夫模型, 吴军]()
+
+1. [^2]: [hhmlearn](https://hmmlearn.readthedocs.io/en/latest/tutorial.html)
+
 1. [Wikipedia: Hidden Markov Model](https://en.wikipedia.org/wiki/Hidden_Markov_model)
-1. [hhmlearn](https://hmmlearn.readthedocs.io/en/latest/tutorial.html)
+
+1. 
 
