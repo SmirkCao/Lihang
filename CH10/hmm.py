@@ -24,7 +24,7 @@ class HMM(object):
 
     def _do_forward(self, X):
         # todo: logsumexp trick
-        alpha = np.zeros((self.T, self.N))
+        alpha = np.zeros((self.N, self.T))
         # A: NxM
         # B: NxM
         # alpha: TxN
@@ -44,13 +44,42 @@ class HMM(object):
         o = X[-1]
         beta[:, -1] = 1
         tmp = beta[:, -1]
-        print(self.A, self.B, self.p, X)
+        # print(self.A, self.B, self.p, X)
+        o_ = o
         for k, o in reversed(list(enumerate(X[:-1]))):
-            beta[:, k] = np.sum(self.A*self.B[:, o]*tmp, axis=1)
+            beta[:, k] = np.sum(self.A*self.B[:, o_]*tmp, axis=1)
             if k > 0:
                 tmp = beta[:, k]
+                o_ = o
         prob = np.sum(self.p*self.B[:, o]*beta[:, 0])
+        # print(beta, prob, prob, "new")
         return prob, beta
+
+    def forward(self, obs_seq):
+        """前向算法"""
+        # 来源: https://applenob.github.io/hmm.html
+        # F保存前向概率矩阵
+        F = np.zeros((self.N, self.T))
+        F[:, 0] = self.p * self.B[:, obs_seq[0]]
+
+        for t in range(1, self.T):
+            for n in range(self.N):
+                F[n, t] = np.dot(F[:, t - 1], (self.A[:, n])) * self.B[n, obs_seq[t]]
+
+        return F
+
+    def backward(self, obs_seq):
+        """后向算法"""
+        # X保存后向概率矩阵
+        # 来源: https://applenob.github.io/hmm.html
+        X = np.zeros((self.N, self.T))
+        X[:, -1:] = 1
+
+        for t in reversed(range(self.T - 1)):
+            X[:, t] = np.sum(self.A * self.B[:, obs_seq[t + 1]]*X[:, t + 1], axis=1)
+        prob = np.sum(self.p * self.B[:, 0] * X[:, 0])
+        print(prob, prob)
+        return X
 
     def _do_estep(self):
         pass
