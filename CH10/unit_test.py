@@ -113,6 +113,27 @@ class TestMEMethods(unittest.TestCase):
         for x, y in zip(alpha_true.flatten().tolist(), alpha.flatten().tolist()):
             self.assertAlmostEqual(x, y, places=5)
 
+    def test_backward(self):
+        # 10.2 数据
+        Q = {0: 1, 1: 2, 2: 3}
+        V = {0: "red", 1: "white"}
+        hmm_forward = HMM(n_component=3)
+        hmm_forward.A = np.array([[0.5, 0.2, 0.3],
+                                  [0.3, 0.5, 0.2],
+                                  [0.2, 0.3, 0.5]])
+        hmm_forward.B = np.array([[0.5, 0.5],
+                                  [0.4, 0.6],
+                                  [0.7, 0.3]])
+        hmm_forward.p = np.array([0.2, 0.4, 0.4])
+        X = np.array([0, 1, 0])
+        hmm_forward.T = len(X)
+
+        prob, alpha = hmm_forward._do_backward(X)
+        alpha_true = np.array([[0.10, 0.077, 0.04187],
+                               [0.16, 0.1104, 0.03551],
+                               [0.28, 0.0606, 0.05284]])
+        self.assertAlmostEqual(prob, 0.13022, places=2)
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

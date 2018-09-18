@@ -23,7 +23,7 @@ class HMM(object):
         self.V = V
 
     def _do_forward(self, X):
-        prob = 0
+        # todo: logsumexp trick
         alpha = np.zeros((self.T, self.N))
         # A: NxM
         # B: NxM
@@ -33,14 +33,24 @@ class HMM(object):
         tmp = alpha[:, 0]
         for k, o in enumerate(X[1:]):
             alpha[:, k+1] = np.sum(tmp*self.A.T, axis=1)*self.B[:, o]
-            if k+1 < len(X):
+            if k < len(X[1:]):
                 tmp = alpha[:, k+1]
         # prob = np.log(np.sum(alpha[:, k+1]))
         prob = np.sum(alpha[:, k+1])
         return prob, alpha
 
-    def _do_backward(self):
-        pass
+    def _do_backward(self, X):
+        beta = np.ones((self.N, self.T))
+        o = X[-1]
+        beta[:, -1] = 1
+        tmp = beta[:, -1]
+        print(self.A, self.B, self.p, X)
+        for k, o in reversed(list(enumerate(X[:-1]))):
+            beta[:, k] = np.sum(self.A*self.B[:, o]*tmp, axis=1)
+            if k > 0:
+                tmp = beta[:, k]
+        prob = np.sum(self.p*self.B[:, o]*beta[:, 0])
+        return prob, beta
 
     def _do_estep(self):
         pass
