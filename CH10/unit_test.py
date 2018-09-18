@@ -135,6 +135,7 @@ class TestMEMethods(unittest.TestCase):
         self.assertAlmostEqual(prob, 0.13022, places=5)
 
     def test_bkw_frw(self):
+        # 并没有实际的测试内容
         Q = {0: 1, 1: 2, 2: 3}
         V = {0: "red", 1: "white"}
         hmm_forward = HMM(n_component=3)
@@ -151,6 +152,9 @@ class TestMEMethods(unittest.TestCase):
         beta = hmm_forward.backward(X)
         alpha = hmm_forward.forward(X)
         print(alpha, beta)
+
+    def test_EM(self):
+        pass
 
 
 if __name__ == '__main__':
