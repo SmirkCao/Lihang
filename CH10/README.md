@@ -103,7 +103,7 @@ $$
 
 其中$A,B,\pi$称为模型三要素.
 
- 
+ 具体实现的过程中, 如果观测的概率分布是定的, 那么$B$就是确定的了. 在hhmlearn[^2]中, 实现了三种概率分布的HMM模型: MultinominalHMM, GaussianHMM, GMMHMM. 还可以定义不同的emission probabilities[^3], 生成不同的HMM模型. 
 
 ### 两个基本假设
 
@@ -146,12 +146,16 @@ $$
 1. 概率计算问题
    输入: 模型$\lambda=(A,B,\pi)$, 观测序列$O=(o_1,o_2,\dots,o_T)$
    输出: $P(O|\lambda)$
+
 1. 学习问题
    输入: 观测序列 $O=(o_1,o_2,\dots,o_T)$
    输出: 输出$\lambda=(A,B,\pi)$
-1. 预测问题, 也称为解码问题
+
+1. 预测问题, 也称为解码问题(Decoding)
    输入: 模型$\lambda=(A,B,\pi)$, 观测序列$O=(o_1,o_2,\dots,o_T)$ 
    输出: 状态序列 $I=(i_1,i_2,\dots,i_T)$
+
+   因为状态序列是隐藏的, 不可观测的, 所以叫解码.
 
 >There are three fundamental problems for HMMs:
 >
@@ -168,6 +172,7 @@ $$
 ### 前向与后向算法
 
 #### 前向概率与后向概率
+
 
 >给定马尔可夫模型$\lambda$, 定义到时刻$t$部分观测序列为$o_1, o_2, \dots ,o_t$, 且状态$q_i$的概率为**前向概率**, 记作
 >$$
@@ -370,7 +375,6 @@ $$
 
 1. [^2]: [hhmlearn](https://hmmlearn.readthedocs.io/en/latest/tutorial.html)
 
+1. [^3]: [PRML:13.2](## 参考)
+
 1. [Wikipedia: Hidden Markov Model](https://en.wikipedia.org/wiki/Hidden_Markov_model)
-
-1. 
-
