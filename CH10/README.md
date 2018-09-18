@@ -243,6 +243,7 @@ $$
 >
 >
 >
+>
 
 - 这里需要**注意**下, 按照后向算法, $\beta$在递推过程中会越来越小, 如果层数较多, 怕是$P(O|\lambda)$会消失
 - 另外一个要注意的点$\color{red}o_{t+1}\beta_{t+1}$
@@ -276,7 +277,37 @@ $$
 
 ### Baum-Welch算法
 
+马尔可夫模型实际上是一个含有隐变量的概率模型
+$$
+P(O|\lambda)=\sum\limits_IP(O|I,\lambda)P(I|\lambda)
+$$
+关于EM算法可以参考[第九章](../CH09/README.md), 对隐变量求期望, Q函数极大化
 
+> 输入: 观测数据$O=(o_1, o_2, \dots, o_T)$
+>
+> 输出: 隐马尔可夫模型参数
+>
+> 1. 初始化
+>    对$n=0$, 选取$a_{ij}^{(0)}, b_j(k)^{(0)}, \pi_i^{(0)}$, 得到模型参数$\lambda^{(0)}=(A^{(0)}, B^{(0)},\pi^{(0)})$
+>
+> 1. 递推
+>    对$n=1,2,\dots,$
+>    $$
+>    a_{ij}^{(n+1)}=\frac{\sum\limits_{t=1}^{T-1}\xi_t(i,j)}{\sum\limits_{t=1}^{T-1}\gamma_t(i)}
+>    $$
+>
+>    $$
+>    b_j(k)^{(n+1)}=\frac{\sum\limits_{t=1,o_t=v_k}^{T}\gamma_t(j)}{\sum\limits_{t=1}^T\gamma_t(j)}
+>    $$
+>
+>    $$
+>    \pi_i^{(n+1)}=\gamma_1(i)
+>    $$
+>
+> 1. 终止
+>    得到模型参数$\lambda^{(n+1)}=(A^{(n+1)}, B^{(n+1)},\pi^{(n+1)})$
+
+Baum-Welch算法是EM算法在隐马尔可夫模型学习中的**具体实现**, 由Baum和Welch提出.
 
 ### Viterbi算法
 
