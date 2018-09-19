@@ -78,6 +78,7 @@ class HMM(object):
         # print(beta, prob, prob, "new")
         return prob, beta
 
+    # 后面这两个主要是为了验证前向后向的结果
     def forward(self, obs_seq):
         """前向算法"""
         # 来源: https://applenob.github.io/hmm.html
@@ -101,33 +102,38 @@ class HMM(object):
         for t in reversed(range(self.T - 1)):
             X[:, t] = np.sum(self.A * self.B[:, obs_seq[t + 1]]*X[:, t + 1], axis=1)
         prob = np.sum(self.p * self.B[:, 0] * X[:, 0])
-        print(prob, prob)
+        # print(prob)
         return X
 
     def _do_estep(self, X):
         # 在hmmlearn里面是会没有专门的estep的
         _, self.alpha = self._do_forward(X)
         _, self.beta = self._do_backward(X)
-
         post_prior = self.alpha*self.beta
+        # Eq. 10.24
         self.gamma = post_prior/np.sum(post_prior)
-
+        # Eq. 10.26
         left_a = self.alpha
         right_a = np.dot(self.B, np.eye(len(X))[X, :len(set(X))].T)*self.beta
         trans_post_prior = np.array([x*self.A*y for x, y in zip(left_a[:, :-1].T, right_a[:, 1:].T)])
         self.xi = trans_post_prior/np.sum(trans_post_prior)
-
+        # Eq. 10.27
         self.Ei = np.sum(self.gamma, axis=1)
+        # Eq. 10.28
         self.Ei_ = np.sum(self.gamma[:, :-1], axis=1)
+        # Eq. 10.29
         self.Ei_j = np.sum(self.xi[:, :, :-1], axis=2)
         return self
 
     def _do_mstep(self, X):
+        # Eq. 10.39
         self.A = self.Ei_j/self.Ei
 
+        # Eq. 10.40
         gamma_o = np.array([np.outer(x, y) for x, y in zip(self.gamma.T, np.eye(len(X))[X, :len(set(X))].T)])
         self.B = np.sum(gamma_o, axis=2).T/self.Ei.reshape(-1, 1)
 
+        # Eq. 10.41
         self.p = self.gamma[:, 0]
         return self
 
