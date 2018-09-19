@@ -257,6 +257,7 @@ $$
 >
 >
 >
+>
 
 - 这里需要**注意**下, 按照后向算法, $\beta$在递推过程中会越来越小, 如果层数较多, 怕是$P(O|\lambda)$会消失
 - 另外一个要注意的点$\color{red}o_{t+1}\beta_{t+1}$
@@ -346,7 +347,39 @@ Baum-Welch算法是EM算法在隐马尔可夫模型学习中的**具体实现**,
 
 这部分的理解, 要再结合第九章的内容反复一下, 应该会有新的体会.
 
-### Viterbi算法
+### 预测算法
+
+#### 近似算法(MAP)
+
+每个时刻最有可能的状态$i_t^*$是
+$$
+i_t^*=\arg \max\limits_{1\leqslant i\leqslant N}\left[\gamma_t(i)\right], t=1,2,\dots,T
+$$
+得到序列$I^*=(i_1^*,i_2^*,\dots,i_T^*)$
+
+这个算法, 在输出每个状态的时候, 只考虑了当前的状态.
+
+#### 维特比算法(Viterbi)
+
+> 输入: 模型$\lambda=(A, B, \pi)$和观测$O=(o_1, o_2,\dots,o_T)$
+>
+> 输出: 最优路径$I^*=(i_1^*, i_2^*,\dots,i_T^*)$
+>
+> 1. 初始化
+>    $\delta_1(i)=\pi_ib_i(o_1), i=1,2,\dots,N$
+>    $\psi_1(i)=0, i=1,2,\dots,N$
+> 1. 递推
+>    $t=2,3,\dots,T$
+>    $\delta_t(i)=\max\limits_{1\leqslant j \leqslant N}\left[\delta_{t-1}(j)a_{ji}\right]b_i(o_t), i=1,2,\dots,N$
+>    $\psi_t(j)=\arg\max\limits_{1\leqslant j \leqslant N}\left[\delta_{t-1}(j)a_{ji}\right], i=1,2,\dots,N$
+> 1. 终止
+>    $P^*=\max\limits_{1\leqslant i\leqslant N}\delta_T(i)$
+>    $i_T^*=\arg\max\limits_{1\leqslant i \leqslant N}\left[ \delta_T(i)\right]$
+> 1. 最优路径回溯
+>    $t=T-1, T-2, \dots,1$
+>    $i_t^*=\psi_{t+1}(i_{i+1}^*)$
+
+书上配了个图, 这个图可视化了$\delta$
 
 
 
