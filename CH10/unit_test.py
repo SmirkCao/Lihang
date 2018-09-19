@@ -11,7 +11,8 @@ import logging
 import unittest
 
 
-class TestMEMethods(unittest.TestCase):
+class TestHHMMethods(unittest.TestCase):
+    @unittest.skip("EM only")
     def test_e101(self):
         logger.info("Exercise 10.1")
         raw_data = pd.read_csv("./Input/data_10-1.txt", header=0, index_col=0)
@@ -34,6 +35,7 @@ class TestMEMethods(unittest.TestCase):
                     % (T, A, B, pi, M, N, O, Q, V))
         pass
 
+    @unittest.skip("EM only")
     def test_e102(self):
         logger.info("Exercise 10.2")
         raw_data = pd.read_csv("./Input/data_10-2.txt", header=0, index_col=0, na_values="None")
@@ -62,6 +64,7 @@ class TestMEMethods(unittest.TestCase):
         # backward
         logger.info(np.dot(A, B[..., O[2]]))
 
+    @unittest.skip("EM only")
     def test_e103(self):
         logger.info("Exercise 10.3")
         raw_data = pd.read_csv("./Input/data_10-2.txt", header=0, index_col=0, na_values="None")
@@ -90,6 +93,7 @@ class TestMEMethods(unittest.TestCase):
         # backward
         logger.info(np.dot(A, B[..., O[2]]))
 
+    @unittest.skip("EM only")
     def test_forward(self):
         # 10.2 数据
         Q = {0: 1, 1: 2, 2: 3}
@@ -113,6 +117,7 @@ class TestMEMethods(unittest.TestCase):
         for x, y in zip(alpha_true.flatten().tolist(), alpha.flatten().tolist()):
             self.assertAlmostEqual(x, y, places=5)
 
+    @unittest.skip("EM only")
     def test_backward(self):
         # 10.2 数据
         Q = {0: 1, 1: 2, 2: 3}
@@ -134,6 +139,7 @@ class TestMEMethods(unittest.TestCase):
                                [0.28, 0.0606, 0.05284]])
         self.assertAlmostEqual(prob, 0.13022, places=5)
 
+    @unittest.skip("EM only")
     def test_bkw_frw(self):
         # 并没有实际的测试内容
         Q = {0: 1, 1: 2, 2: 3}
@@ -154,7 +160,12 @@ class TestMEMethods(unittest.TestCase):
         print(alpha, beta)
 
     def test_EM(self):
-        pass
+        hmm_fit = HMM(n_component=3)
+        X = np.array([0, 1, 0, 0])
+        hmm_fit.fit(X)
+        print(hmm_fit.A)
+        print(hmm_fit.B)
+        print(hmm_fit.p)
 
 
 if __name__ == '__main__':

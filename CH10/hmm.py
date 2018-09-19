@@ -19,7 +19,7 @@ class HMM(object):
         self.A = None
         self.B = None
         self.p = None
-        self.M = 0
+        self.M = 2
         self.N = n_component
         self.T = 0
         self.Q = Q
@@ -33,11 +33,16 @@ class HMM(object):
         self.Ei_ = None
         self.Ei_j = None
 
-    def init_param(self):
-        self.A = None
-        self.B = None
-        self.p = None
-
+    def init_param(self, X):
+        # 最简单的初始化应该是均匀分布
+        # 另外的方法是Dirichlet Distribution
+        # todo: update Dirchlet Distribution
+        if self.V is not None:
+            self.M = len(self.V)
+        self.A = np.ones((self.N, self.N))/self.N
+        self.B = np.ones((self.N, self.M))/self.M
+        self.p = np.ones(self.N)/self.N
+        self.T = len(X)
         return self
 
     def _do_forward(self, X):
@@ -106,25 +111,32 @@ class HMM(object):
 
         post_prior = self.alpha*self.beta
         self.gamma = post_prior/np.sum(post_prior)
-        trans_post_prior = self.alpha*self.A*self.B*self.beta
+
+        left_a = self.alpha
+        right_a = np.dot(self.B, np.eye(len(X))[X, :len(set(X))].T)*self.beta
+        trans_post_prior = np.array([x*self.A*y for x, y in zip(left_a[:, :-1].T, right_a[:, 1:].T)])
         self.xi = trans_post_prior/np.sum(trans_post_prior)
+
         self.Ei = np.sum(self.gamma, axis=1)
-        self.Ei_ = np.sum(self.gamma[:-1], axis=1)
-        self.Ei_j = np.sum(self.xi, axis=1)
+        self.Ei_ = np.sum(self.gamma[:, :-1], axis=1)
+        self.Ei_j = np.sum(self.xi[:, :, :-1], axis=2)
         return self
 
-    def _do_mstep(self):
+    def _do_mstep(self, X):
         self.A = self.Ei_j/self.Ei
-        self.B = 1/self.Ei
+
+        gamma_o = np.array([np.outer(x, y) for x, y in zip(self.gamma.T, np.eye(len(X))[X, :len(set(X))].T)])
+        self.B = np.sum(gamma_o, axis=2).T/self.Ei.reshape(-1, 1)
+
         self.p = self.gamma[:, 0]
         return self
 
     def fit(self, X):
         # 估计模型参数
-        self.init_param()
+        self.init_param(X)
         for n_iter in range(self.n_iters):
             self._do_estep(X)
-            self._do_mstep()
+            self._do_mstep(X)
             # convergence check
             if False:
                 return rst
