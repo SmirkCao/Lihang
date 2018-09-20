@@ -4,5 +4,5 @@
 
 1. $P_{162}$ 高斯混合模型的英文表示: Gaussian misture model $\rightarrow$ Gaussian mixture model
 1. $P_{201}$对数线~~形~~模型$\rightarrow$对数线性模型
-1. 
+1. $P_{173}$观测序列$O={红, 红, 白, 白, 红}$, 序列表示应该是$O=(红, 红, 白, 白, 红)$
 
