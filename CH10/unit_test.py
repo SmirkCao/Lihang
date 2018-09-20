@@ -211,22 +211,45 @@ class TestHHMMethods(unittest.TestCase):
         # self.assertAlmostEqual(prob, 0.13022, places=5)
 
     def test_q102(self):
-        pass
-
-    def test_q103(self):
-        # 这题目, 使用hmmlearn的预测结果是[2, 1, 1, 1]
-        # 10.3
+        # 这个题目, 意义在哪里?
+        logger.info("----q102----")
+        # 10.2
         Q = {0: 1, 1: 2, 2: 3}
         V = {0: "red", 1: "white"}
         hmm_backward = HMM(n_component=3, V=V)
-        hmm_backward.A = np.array([[0.5, 0.2, 0.3],
+        hmm_backward.A = np.array([[0.5, 0.1, 0.4],
                                    [0.3, 0.5, 0.2],
-                                   [0.2, 0.3, 0.5]])
+                                   [0.2, 0.2, 0.6]])
         hmm_backward.B = np.array([[0.5, 0.5],
                                    [0.4, 0.6],
                                    [0.7, 0.3]])
-        hmm_backward.p = np.array([0.2, 0.4, 0.4])
-        X = np.array([0, 1, 0, 1])
+        hmm_backward.p = np.array([0.2, 0.3, 0.5])
+        X = np.array([0, 1, 0, 0, 1, 0, 1, 1])
+        hmm_backward.T = len(X)
+        prob, states = hmm_backward.decode(X)
+        prob_fwd, _ = hmm_backward._do_forward(X)
+        prob_bwd, _ = hmm_backward._do_backward(X)
+        logger.info("decode prob %s, forward prob %s, backward prob %s" % (prob, prob_fwd, prob_bwd))
+        logger.info(states)
+        logger.info("alpha\n %s" % hmm_backward.alpha)
+        logger.info("beta\n%s" % hmm_backward.beta)
+        logger.info("delta\n%s" % hmm_backward.delta)
+
+    def test_q103(self):
+        # 10.3
+        Q = {0: 1, 1: 2, 2: 3, 3:4}
+        V = {0: "red", 1: "white"}
+        hmm_backward = HMM(n_component=4, V=V)
+        hmm_backward.A = np.array([[0, 1, 0, 0],
+                                   [0.4, 0, 0.6, 0],
+                                   [0, 0.4, 0, 0.6],
+                                   [0, 0, 0.5, 0.5]])
+        hmm_backward.B = np.array([[0.5, 0.5],
+                                   [0.3, 0.7],
+                                   [0.6, 0.4],
+                                   [0.8, 0.2]])
+        hmm_backward.p = np.array([0.25, 0.25, 0.25, 0.25])
+        X = np.array([0, 0, 1, 1, 0])
         hmm_backward.T = len(X)
 
         prob, states = hmm_backward.decode(X)
@@ -238,7 +261,6 @@ class TestHHMMethods(unittest.TestCase):
         logger.info("alpha\n %s" % hmm_backward.alpha)
         logger.info("beta\n%s" % hmm_backward.beta)
         logger.info("delta\n%s" % hmm_backward.delta)
-        # 这个结果和hmmlearn的结果不一样, 隐状态生成还要看下
 
 
 if __name__ == '__main__':
