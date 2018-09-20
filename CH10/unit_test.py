@@ -12,7 +12,7 @@ import unittest
 
 
 class TestHHMMethods(unittest.TestCase):
-    @unittest.skip("EM only")
+    # @unittest.skip("EM only")
     def test_e101(self):
         logger.info("Exercise 10.1")
         raw_data = pd.read_csv("./Input/data_10-1.txt", header=0, index_col=0)
@@ -28,14 +28,14 @@ class TestHHMMethods(unittest.TestCase):
         A = raw_data[raw_data.columns[-1-len(raw_data):-1]].values
         B = raw_data[raw_data.columns[:-1 - len(raw_data)]].values
         B = B / np.sum(B, axis=1).reshape((-1, 1))
-        B
+
         if raw_data[["pi"]].apply(np.isnan).values.flatten().sum() > 1:
             pi = [1/raw_data[["pi"]].apply(np.isnan).values.flatten().sum()]*N
         logger.info("\nT\n%s\nA\n%s\nB\n%s\npi\n%s\nM\n%s\nN\n%s\nO\n%s\nQ\n%s\nV\n%s"
                     % (T, A, B, pi, M, N, O, Q, V))
         pass
 
-    @unittest.skip("EM only")
+    # @unittest.skip("EM only")
     def test_e102(self):
         logger.info("Exercise 10.2")
         raw_data = pd.read_csv("./Input/data_10-2.txt", header=0, index_col=0, na_values="None")
@@ -49,7 +49,7 @@ class TestHHMMethods(unittest.TestCase):
         A = raw_data[raw_data.columns[-1-len(raw_data):-1]].values
         B = raw_data[raw_data.columns[:-1 - len(raw_data)]].values
         B = B / np.sum(B, axis=1).reshape((-1, 1))
-        B
+
         if raw_data[["pi"]].apply(np.isnan).values.flatten().sum() > 1:
             pi = [raw_data[["pi"]].apply(np.isnan).values.flatten().sum()]*N
         else:
@@ -64,7 +64,7 @@ class TestHHMMethods(unittest.TestCase):
         # backward
         logger.info(np.dot(A, B[..., O[2]]))
 
-    @unittest.skip("EM only")
+    # @unittest.skip("EM only")
     def test_e103(self):
         logger.info("Exercise 10.3")
         raw_data = pd.read_csv("./Input/data_10-2.txt", header=0, index_col=0, na_values="None")
@@ -78,22 +78,27 @@ class TestHHMMethods(unittest.TestCase):
         A = raw_data[raw_data.columns[-1-len(raw_data):-1]].values
         B = raw_data[raw_data.columns[:-1 - len(raw_data)]].values
         B = B / np.sum(B, axis=1).reshape((-1, 1))
-        B
+
         if raw_data[["pi"]].apply(np.isnan).values.flatten().sum() > 1:
             pi = [raw_data[["pi"]].apply(np.isnan).values.flatten().sum()]*N
         else:
             pi = raw_data[["pi"]].values.flatten()
         logger.info("\nT\n%s\nA\n%s\nB\n%s\npi\n%s\nM\n%s\nN\n%s\nO\n%s\nQ\n%s\nV\n%s"
                     % (T, A, B, pi, M, N, O, Q, V))
-        # forward
-        logger.info(pi*B[..., O[0]])
-        logger.info(np.dot(pi*B[..., O[0]], A)*B[..., O[1]])
-        logger.info(np.dot(np.dot(pi*B[..., O[0]], A)*B[..., O[1]], A)*B[..., O[2]])
-        logger.info(np.sum(np.dot(np.dot(pi*B[..., O[0]], A)*B[..., O[1]], A)*B[..., O[2]]))
-        # backward
-        logger.info(np.dot(A, B[..., O[2]]))
+        hmm_e103 = HMM(n_component=3)
+        hmm_e103.A = A
+        hmm_e103.B = B
+        hmm_e103.p = pi
+        hmm_e103.N = N
+        hmm_e103.T = T
+        hmm_e103.M = M
 
-    @unittest.skip("EM only")
+        prob, states = hmm_e103.decode(O)
+        # p_star
+        self.assertAlmostEqual(0.0147, prob, places=5)
+        self.assertSequenceEqual([2, 2, 2], states.tolist())
+        logger.info("P star is %s, I star is %s" % (prob, states))
+
     def test_forward(self):
         # 10.2 数据
         Q = {0: 1, 1: 2, 2: 3}
@@ -117,7 +122,7 @@ class TestHHMMethods(unittest.TestCase):
         for x, y in zip(alpha_true.flatten().tolist(), alpha.flatten().tolist()):
             self.assertAlmostEqual(x, y, places=5)
 
-    @unittest.skip("EM only")
+    # @unittest.skip("EM only")
     def test_backward(self):
         # 10.2 数据
         Q = {0: 1, 1: 2, 2: 3}
@@ -139,7 +144,7 @@ class TestHHMMethods(unittest.TestCase):
                                [0.28, 0.0606, 0.05284]])
         self.assertAlmostEqual(prob, 0.13022, places=5)
 
-    @unittest.skip("EM only")
+    # @unittest.skip("EM only")
     def test_bkw_frw(self):
         # 并没有实际的测试内容
         Q = {0: 1, 1: 2, 2: 3}
@@ -157,15 +162,21 @@ class TestHHMMethods(unittest.TestCase):
 
         beta = hmm_forward.backward(X)
         alpha = hmm_forward.forward(X)
-        print(alpha, beta)
+        logger.info("%s \n %s" % (alpha, beta))
 
+    # @unittest.skip("")
     def test_EM(self):
-        hmm_fit = HMM(n_component=3)
+        logger.info("test EM")
+        V = {0: "red", 1: "white"}
+        hmm_fit = HMM(n_component=3, V=V)
         X = np.array([0, 1, 0, 0])
         hmm_fit.fit(X)
-        print(hmm_fit.A)
-        print(hmm_fit.B)
-        print(hmm_fit.p)
+        # prob, states = hmm_fit.decode([0, 1, 0, 0])
+        logger.info(hmm_fit.A)
+        logger.info(hmm_fit.B)
+        logger.info(hmm_fit.p)
+        # logger.info("prob %s " % prob)
+        # logger.info("states %s" % states)
 
 
 if __name__ == '__main__':

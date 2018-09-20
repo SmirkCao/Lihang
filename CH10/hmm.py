@@ -19,7 +19,7 @@ class HMM(object):
         self.A = None
         self.B = None
         self.p = None
-        self.M = 2
+        self.M = 0
         self.N = n_component
         self.T = 0
         self.Q = Q
@@ -39,6 +39,8 @@ class HMM(object):
         # todo: update Dirchlet Distribution
         if self.V is not None:
             self.M = len(self.V)
+        else:
+            warnings.warn("M warning")
         self.A = np.ones((self.N, self.N))/self.N
         self.B = np.ones((self.N, self.M))/self.M
         self.p = np.ones(self.N)/self.N
@@ -50,31 +52,31 @@ class HMM(object):
         alpha = np.zeros((self.N, self.T))
         # A: NxM
         # B: NxM
-        # alpha: TxN
-        o = X[0]
-        alpha[:, 0] = self.p * self.B[:, o]
-        tmp = alpha[:, 0]
-        for k, o in enumerate(X[1:]):
-            alpha[:, k+1] = np.sum(tmp*self.A.T, axis=1)*self.B[:, o]
-            if k < len(X[1:]):
-                tmp = alpha[:, k+1]
-        # prob = np.log(np.sum(alpha[:, k+1]))
-        prob = np.sum(alpha[:, k+1])
+        # alpha: NxT
+        t = 0
+        o = X[t]
+        alpha[:, t] = self.p * self.B[:, o]
+        t_rest = np.arange(1, self.T)
+        for t in t_rest:
+            o = X[t]
+            alpha[:, t] = np.sum(alpha[:, t-1]*self.A.T, axis=1)*self.B[:, o]
+
+        prob = np.sum(alpha[:, -1])
         return prob, alpha
 
     def _do_backward(self, X):
         beta = np.ones((self.N, self.T))
-        o = X[-1]
-        beta[:, -1] = 1
-        tmp = beta[:, -1]
+
+        t = -1
+        beta[:, t] = 1
         # print(self.A, self.B, self.p, X)
-        o_ = o
-        for k, o in reversed(list(enumerate(X[:-1]))):
-            beta[:, k] = np.sum(self.A*self.B[:, o_]*tmp, axis=1)
-            if k > 0:
-                tmp = beta[:, k]
-                o_ = o
-        prob = np.sum(self.p*self.B[:, o]*beta[:, 0])
+
+        t_rest = np.arange(self.T-1)[::-1]
+        for t in t_rest:
+            o = X[t+1]
+            beta[:, t] = np.sum(self.A*self.B[:, o]*beta[:, t+1], axis=1)
+
+        prob = np.sum(self.p*self.B[:, X[0]]*beta[:, 0])
         # print(beta, prob, prob, "new")
         return prob, beta
 
@@ -148,9 +150,56 @@ class HMM(object):
                 return rst
         return self
 
+    def decode(self, X):
+        """
+        Find most likely state sequence corresponding to ``X``.
+        """
+        if self.T == 0:
+            warnings.warn("T warning")
+        if self.N == 0:
+            warnings.warn("N warning")
+
+        hidden_states = np.zeros(self.T)
+        delta = np.ones((self.N, self.T))
+        psi = np.zeros((self.N, self.T))
+
+        t = 0
+        o = X[t]
+        delta[:, t] = self.p*self.B[:, o]
+        psi[:, t] = 0
+        t_rest = np.arange(1, self.T)
+        for t in t_rest:
+            o = X[t]
+            delta[:, t] = np.max(delta[:, t-1]*self.A.T, axis=1)*self.B[:, o]
+            psi[:, t] = np.argmax(delta[:, t-1]*self.A.T, axis=1)
+
+        # print("参考答案")
+        # print(np.array([[0.1,     0.028,   0.00756],
+        #                 [0.016,   0.0504,  0.01008],
+        #                 [0.28,    0.042,   0.0147]]))
+        # print("程序结果")
+        # print(delta)
+
+        prob = np.max(delta[:, -1])
+        hidden_states[-1] = np.argmax(delta[:, -1])
+        # T in 1,...,T-1
+        t_rest = np.arange(self.T)[self.T - 1:0:-1]
+        for t in t_rest:
+            hidden_states[t-1] = np.argmax(delta[:, t]*self.A[:, int(hidden_states[t])], axis=0)
+
+        return prob, hidden_states
+
     def predict(self, X):
-        rst = None
+        """
+        Find most likely state sequence corresponding to ``X``.
+        """
+        rst = self.decode(X)
         return rst
+
+    def predict_proba(self):
+        post_prior = 0
+
+        return post_prior
 
     def sample(self):
         rst = None
