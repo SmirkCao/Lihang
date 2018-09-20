@@ -27,6 +27,7 @@ class HMM(object):
         self.n_iters = n_iters
         self.alpha = None
         self.beta = None
+        self.deta = None
         self.gamma = None
         self.xi = None
         self.Ei = None
@@ -61,6 +62,7 @@ class HMM(object):
             o = X[t]
             alpha[:, t] = np.sum(alpha[:, t-1]*self.A.T, axis=1)*self.B[:, o]
 
+        self.alpha = alpha
         prob = np.sum(alpha[:, -1])
         return prob, alpha
 
@@ -75,6 +77,7 @@ class HMM(object):
         for t in t_rest:
             o = X[t+1]
             beta[:, t] = np.sum(self.A*self.B[:, o]*beta[:, t+1], axis=1)
+        self.beta = beta
 
         prob = np.sum(self.p*self.B[:, X[0]]*beta[:, 0])
         # print(beta, prob, prob, "new")
@@ -173,19 +176,13 @@ class HMM(object):
             delta[:, t] = np.max(delta[:, t-1]*self.A.T, axis=1)*self.B[:, o]
             psi[:, t] = np.argmax(delta[:, t-1]*self.A.T, axis=1)
 
-        # print("参考答案")
-        # print(np.array([[0.1,     0.028,   0.00756],
-        #                 [0.016,   0.0504,  0.01008],
-        #                 [0.28,    0.042,   0.0147]]))
-        # print("程序结果")
-        # print(delta)
-
+        self.delta = delta
         prob = np.max(delta[:, -1])
         hidden_states[-1] = np.argmax(delta[:, -1])
-        # T in 1,...,T-1
-        t_rest = np.arange(self.T)[self.T - 1:0:-1]
+        # t in T-1,...,1
+        t_rest = np.arange(self.T-1)[::-1]
         for t in t_rest:
-            hidden_states[t-1] = np.argmax(delta[:, t]*self.A[:, int(hidden_states[t])], axis=0)
+            hidden_states[t] = np.argmax(delta[:, t]*self.A[:, int(hidden_states[t+1])], axis=0)
 
         return prob, hidden_states
 
@@ -193,8 +190,8 @@ class HMM(object):
         """
         Find most likely state sequence corresponding to ``X``.
         """
-        rst = self.decode(X)
-        return rst
+        _, states = self.decode(X)
+        return states
 
     def predict_proba(self):
         post_prior = 0
