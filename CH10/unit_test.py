@@ -98,6 +98,12 @@ class TestHHMMethods(unittest.TestCase):
         self.assertAlmostEqual(0.0147, prob, places=5)
         self.assertSequenceEqual([2, 2, 2], states.tolist())
         logger.info("P star is %s, I star is %s" % (prob, states))
+        # print("参考答案")
+        # print(np.array([[0.1,     0.028,   0.00756],
+        #                 [0.016,   0.0504,  0.01008],
+        #                 [0.28,    0.042,   0.0147]]))
+        # print("程序结果")
+        # print(delta)
 
     def test_forward(self):
         # 10.2 数据
@@ -177,6 +183,84 @@ class TestHHMMethods(unittest.TestCase):
         logger.info(hmm_fit.p)
         # logger.info("prob %s " % prob)
         # logger.info("states %s" % states)
+
+    def test_q101(self):
+        # 和 backward结果一致
+        # 10.1
+        Q = {0: 1, 1: 2, 2: 3}
+        V = {0: "red", 1: "white"}
+        hmm_backward = HMM(n_component=3, V=V)
+        hmm_backward.A = np.array([[0.5, 0.2, 0.3],
+                                   [0.3, 0.5, 0.2],
+                                   [0.2, 0.3, 0.5]])
+        hmm_backward.B = np.array([[0.5, 0.5],
+                                   [0.4, 0.6],
+                                   [0.7, 0.3]])
+        hmm_backward.p = np.array([0.2, 0.4, 0.4])
+        X = np.array([0, 1, 0, 1])
+        hmm_backward.T = len(X)
+
+        # beta = hmm_backward.backward(X)
+        prob, beta = hmm_backward._do_backward(X)
+        logger.info("----q101----")
+        logger.info(prob)
+        logger.info(beta)
+        # alpha_true = np.array([[0.10, 0.077, 0.04187],
+        #                        [0.16, 0.1104, 0.03551],
+        #                        [0.28, 0.0606, 0.05284]])
+        # self.assertAlmostEqual(prob, 0.13022, places=5)
+
+    def test_q102(self):
+        # 这个题目, 意义在哪里?
+        logger.info("----q102----")
+        # 10.2
+        Q = {0: 1, 1: 2, 2: 3}
+        V = {0: "red", 1: "white"}
+        hmm_backward = HMM(n_component=3, V=V)
+        hmm_backward.A = np.array([[0.5, 0.1, 0.4],
+                                   [0.3, 0.5, 0.2],
+                                   [0.2, 0.2, 0.6]])
+        hmm_backward.B = np.array([[0.5, 0.5],
+                                   [0.4, 0.6],
+                                   [0.7, 0.3]])
+        hmm_backward.p = np.array([0.2, 0.3, 0.5])
+        X = np.array([0, 1, 0, 0, 1, 0, 1, 1])
+        hmm_backward.T = len(X)
+        prob, states = hmm_backward.decode(X)
+        prob_fwd, _ = hmm_backward._do_forward(X)
+        prob_bwd, _ = hmm_backward._do_backward(X)
+        logger.info("decode prob %s, forward prob %s, backward prob %s" % (prob, prob_fwd, prob_bwd))
+        logger.info(states)
+        logger.info("alpha\n %s" % hmm_backward.alpha)
+        logger.info("beta\n%s" % hmm_backward.beta)
+        logger.info("delta\n%s" % hmm_backward.delta)
+
+    def test_q103(self):
+        # 10.3
+        Q = {0: 1, 1: 2, 2: 3, 3:4}
+        V = {0: "red", 1: "white"}
+        hmm_backward = HMM(n_component=4, V=V)
+        hmm_backward.A = np.array([[0, 1, 0, 0],
+                                   [0.4, 0, 0.6, 0],
+                                   [0, 0.4, 0, 0.6],
+                                   [0, 0, 0.5, 0.5]])
+        hmm_backward.B = np.array([[0.5, 0.5],
+                                   [0.3, 0.7],
+                                   [0.6, 0.4],
+                                   [0.8, 0.2]])
+        hmm_backward.p = np.array([0.25, 0.25, 0.25, 0.25])
+        X = np.array([0, 0, 1, 1, 0])
+        hmm_backward.T = len(X)
+
+        prob, states = hmm_backward.decode(X)
+        prob_fwd, _ = hmm_backward._do_forward(X)
+        prob_bwd, _ = hmm_backward._do_backward(X)
+        logger.info("----q103----")
+        logger.info("decode prob %s, forward prob %s, backward prob %s" % (prob, prob_fwd, prob_bwd))
+        logger.info(states)
+        logger.info("alpha\n %s" % hmm_backward.alpha)
+        logger.info("beta\n%s" % hmm_backward.beta)
+        logger.info("delta\n%s" % hmm_backward.delta)
 
 
 if __name__ == '__main__':
