@@ -68,7 +68,32 @@ $Y\in \mathcal Y$是**一组随机变量**$Y=(Y_{\nu})_{\nu \in V}$
 特征函数部分的内容理解下.
 
 ### 例11.2
+这里使用sympy推导一下这个例子
+```python
+from sympy import *
+a01,a02, b11, b12, b21, b22, c11, c12, c21, c22  = symbols("a01, a02, \
+                                                            b11, b12,b21, b22, \
+                                                            c11, c12, c21, c22")
+M1 = Matrix([[a01, a02],
+             [0,   0]])
+M2 = Matrix([[b11, b12],
+             [b21, b22]])
 
+M3 = Matrix([[c11, c12],
+             [c21, c22]])
+
+M4 = Matrix([[1, 0],
+             [1, 0]])
+Z = expand(M1*M2*M3*M4)
+P = str(expand(M1*M2*M3*M4)[0]).replace(" ","").split("+")
+print(Z)
+print(P)
+```
+本章代码有设计这个例子的测试案例, 可以参考.
+这里有个点要注意下, 书中强调了$Z$的**第一行和第一列**
+$$
+Z(x)=\alpha_n^T(x)\cdot \mathrm{1}=\mathrm{1}^T\cdot \beta_1(x)
+$$
 ### 例11.3
 
 ## CRF与LR比较
