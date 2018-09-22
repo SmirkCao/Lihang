@@ -68,11 +68,12 @@ $Y\in \mathcal Y$是**一组随机变量**$Y=(Y_{\nu})_{\nu \in V}$
 特征函数部分的内容理解下.
 引用一下书中的解，注意看
 $$
-P(y|ｘ)\varpropto \exp \left[\sum_{k=1}^5\lambda_k\sum_{i=2}^3t_k(y_{i-1}, y_i, x, i)+\sum_{k=1}^4\mu_k\sum_{i=1}^3s_k(y_i,x,i)\right]
+P(y|ｘ)\varpropto \exp \left[\sum_{k=1}^5\lambda_k\color{red}\sum_{i=2}^3\color{black}t_k(y_{i-1}, y_i, x, i)+\sum_{k=1}^4\mu_k\color{red}\sum_{i=1}^3\color{black}s_k(y_i,x,i)\right]
 $$
-注意，按照这里的表达$\sum\limits_{i=2}^3 \sum\limits_{i=1}^3$，实际上特征函数会遍历每一个可能的点和边。书中有这样一句**取值为０的条件省略**, 这个仔细体会下
+注意，按照这里红色部分的表达$\sum\limits_{i=2}^3 \sum\limits_{i=1}^3​$，实际上特征函数会遍历每一个可能的点和边。书中有这样一句**取值为０的条件省略**, 这个仔细体会下
 
 ### 例11.2
+
 这里使用sympy推导一下这个例子
 ```python
 from sympy import *
