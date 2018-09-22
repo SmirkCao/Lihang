@@ -5,6 +5,7 @@
 # Date: 9/21/18
 # Author: 😏 <smirk dot cao at gmail dot com>
 from crf import *
+from sympy import *
 import argparse
 import logging
 import warnings
@@ -18,7 +19,27 @@ class TestCRF(unittest.TestCase):
         pass
 
     def test_e112(self):
-        pass
+        a01, a02, b11, b12, b21, b22, c11, c12, c21, c22 = symbols("a01, a02, b11, \
+                                                                    b12, b21, b22, \
+                                                                    c11, c12, c21, \
+                                                                    c22")
+        M1 = Matrix([[a01, a02],
+                     [0,   0]])
+        M2 = Matrix([[b11, b12],
+                     [b21, b22]])
+
+        M3 = Matrix([[c11, c12],
+                     [c21, c22]])
+
+        M4 = Matrix([[1, 0],
+                     [1, 0]])
+        Z = (M1 * M2 * M3 * M4)[0].expand()
+        P = str(Z).replace(" ", "").split("+")
+        logger.info(Z)
+        logger.info(P)
+        self.assertSetEqual(set(P),
+                            {"a02*b21*c11", "a02*b21*c12", "a02*b22*c21", "a02*b22*c22",
+                             "a01*b11*c11", "a01*b11*c12", "a01*b12*c21", "a01*b12*c22"})
 
     def test_e113(self):
         pass
