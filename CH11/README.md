@@ -94,7 +94,18 @@ $Y\in \mathcal Y$是**一组随机变量**$Y=(Y_{\nu})_{\nu \in V}$
 
 
 ## 例子
+> 条件随机场完全由特征函数$t_k,s_l$和对应的权值$\lambda_k,\mu_l$确定
+接下来的三个例子
+- 例11.1
 
+  已知上述四个参数的情况下，求概率
+- 例11.2
+
+  假设了$y_0=start=1, y_4=stop=1$
+
+  矩阵形式的表示是为了后面的前向后向算法中递推的使用。 
+- 例11.3
+  decode问题实例
 ### 例11.1
 
 特征函数部分的内容理解下.
@@ -146,6 +157,11 @@ M4 = Matrix([[1, 0],
              [1, 0]])
 Z = expand(M1*M2*M3*M4)
 P = str(expand(M1*M2*M3*M4)[0]).replace(" ","").split("+")
+# 体会各个路径之间关系
+for i in range(2):
+   for j in range(2):
+       for k in range(2):
+           logger.info(str(M1[0, i] * M2[i, j] * M3[j, k]))
 print(Z)
 print(P)
 ```
