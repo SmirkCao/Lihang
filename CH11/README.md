@@ -126,12 +126,15 @@ $$
 $K_1$个转移特征， $K_2$个状态特征
 
 $$
+\color{red}
 f_k(y_{i-1},y_i,x,i)=
 \begin{cases}
 t_k(y_{i-1},y_i,x,i),&k=1,2,\dots,K_1\\
 s_l(y_i,x,i),&k=K_1+l;l=1,2,\dots,K_2
 \end{cases}
 $$
+**上面这个红色的式子很重要，把unigram和bigram统一到一起了，如果有trigram等也在这里融合**
+
 然后，对转和状态特征在各个位置$i$求和，记作
 $$
 f_k(y,x)=\sum_{i=1}^nf_k(y_{i-1},y_i,x,i),k=1,2,\dots,K
@@ -251,6 +254,45 @@ $$
 这里还有个问题， 这个$m$阶的矩阵是怎么来的？上面这四个表达式每一个都是$m$阶矩阵么？
 
 这个问题在例子11.2中展开。
+
+
+
+## 概率计算
+
+前向向量$\alpha_i(x)$
+1. 初值
+    $$\alpha_0(y|x)=
+    \begin{cases}
+    1,&y=start \\
+    0,&others
+    \end{cases}$$
+1. 递推
+   $$\alpha_i^T(y_i|x)=\alpha_{i-1}^T(y_{i-1}|x)[M_i(y_{i-1},y_i|x)],i=1,2,\dots,n+1$$
+
+$\alpha_i(y_i|x)$表示在位置$i$的标记是$y_i$并且到位置$i$的前部标记序列的非规范化概率，$y_i$可取的值有$m$个,所以$\alpha_i(x)$是$m$维列向量
+
+后向向量$\beta_i(x)$
+
+1. 初值
+   $$\beta_{n+1}(y_{n+1}|x)=
+   \begin{cases}
+   1,&y_{n+1}=stop \\
+   0,&others
+   \end{cases}$$
+1. 递推
+   $$\beta_i(y_i|x)=[M_i(y_i,y_{i+1}|x)]\beta_{i+1}(y_{i+1}|x),i=1,2,\dots,n+1$$
+
+$\beta_i(y_i|x)$表示在位置$i$的标记是$y_i$并且从$i+1$到$n$的后部标记序列的非规范化概率
+$$
+Z(x)=\alpha_n^T(x)\cdot1=1^T\cdot\beta_1(x)
+$$
+
+
+
+
+## 预测
+
+
 
 ## 例子
 
