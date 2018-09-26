@@ -103,7 +103,7 @@ Z(x)=\sum_y\left(\sum_{i,k}\lambda_kt_k(y_{i-1},y_i,x,i)+\sum_{i,l}\mu_ls_l(y_i,
 $$
 $k,l$对应特征函数的编号，注意这里用了$k,l$两个编号，$i$对应了输出序列的每个位置
 $$
-\begin{align}
+\begin{aligned}
 t_1&=t_1(y_{i-1}=1,y_i=2,x,i),&i&=2,3,&\lambda_1&=1 \\
 t_2&=t_2(y_{i-1}=1,y_i=1,x,i),&i&=2,&\lambda_2&=0.5\\
 \color{red}t_3&=t_3(y_{i-1}=2,y_i=1,x,i),&i&=3,&\lambda_3&=1\\
@@ -113,7 +113,7 @@ s_1&=s_1(y_i=1,x,i),&i&=1,&\mu_1&=1\\
 s_2&=s_2(y_i=1,x,i),&i&=1,2,&\mu_2&=0.5\\
 s_3&=s_3(y_i=1,x,i),&i&=2,3,&\mu_3&=0.8\\
 s_4&=s_4(y_i=2,x,i),&i&=3&\mu_4&=0.5\\
-\end{align}
+\end{aligned}
 $$
 可以抽象成上面这种形式。
 
@@ -169,7 +169,7 @@ $$
 在参数化形式的展示中，书中的公式已经做了删减。
 而实际上这里应该是展开的。
 $$
-\begin{align}
+\begin{aligned}
 f_k&=t_1(y_{i-1}=1,y_i=2,x,i),&i&=2,&w_k&=1,&k=1 \\
 f_k&=t_1(y_{i-1}=1,y_i=2,x,i),&i&=3,&w_k&=1,&k=1 \\
 f_k&=t_2(y_{i-1}=1,y_i=1,x,i),&i&=2,&w_k&=0.5,&k=2\\
@@ -193,7 +193,7 @@ f_k&=s_3(y_i=1,x,i),&i&=3,&w_k&=0.8,&k=8\\
 f_k&=s_4(y_i=2,x,i),&i&=1,&w_k&=0.5,&k=9\\
 f_k&=s_4(y_i=2,x,i),&i&=2,&w_k&=0.5,&k=9\\
 f_k&=s_4(y_i=2,x,i),&i&=3,&w_k&=0.5,&k=9
-\end{align}
+\end{aligned}
 $$
 
 这里对于$w_k$的理解再体会下。
@@ -206,7 +206,7 @@ $$
 
 引入起点和终点状态标记$y_0=start,y_{n+1}=end$， 这时$P_w(y|x)$可以矩阵形式表示。
 
-对应观测序列的每个位置$i=1,2,\dots,n+1$，定义一个$m$阶矩阵（$m$是标记$y_i$取值的个数）
+对应观测序列的**每个位置**$i=1,2,\dots,\color{red}n+1$，定义一个$m$阶矩阵（$m$是标记$y_i$取值的个数）
 $$
 \begin{align}
 M_i(x)&=\left[M_i(y_{i-1},y_i|x)\right]\\
@@ -217,6 +217,40 @@ $$
 把整个向量乘法按照**观测位置**拆成矩阵形式， 每个观测位置对应一个矩阵
 
 这个过程和$CNN$中的卷积实际上有点像，这里面卷积模板有两种$k\times 1$和$k\times 2$， 以1和2进行滑窗。
+
+给定观测序列$x$，相应的标记序列$y$的非规范化概率可以通过该序列的$n+1$个矩阵适当元素的乘积$\prod_{i=1}^{n+1}M_i(y_{i-1},y_i|x)$表示。于是
+$$
+P_w(y|x)=\frac{1}{Z_w(x)}\prod_{i=1}^{n+1}M_i(y_{i-1},y_i|x)
+$$
+其中，$Z_w$为规范化因子，$\color{red}是n+1个矩阵的乘积的(start,stop)元素$：
+$$
+Z_w(x)=(M_1(x)M_2(x)\dots M_{n+1}(x))_{start,stop}
+$$
+这个式子，以及这段内容，注意下.
+
+上面的式子展开一下,得到$n+1$个$\color{red}m$阶矩阵
+$$
+M_i(x)=\left[\exp\left(\sum_{k=1}^Kw_kf_k(y_{i-1},y_i|x)\right)\right], i=1,2,\dots,n+1
+$$
+这里面， 各个位置$(1,2,\dots,n+1)$的**随机矩阵**分别是
+$$
+\begin{align}
+M_1(y_0,y_1|x)&=\exp\left(\sum_{k=1}^Kw_kf_k(y_0,y_1|x)\right)\nonumber\\
+&=\exp (w_1f_1(y_0,y_1))\exp(w_2f_2(y_0,y_1))\dots\exp(w_Kf_K(y_0,y_1))\\
+M_2(y_1,y_2|x)&=\exp\left(\sum_{k=1}^Kw_kf_k(y_1,y_2|x)\right)\nonumber\\
+&=\exp (w_1f_1(y_1,y_2))\exp(w_2f_2(y_1,y_2))\dots\exp(w_Kf_K(y_1,y_2))\\
+M_3(y_2,y_3|x)&=\exp\left(\sum_{k=1}^Kw_kf_k(y_2,y_3|x)\right)\nonumber\\
+&=\exp (w_1f_1(y_2,y_3))\exp(w_2f_2(y_2,y_3))\dots\exp(w_Kf_K(y_2,y_3))\\
+M_4(y_3,y_4|x)&=\exp\left(\sum_{k=1}^Kw_kf_k(y_3,y_4|x)\right)\nonumber\\
+&=\exp (w_1f_1(y_3,y_4))\exp(w_2f_2(y_3,y_4))\dots\exp(w_Kf_K(y_3,y_4))\\
+\end{align}
+$$
+
+所以，无论特征有多少个，随机矩阵都是四个$(n+1)$
+
+这里还有个问题， 这个$m$阶的矩阵是怎么来的？上面这四个表达式每一个都是$m$阶矩阵么？
+
+这个问题在例子11.2中展开。
 
 ## 例子
 
@@ -238,7 +272,7 @@ $$
 
 这里整理下题目中的特征函数，这里和书上的格式稍有不同，希望用这样的描述能看到这些特征函数中抽象的地方。
 $$
-\begin{align}
+\begin{aligned}
 t_1&=t_1(y_{i-1}=1,y_i=2,x,i),&i&=2,3,&\lambda_1&=1 \\
 t_2&=t_2(y_{i-1}=1,y_i=1,x,i),&i&=2,&\lambda_2&=0.5\\
 \color{red}t_3&=t_3(y_{i-1}=2,y_i=1,x,i),&i&=3,&\lambda_3&=1\\
@@ -248,7 +282,7 @@ s_1&=s_1(y_i=1,x,i),&i&=1,&\mu_1&=1\\
 s_2&=s_2(y_i=1,x,i),&i&=1,2,&\mu_2&=0.5\\
 s_3&=s_3(y_i=1,x,i),&i&=2,3,&\mu_3&=0.8\\
 s_4&=s_4(y_i=2,x,i),&i&=3&\mu_4&=0.5\\
-\end{align}
+\end{aligned}
 $$
 注意上面红色标记的$t_3,t_4$是可以合并的。
 
@@ -285,7 +319,99 @@ proba = np.sum(w_k*f_k)
 
 ### 例11.2
 
+重复下题目， 其实就是做了符号说明
+
+```mermaid
+graph LR
+A0((start)) --- A1((1))
+A1---A2((1))
+A2---A3((1))
+A3---A4((stop))
+A1---B2
+A2---B3((2))
+A0---B1((2))
+B1---B2
+B2---B3
+B3---A4
+B1((2))---A2
+B2((2))---A3
+
+```
+
+线性链条件随机场结构如上图
+
+观测序列$x$，状态序列$y,i=1,2,3, n=3$，标记$y_i\in\{1,2\}$，假设$y_0=start=1,y_4=stop=1$，各个位置的随机矩阵为
+$$
+\begin{aligned}
+M_1(x)=
+\begin{bmatrix}
+&a_{01}&a_{02}\\
+&0&0
+\end{bmatrix}
+&,M_2(x)=
+\begin{bmatrix}
+&b_{11}&b_{12}\\
+&b_{21}&b_{22}
+\end{bmatrix}
+\\
+M_3(x)=
+\begin{bmatrix}
+&c_{11}&c_{12}\\
+&c_{21}&c_{22}
+\end{bmatrix}
+&,M_4(x)=
+\begin{bmatrix}
+&1&0\\
+&1&0
+\end{bmatrix}
+\end{aligned}
+$$
+
+由$M_i$的定义
+$$
+M_i(x)=\left[\exp\left(\sum_{k=1}^Kw_kf_k(y_{i-1},y_i|x)\right)\right], i=1,2,\dots,n+1\nonumber
+$$
+以及$y_i\in\{1,2\}$
+
+可以知道，每个$M_i$中$f_k$对应的$y_{i-1},y_i$都有两种取值，对应的组合就有四种
+$$
+M(x)=
+\begin{bmatrix}
+\exp\sum\limits_{k=1}^Kw_kf_k(\color{red}y[0],y[0]\color{black}),\exp\sum\limits_{k=1}^Kw_kf_k(\color{red}y[0],y[1]\color{black})\\
+\exp\sum\limits_{k=1}^Kw_kf_k(\color{red}y[1],y[0]\color{black}),\exp\sum\limits_{k=1}^Kw_kf_k(\color{red}y[1],y[1]\color{black})
+\end{bmatrix}
+$$
+对应的红色部分组合使得$M$成为一个矩阵
+
+这里注意$M_1,M_4$，理解这里的$y[0],y[1]$表示的是$y$的取值
+$$
+\begin{aligned}
+&M_1\rightarrow y[0]\rightarrow start \\
+&M_4\rightarrow y[4]\rightarrow end
+\end{aligned}
+$$
+这里重新整理一下
+
+对于$y_0=start=1$
+$$
+M(x)=
+\begin{bmatrix}
+\exp\sum\limits_{k=1}^Kw_kf_k(\color{red}y[0]\color{black},y[0]),\exp\sum\limits_{k=1}^Kw_kf_k(\color{red}y[0]\color{black},y[1])\\
+\exp\sum\limits_{k=1}^Kw_kf_k(y[1],y[0]),\exp\sum\limits_{k=1}^Kw_kf_k(y[1],y[1])
+\end{bmatrix}
+$$
+对于$y_4=end=1$
+$$
+M(x)=
+\begin{bmatrix}
+\exp\sum\limits_{k=1}^Kw_kf_k(y[0],\color{red}y[0]\color{black}),\exp\sum\limits_{k=1}^Kw_kf_k(y[0],y[1])\\
+\exp\sum\limits_{k=1}^Kw_kf_k(y[1],\color{red}y[0]\color{black}),\exp\sum\limits_{k=1}^Kw_kf_k(y[1],y[1])
+\end{bmatrix}
+$$
+以上，取不到的值为0.
+
 这里使用SymPy推导一下这个例子
+
 ```python
 from sympy import *
 a01,a02, b11, b12, b21, b22, c11, c12, c21, c22  = symbols("a01, a02, \
