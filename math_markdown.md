@@ -1,5 +1,7 @@
 # Markdown Cheat Sheet
 
+[TOC]
+
 ### 表 1: 数学模式重音符
 
 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 |
@@ -88,6 +90,8 @@
 
 ### 表9: 分段函数与公式对齐
 
+#### 分段函数
+
 示例
 $$
 f(x,y) = \begin{cases}
@@ -110,11 +114,15 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\lim
 \end{aligned}
 $$
 
+#### 对齐控制
+
 ```latex
 # 代码
 # 通过\begin{aligned}\end{aligned}控制对齐, 使用&表示对齐点.
 \begin{aligned}
-L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
+L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
+&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\\
+&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
 \end{aligned}
 ```
 
@@ -122,7 +130,9 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\lim
 $$
 \begin{equation}
 \begin{aligned}
-L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\\&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
+L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
+&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\\
+&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
 \end{aligned}
 \end{equation}
 $$
@@ -135,6 +145,89 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\&=\sum\lim
 \end{aligned}
 \end{equation}
 ```
+
+#### 公式编号
+
+关于编号也可以通过行间公式做如下表达
+$$
+\begin{align}
+L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
+&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\nonumber\\
+&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
+\end{align}
+$$
+代码如下
+
+```latex
+\begin{align}
+L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
+&=\sum\limits^{N}_{i=1}[y_i\log{\frac{\pi(x_i)}{1-\pi(x_i)}}+\log(1-\pi(x_i))]\nonumber\\
+&=\sum\limits^{N}_{i=1}[y_i(w\cdot x_i)-\log(1+\exp(w\cdot{x_i})]
+\end{align}
+```
+
+以上代码有两点需要注意体会：
+
+1. align
+1. \nonumber的使用
+
+#### 矩阵
+
+$$
+\begin{aligned}
+M_1(x)=
+\begin{bmatrix}
+&a_{01}&a_{02}\\
+&0&0
+\end{bmatrix}
+&,M_2(x)=
+\begin{bmatrix}
+&b_{11}&b_{12}\\
+&b_{21}&b_{22}
+\end{bmatrix}
+\\
+M_3(x)=
+\begin{bmatrix}
+&c_{11}&c_{12}\\
+&c_{21}&c_{22}
+\end{bmatrix}
+&,M_4(x)=
+\begin{bmatrix}
+&1&0\\
+&1&0
+\end{bmatrix}
+\end{aligned}
+$$
+
+代码
+
+```latex
+\begin{aligned}
+M_1(x)=
+\begin{bmatrix}
+&a_{01}&a_{02}\\
+&0&0
+\end{bmatrix}
+&,M_2(x)=
+\begin{bmatrix}
+&b_{11}&b_{12}\\
+&b_{21}&b_{22}
+\end{bmatrix}
+\\
+M_3(x)=
+\begin{bmatrix}
+&c_{11}&c_{12}\\
+&c_{21}&c_{22}
+\end{bmatrix}
+&,M_4(x)=
+\begin{bmatrix}
+&1&0\\
+&1&0
+\end{bmatrix}
+\end{aligned}
+```
+
+
 
 ### 表X:Emoji
 
