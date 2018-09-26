@@ -91,9 +91,135 @@ $Y\in \mathcal Y$是**一组随机变量**$Y=(Y_{\nu})_{\nu \in V}$
 >
 > 则称$P(Y|X)$为线性链条件随机场
 
+#### 参数化形式
 
+随机变量$X$取值为$x$的**条件**下，随机变量$Y$取值为$y$的条件概率具有如下形式：
+$$
+P(y|x)=\frac{1}{Z}\exp\left(\sum_{i,k}\lambda_kt_k(y_{i-1},y_i,x,i+\sum_{i,l}\mu_ls_l(y_i,x,i)\right)
+$$
+其中
+$$
+Z(x)=\sum_y\left(\sum_{i,k}\lambda_kt_k(y_{i-1},y_i,x,i)+\sum_{i,l}\mu_ls_l(y_i,x,i)\right)
+$$
+$k,l$对应特征函数的编号，注意这里用了$k,l$两个编号，$i$对应了输出序列的每个位置
+$$
+\begin{align}
+t_1&=t_1(y_{i-1}=1,y_i=2,x,i),&i&=2,3,&\lambda_1&=1 \\
+t_2&=t_2(y_{i-1}=1,y_i=1,x,i),&i&=2,&\lambda_2&=0.5\\
+\color{red}t_3&=t_3(y_{i-1}=2,y_i=1,x,i),&i&=3,&\lambda_3&=1\\
+\color{red}t_4&=t_4(y_{i-1}=2,y_i=1,x,i),&i&=2,&\lambda_4&=1\\
+t_5&=t_5(y_{i-1}=2,y_i=2,x,i),&i&=3,&\lambda_5&=0.2\\
+s_1&=s_1(y_i=1,x,i),&i&=1,&\mu_1&=1\\
+s_2&=s_2(y_i=1,x,i),&i&=1,2,&\mu_2&=0.5\\
+s_3&=s_3(y_i=1,x,i),&i&=2,3,&\mu_3&=0.8\\
+s_4&=s_4(y_i=2,x,i),&i&=3&\mu_4&=0.5\\
+\end{align}
+$$
+可以抽象成上面这种形式。
+
+
+
+#### 简化形式
+
+上面的结构，包含了两个部分，表达式不够简单，如何落地？
+
+$K_1$个转移特征， $K_2$个状态特征
+
+$$
+f_k(y_{i-1},y_i,x,i)=
+\begin{cases}
+t_k(y_{i-1},y_i,x,i),&k=1,2,\dots,K_1\\
+s_l(y_i,x,i),&k=K_1+l;l=1,2,\dots,K_2
+\end{cases}
+$$
+然后，对转和状态特征在各个位置$i$求和，记作
+$$
+f_k(y,x)=\sum_{i=1}^nf_k(y_{i-1},y_i,x,i),k=1,2,\dots,K
+$$
+用$w_k$表示特征$f_k(y,x)$的权值
+$$
+w_k=
+\begin{cases}
+\lambda_k,&k=1,2,\dots,K_1\\
+\mu_l,&k=K1+l;l=1,2,\dots,K_2
+\end{cases}
+$$
+于是条件随机场可以表示为
+$$
+\begin{align}
+P(y|x)&=\frac{1}{Z(x)}\exp\sum_{k=1}^Kw_kf_k(y,x)\\
+Z(x)&=\sum_y\exp\sum_{k=1}^Kw_kf_k(y,x)
+\end{align}
+$$
+若以$w$表示权值向量， 即
+$$
+w=(w_1,w_2,\dots,w_K)^T
+$$
+以$F$表示全局特征向量，即
+$$
+F(y,x)=(f_1(y,x),f_2(y,x),\dots,f_K(y,x))^T
+$$
+条件随机场可以表示成向量内积的形式
+$$
+\begin{align}
+P_w(y|x)&=\frac{\exp(w\cdot F(y,x))}{Z_w(x)}\\
+Z_w(x)&=\sum_y\exp\left(w\cdot F(y,x)\right)
+\end{align}
+$$
+在参数化形式的展示中，书中的公式已经做了删减。
+而实际上这里应该是展开的。
+$$
+\begin{align}
+f_k&=t_1(y_{i-1}=1,y_i=2,x,i),&i&=2,&w_k&=1,&k=1 \\
+f_k&=t_1(y_{i-1}=1,y_i=2,x,i),&i&=3,&w_k&=1,&k=1 \\
+f_k&=t_2(y_{i-1}=1,y_i=1,x,i),&i&=2,&w_k&=0.5,&k=2\\
+f_k&=t_2(y_{i-1}=1,y_i=1,x,i),&i&=3,&w_k&=0.5,&k=2\\
+\color{red}f_k&=t_3(y_{i-1}=2,y_i=1,x,i),&i&=2,&w_k&=1,&k=3\\
+\color{red}f_k&=t_3(y_{i-1}=2,y_i=1,x,i),&i&=3,&w_k&=1,&k=3\\
+\color{red}f_k&=t_4(y_{i-1}=2,y_i=1,x,i),&i&=2,&w_k&=1,&k=4\\
+\color{red}f_k&=t_4(y_{i-1}=2,y_i=1,x,i),&i&=3,&w_k&=1,&k=4\\
+f_k&=t_5(y_{i-1}=2,y_i=2,x,i),&i&=2,&w_k&=0.2,&k=5\\
+f_k&=t_5(y_{i-1}=2,y_i=2,x,i),&i&=3,&w_k&=0.2,&k=5\\
+\\
+f_k&=s_1(y_i=1,x,i),&i&=1,&w_k&=1,&k=6\\
+f_k&=s_1(y_i=1,x,i),&i&=2,&w_k&=1,&k=6\\
+f_k&=s_1(y_i=1,x,i),&i&=3,&w_k&=1,&k=6\\
+f_k&=s_2(y_i=1,x,i),&i&=1,&w_k&=0.5,&k=7\\
+f_k&=s_2(y_i=1,x,i),&i&=2,&w_k&=0.5,&k=7\\
+f_k&=s_2(y_i=1,x,i),&i&=3,&w_k&=0.5,&k=7\\
+f_k&=s_3(y_i=1,x,i),&i&=1,&w_k&=0.8,&k=8\\
+f_k&=s_3(y_i=1,x,i),&i&=2,&w_k&=0.8,&k=8\\
+f_k&=s_3(y_i=1,x,i),&i&=3,&w_k&=0.8,&k=8\\
+f_k&=s_4(y_i=2,x,i),&i&=1,&w_k&=0.5,&k=9\\
+f_k&=s_4(y_i=2,x,i),&i&=2,&w_k&=0.5,&k=9\\
+f_k&=s_4(y_i=2,x,i),&i&=3,&w_k&=0.5,&k=9
+\end{align}
+$$
+
+这里对于$w_k$的理解再体会下。
+
+
+
+#### 矩阵形式
+
+针对线性链条件随机场
+
+引入起点和终点状态标记$y_0=start,y_{n+1}=end$， 这时$P_w(y|x)$可以矩阵形式表示。
+
+对应观测序列的每个位置$i=1,2,\dots,n+1$，定义一个$m$阶矩阵（$m$是标记$y_i$取值的个数）
+$$
+\begin{align}
+M_i(x)&=\left[M_i(y_{i-1},y_i|x)\right]\\
+M_i(y_{i-1},y_i)&=\exp\left(W_i(y_{i-1},y_i|x)\right)\\
+W_i(y_{i-1},y_i|x)&=\sum_{k=1}^Kw_kf_k(y_{i-1},y_i|x)
+\end{align}
+$$
+把整个向量乘法按照**观测位置**拆成矩阵形式， 每个观测位置对应一个矩阵
+
+这个过程和$CNN$中的卷积实际上有点像，这里面卷积模板有两种$k\times 1$和$k\times 2$， 以1和2进行滑窗。
 
 ## 例子
+
 > 条件随机场完全由特征函数$t_k,s_l$和对应的权值$\lambda_k,\mu_l$确定
 接下来的三个例子
 - 例11.1
@@ -125,6 +251,26 @@ s_4&=s_4(y_i=2,x,i),&i&=3&\mu_4&=0.5\\
 \end{align}
 $$
 注意上面红色标记的$t_3,t_4$是可以合并的。
+
+```python
+# transition feature
+# i-1, i
+f_k[0] = np.sum([1 if tmp[0] == 1 and tmp[1] == 2 else 0 for tmp in list(zip(Y[:-1], Y[1:]))])
+f_k[1] = np.sum([1 if tmp[0] == 1 and tmp[1] == 1 else 0 for tmp in list(zip(Y[:-1], Y[1:]))])
+f_k[2] = np.sum([1 if tmp[0] == 2 and tmp[1] == 1 else 0 for tmp in list(zip(Y[:-1], Y[1:]))])
+f_k[3] = np.sum([1 if tmp[0] == 2 and tmp[1] == 1 else 0 for tmp in list(zip(Y[:-1], Y[1:]))])
+f_k[4] = np.sum([1 if tmp[0] == 2 and tmp[1] == 2 else 0 for tmp in list(zip(Y[:-1], Y[1:]))])
+# state feature
+# i
+f_k[5] = np.sum([1 if tmp == 1 else 0 for tmp in [Y[0]]])
+f_k[6] = np.sum([1 if tmp == 2 else 0 for tmp in Y[:2]])
+f_k[7] = np.sum([1 if tmp == 1 else 0 for tmp in Y[1:]])
+f_k[8] = np.sum([1 if tmp == 2 else 0 for tmp in [Y[2]]])
+
+# 生成全局特征向量
+proba = np.sum(w_k*f_k)
+# w的维度和f_k的维度匹配，一一对应
+```
 
 
 
