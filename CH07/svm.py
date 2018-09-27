@@ -10,13 +10,17 @@ import warnings
 
 
 class SVM(object):
-    def __init__(self):
+    def __init__(self,
+                 tol=10e-3,
+                 C=0.6,
+                 n_iters=10):
         self.alpha = None
-
-        pass
+        self.tol = tol
+        self.C = C
+        self.n_iters=n_iters
 
     def fit(self, X):
-        pass
+        self._do_smo(X)
 
     def predict(self, X):
         pass
@@ -24,6 +28,9 @@ class SVM(object):
     def predict_preba(self, X):
         pass
 
+    def _do_smo(self, X):
+        for n_iter in range(self.n_iters):
+            pass
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
