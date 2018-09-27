@@ -57,7 +57,30 @@ class TestSVM(unittest.TestCase):
 
     def test_e72(self):
         # data 2.1
-        pass
+        data = np.array([[3, 3],
+                         [4, 3],
+                         [1, 1]])
+        label = np.array([1, 1, -1])
+
+        def fun(a):
+            return 4 * (a[0]) ** 2 + 13 / 2 * (a[1]) ** 2 + 10 * a[0] * a[1] - 2 * a[0] - 2 * a[1]
+        # cons = ({'type': 'ineq', 'fun': lambda a: a[0]},
+        #         {'type': 'ineq', 'fun': lambda a: a[1]})
+        bnds = ((0, None), (0, None))
+        res = optimize.minimize(fun, np.ones(2), method='SLSQP', bounds=bnds)
+
+        alpha = res["x"]
+        alpha = np.append(alpha, alpha[0] + alpha[1])
+        w = np.sum((alpha * label).reshape(-1, 1) * data, axis=0)
+        j = np.argmax(alpha)
+        b = label[j] - np.sum(alpha * label * np.dot(data, data[j, :]), axis=0)
+        #  0和2都OK，因为都为0.5 > 0
+        # b = label[0] - np.sum(alpha*label*np.dot(data,data[0,:]),axis=0)
+        # b = label[2] - np.sum(alpha*label*np.dot(data,data[2,:]),axis=0)
+        self.assertListEqual(w.round(2).tolist(), [0.5, 0.5])
+        self.assertEqual(b.round(2).tolist(), -2)
+        logger.info("\nw is %s \n" % str(w.round(2)))
+        logger.info("\nb is %s \n" % str(b.round(2)))
 
     def test_e73(self):
         logger.info("This ex is for introduce H and phi have not only one expression.")
