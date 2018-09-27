@@ -60,6 +60,15 @@ class TestSVM(unittest.TestCase):
         pass
 
     def test_e73(self):
+        logger.info("This ex is for introduce H and phi have not only one expression.")
+        pass
+
+    def test_e71_(self):
+        # use this solver project
+        pass
+
+    def test_e72_(self):
+        # use this solver project
         pass
 
 

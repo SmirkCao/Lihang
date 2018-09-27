@@ -12,6 +12,7 @@ import warnings
 class SVM(object):
     def __init__(self):
         self.alpha = None
+
         pass
 
     def fit(self, X):
