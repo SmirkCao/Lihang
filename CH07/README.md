@@ -34,6 +34,8 @@
 - 支持向量机学习策略是间隔最大化，可形式化为一个求解凸二次规划的问题，也等价于正则化的合页损失函数的最小化问题。
 - 判别模型
 
+---
+
 这一章介绍了几个算法
 
 1. 算法7.1 最大间隔法，针对线性可分支持向量机，直接求$w^*,b^*$
@@ -43,6 +45,8 @@
 1. 算法7.5 序列最小最优化
 
 注意前四个算法里面，都没有写该怎么去求解$\alpha$，最后一节**序列最小最优化**讨论了具体实现。也就是算法7.5给出了求解$\hat\alpha$的方法。
+
+另外，注意对比算法7.3和算法7.4，关注输出，关注$b^*$.
 
 
 
@@ -122,7 +126,14 @@ $$
 可以用如下程序实现
 
 ```python
-
+# data 2.1
+# x_1 = (3, 3), x_2 = (4, 3), x_3 = (1, 1)
+# ref: [example 16.3](http://www.bioinfo.org.cn/~wangchao/maa/Numerical_Optimization.pdf)
+fun = lambda x: ((x[0]) ** 2 + (x[1]) ** 2)/2
+cons = ({'type': 'ineq', 'fun': lambda x: 3 * x[0] + 3 * x[1] + x[2] - 1},
+        {'type': 'ineq', 'fun': lambda x: 4 * x[0] + 3 * x[1] + x[2] - 1},
+        {'type': 'ineq', 'fun': lambda x: -x[0] - x[1] - x[2] - 1})
+res = optimize.minimize(fun, np.ones(3), method='SLSQP', constraints=cons)
 ```
 
 ### 对偶算法
@@ -162,19 +173,68 @@ $$
 
 对于任意线性可分的两组点，他们在分类超平面上的投影都是线性不可分的。
 
-$\alpha$不为零的点对应的为支持向量。
+$\alpha$不为零的点对应的为支持向量，通过支持向量可以求得$b$值
+
+核心公式两个
+$$
+\begin{align}
+w^*&=\sum_{i=1}^{N}\alpha_i^*y_ix_i\\
+b^*&=\color{red}y_j\color{black}-\sum_{i=1}^{N}\alpha_i^*y_i(x_i\cdot \color{red}x_j\color{black})
+\end{align}
+$$
+这里面比较重要的是$b^*$的公式的理解，通过$\arg\max \alpha^*$实现，因为支持向量共线，所以通过任意支持向量求解都可以。
 
 介绍学习的对偶算法之后，引入了例7.2解决之前同样的问题，这部分代码整理下
 
-
-
 ```python
+# data 2.1
+data = np.array([[3, 3],
+                 [4, 3],
+                 [1, 1]])
+label = np.array([1, 1, -1])
 
+def fun(a):
+    return 4 * (a[0]) ** 2 + 13 / 2 * (a[1]) ** 2 + 10 * a[0] * a[1] - 2 * a[0] - 2 * a[1]
+# cons = ({'type': 'ineq', 'fun': lambda a: a[0]},
+#         {'type': 'ineq', 'fun': lambda a: a[1]})
+bnds = ((0, None), (0, None))
+res = optimize.minimize(fun, np.ones(2), method='SLSQP', bounds=bnds)
+
+alpha = res["x"]
+alpha = np.append(alpha, alpha[0] + alpha[1])
+w = np.sum((alpha * label).reshape(-1, 1) * data, axis=0)
+j = np.argmax(alpha)
+b = label[j] - np.sum(alpha * label * np.dot(data, data[j, :]), axis=0)
+#  0和2都OK，因为都为0.5 > 0
+# b = label[0] - np.sum(alpha*label*np.dot(data,data[0,:]),axis=0)
+# b = label[2] - np.sum(alpha*label*np.dot(data,data[2,:]),axis=0)
 ```
 
-
+至此，两个例子求解的都是线性可分支持向量机。
 
 ## [2] 线性支持向量机
+
+### 问题描述
+
+$$
+\begin{align}
+\min_{w,b,\xi} &\frac{1}{2}\left\|w\right\|^2+C\sum_{i=1}^N\xi_i\\
+s.t. \ \ \ &y_i(w\cdot x_i+b)\geqslant1-\xi_i, i=1,2,\dots,N\\
+&\xi_i\geqslant0,i=1,2,\dots,N
+\end{align}
+$$
+
+### 对偶问题描述
+
+原始问题里面有两部分约束，涉及到两个拉格朗日乘子向量
+$$
+\begin{align}
+\min_\alpha\ &\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_{i=1}^N\alpha_i\\
+s.t.\ \ \ &\sum_{i=1}^N\alpha_iy_i=0\\
+&0\leqslant \alpha_i \leqslant C,i=1,2,\dots,N
+\end{align}
+$$
+通过求解对偶问题， 得到$\alpha$，然后求解$w,b$的过程和之前一样
 
 ### 软间隔最大化
 
@@ -191,13 +251,51 @@ $\alpha$不为零的点对应的为支持向量。
 
 ### 合页损失
 
-另一种解释是最小化目标函数
+另一种解释最优化
 
-> $\sum\limits_{i=1}^N\left[1-y_i(w\cdot x+b)\right]_++\lambda\left\|w\right\|^2$
->
->
+$$\min\limits_{w,b} \sum\limits_{i=1}^N\left[1-y_i(w\cdot x+b)\right]_++\lambda\left\|w\right\|^2$$
+
+下面分析最小化的目标函数：
+
+- 目标函数第一项是经验损失或经验风险，函数$L(y(w\cdot x+b))=[1-y(w\cdot x+b)]_+$称为合页损失，可以表示成$L = \max(1-y(w\cdot x+b), 0)$
+- 目标函数第二项是系数为$\lambda$的$w$的$L_2$范数，是正则化项
+
+TODO: 损失函数对比
+
+
 
 ## [3]非线性支持向量机
+
+### 问题描述
+
+和线性支持向量机的问题描述一样
+$$
+\begin{aligned}
+\min_\alpha\ &\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_{i=1}^N\alpha_i\\
+s.t.\ \ \ &\sum_{i=1}^N\alpha_iy_i=0\\
+&0\leqslant \alpha_i \leqslant C,i=1,2,\dots,N
+\end{aligned}
+$$
+学习算法不一样的在于
+$$
+b^*=y_j-\sum_{i=1}^N\alpha_i^*y_iK(x_i\cdot x_j)
+$$
+决策函数
+$$
+f(x)=sign\left(\sum_{i=1}^N\alpha_i^*y_iK(x\cdot x_i)+b^*\right)
+$$
+
+
+核技巧的想法是在学习和预测中只定义核函数$K(x,z)$，而不是显式的定义映射函数$\phi$
+
+通常，直接计算$K(x,z)$比较容易， 而通过$\phi(x)$和$\phi(z)$计算$K(x,z)$并不容易。
+$$
+\begin{align}
+W(\alpha)=\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i,x_j)-\sum_{i=1}^N\alpha_i\\
+f(x)=sign\left(\sum_{i=1}^{N_s}\alpha_i^*y_i\phi(x_i)\cdot \phi(x)+b^*\right)=sign\left(\sum_{i=1}^{N_s}\alpha_i^*y_iK(x_i,x)+b^*\right) 
+\end{align}
+$$
+学习是隐式地在特征空间进行的，不需要显式的定义特征空间和映射函数。这样的技巧称为核技巧。
 
 ### 核函数
 
@@ -211,16 +309,48 @@ $\alpha$不为零的点对应的为支持向量。
 
 支持向量机实现问题
 
-在SMO求解的问题描述中， 已经是包含核函数的情况了
-
 ### KKT 条件
+
+KKT条件是该最优化问题的充分必要条件。
 
 ### SMO算法
 
 1. 求解两个变量二次规划的解析方法
 1. 选择变量的启发式方法
 
+$$
+\begin{aligned}
+\min_\alpha\ &\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_{i=1}^N\alpha_i\\
+s.t.\ \ \ &\sum_{i=1}^N\alpha_iy_i=0\\
+&0\leqslant \alpha_i \leqslant C,i=1,2,\dots,N
+\end{aligned}
+$$
 
+#### 第一步
+
+两变量二次规划求解
+
+选择两个变量$\alpha_1,\alpha_2$
+$$
+\begin{align}
+\min_{\alpha_1,\alpha_2} W(\alpha_1,\alpha_2)=&\frac{1}{2}K_{11}\alpha_1^2+\frac{1}{2}K_{22}\alpha_2^2+y_1y_2K_{12}\alpha_1\alpha_2\nonumber\\
+&-(\alpha_1+\alpha_2)+y_1\alpha_1\sum_{i=3}^Ny_i\alpha_iK_{il}+y_2\alpha_2\sum_{i=3}^Ny_i\alpha_iK_{i2}\\
+s.t. \ \ \ &\alpha_1y_1+\alpha_2y_2=-\sum_{i=3}^Ny_i\alpha_i=\varsigma\nonumber\\
+&0\leqslant\alpha_i\leqslant C, i=1,2\nonumber
+\end{align}
+$$
+
+#### 第二步
+
+变量的选择方法
+
+1. 第一个变量
+1. 第二个变量
+1. 计算阈值$b$和差值$E_i$
+
+TODO:
+
+其实这里支持向量机的几个核心的思想是不难理解的，这里涉及到的主要是求解二次规划问题么？
 
 ## 扩展
 
