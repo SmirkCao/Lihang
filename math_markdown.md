@@ -47,7 +47,7 @@
 | - | - | - | - | - | - |
 | $\sum$ | \sum | $\prod$ | \prod | $x\cdot{y}$ | x\cdot{y} |
 | $\bigcup$ | \bigcup | $\bigoplus$ | \bigoplus | $x\times {y}$ | x\times {y} |
-| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| | |
+| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | \left\|w\right\| |
 | $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
 | $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup |  |  |
@@ -80,13 +80,13 @@
 
 | 示例 | 代码 | 备注 |
 | - | - | - |
-| $\rm {ABCdefXYZ}$  | \rm {ABCdefXYZ}  | 罗马体 |
-| $\it{ABCdefXYZ}$   | \it{ABCdefXYZ}   | 意大利体 |
-| $\bf{ABCdefXYZ}$   | \bf{ABCdefXYZ}   | 黑体 |
-| $\cal {ABCdefXYZ}$ | \cal {ABCdefXYZ} | 花体 |
-| $\sf{ABCdefXYZ}$   | \sf{ABCdefXYZ}   | 等线体 |
-| $\mit{ABCdefXYZ}$  | \mit{ABCdefXYZ}  | 数字斜体 |
-| $\tt{ABCdefXYZ}$   | \tt{ABCdefXYZ}   | 打印机字体 |
+| $\rm {ABCdefXYZ123}$ | \rm {ABCdefXYZ123} | 罗马体 |
+| $\it{ABCdefXYZ123}$ | \it{ABCdefXYZ123} | 意大利体 |
+| $\bf{ABCdefXYZ123}$ | \bf{ABCdefXYZ123} | 黑体 |
+| $\cal {ABCdefXYZ123}$ | \cal {ABCdefXYZ123} | 花体 |
+| $\sf{ABCdefXYZ123}$ | \sf{ABCdefXYZ123} | 等线体 |
+| $\mit{ABCdefXYZ123}$ | \mit{ABCdefXYZ123} | 数字斜体 |
+| $\tt{ABCdefXYZ123}$ | \tt{ABCdefXYZ123} | 打印机字体 |
 
 ### 表9: 分段函数与公式对齐
 
