@@ -13,13 +13,15 @@ class SVM(object):
     def __init__(self,
                  tol=10e-3,
                  C=0.6,
-                 n_iters=10):
+                 n_iters=10,
+                 verbose=True):
         self.alpha = None
         self.b = 0
         self.tol = tol
         self.C = C
         self.n_iters = n_iters
         self.m = 0
+        self.verbose = verbose
 
     def fit(self, X, y):
         self.m = len(X)
@@ -52,19 +54,22 @@ class SVM(object):
                         L = max(0.0, self.alpha[j] + self.alpha[i] - self.C)
                         H = min(self.C, self.alpha[j] + self.alpha[i])
                     if L == H:
-                        print("L==H")
+                        if self.verbose:
+                            print("L==H")
                         continue
                     eta = self._do_eta(X, i, j)
                     # 简化处理
                     if eta >= 0:
-                        print("eta>=0")
+                        if self.verbose:
+                            print("eta>=0")
                         continue
                     # alpha[j]
                     self.alpha[j] -= y[j] * (ei - ej) / eta
                     self.alpha[j] = self._do_clipalpha(self.alpha[j], H, L)
 
                     if abs(self.alpha[j] - alphajold) < 0.00001:
-                        print("j not moving enough")
+                        if self.verbose:
+                            print("j not moving enough")
                         continue
                     # alpha[i]
                     self.alpha[i] += y[j] * y[i] * (alphajold - self.alpha[j])
@@ -82,12 +87,17 @@ class SVM(object):
                     else:
                         self.b = (b1 + b2) / 2
                     alpha_pairs_changed += 1
-                    print("iter: %d i: %d, paris changed %d" % (n_iter, i, alpha_pairs_changed))
-                if alpha_pairs_changed == 0:
-                    n_iter += 1
-                else:
-                    n_iter = 0
+                    if self.verbose:
+                        print("iter: %d i: %d, paris changed %d" % (n_iter, i, alpha_pairs_changed))
+            if alpha_pairs_changed == 0:
+                n_iter += 1
+            else:
+                n_iter = 0
+            if self.verbose:
                 print("iteration number: %d" % n_iter)
+        return self.alpha, self.b
+
+    def _do_smop(self):
         return self.alpha, self.b
 
     def _do_gxi(self, X, y, i):

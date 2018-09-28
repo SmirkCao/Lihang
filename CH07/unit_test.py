@@ -8,6 +8,7 @@ from scipy import optimize
 from svm import *
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import sympy
 import argparse
 import logging
@@ -15,7 +16,7 @@ import unittest
 
 
 class TestSVM(unittest.TestCase):
-    skip_flag = True
+    skip_flag = False
 
     @unittest.skipIf(skip_flag, "debug")
     def test_e71(self):
@@ -121,11 +122,13 @@ class TestSVM(unittest.TestCase):
     def test_mlia(self):
         # use dataset from mlia
         # load data
-        # X = 0
-        # clf = SVM()
-        # clf.fit(X)
-        # print(clf.alpha)
-        pass
+        df = pd.read_table("Input/testSet.txt", header=None)
+        X = df[[0, 1]].values
+        y = df[2].values
+        clf = SVM(n_iters=40, verbose=False)
+        clf.fit(X, y)
+        logger.info("test_mlia: alpha is %s b is %s" % (str(clf.alpha[clf.alpha > 0.001]), str(clf.b)))
+        logger.info("test_mlia: support vector %s "% str(X[clf.alpha > 0.001, :]))
 
 
 if __name__ == '__main__':
