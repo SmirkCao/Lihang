@@ -236,6 +236,8 @@ s.t.\ \ \ &\sum_{i=1}^N\alpha_iy_i=0\\
 $$
 通过求解对偶问题， 得到$\alpha$，然后求解$w,b$的过程和之前一样
 
+注意， 书后总结部分，有这样一句描述：**线性支持向量机的解$w^*$唯一但$b^*$不一定唯一**
+
 ### 软间隔最大化
 
 >对于线性支持向量机学习来说
@@ -268,21 +270,21 @@ TODO: 损失函数对比
 
 ### 问题描述
 
-和线性支持向量机的问题描述一样
+~~和线性支持向量机的问题描述一样~~，注意，这里是有差异的，将向量内积替换成了核函数，而后续SMO算法求解的问题是该问题。
 $$
-\begin{aligned}
-\min_\alpha\ &\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_{i=1}^N\alpha_i\\
+\begin{align}
+\min_\alpha\ &\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i,x_j)-\sum_{i=1}^N\alpha_i\\
 s.t.\ \ \ &\sum_{i=1}^N\alpha_iy_i=0\\
 &0\leqslant \alpha_i \leqslant C,i=1,2,\dots,N
-\end{aligned}
+\end{align}
 $$
 学习算法不一样的在于
 $$
-b^*=y_j-\sum_{i=1}^N\alpha_i^*y_iK(x_i\cdot x_j)
+b^*=y_j-\sum_{i=1}^N\alpha_i^*y_iK(x_i,x_j)
 $$
 决策函数
 $$
-f(x)=sign\left(\sum_{i=1}^N\alpha_i^*y_iK(x\cdot x_i)+b^*\right)
+f(x)=sign\left(\sum_{i=1}^N\alpha_i^*y_iK(x,x_i)+b^*\right)
 $$
 
 
@@ -307,13 +309,31 @@ $$
 
 ## 学习算法：序列最小最优化
 
-支持向量机实现问题
+支持向量机的学习问题可以形式化为求解凸二次规划问题，这部分主要参考文献是文献5[^1]
+
+### 问题描述
+
+$$
+\begin{aligned}
+\min_\alpha\ &\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i,x_j)-\sum_{i=1}^N\alpha_i\\
+s.t.\ \ \ &\sum_{i=1}^N\alpha_iy_i=0\\
+&0\leqslant \alpha_i \leqslant C,i=1,2,\dots,N
+\end{aligned}
+$$
+
+这个问题中，变量是$\alpha$，一个变量$\alpha_i$对应一个样本点$(x_i,y_i)$，变量总数等于$N$
+
+
 
 ### KKT 条件
 
 KKT条件是该最优化问题的充分必要条件。
 
+
+
 ### SMO算法
+
+整个SMO算法包括两~~步骤~~**部分**：
 
 1. 求解两个变量二次规划的解析方法
 1. 选择变量的启发式方法
@@ -326,27 +346,80 @@ s.t.\ \ \ &\sum_{i=1}^N\alpha_iy_i=0\\
 \end{aligned}
 $$
 
-#### 第一步
+注意，这里是**两个部分**，而不是先后的两个步骤。
+
+#### Part I
 
 两变量二次规划求解
 
 选择两个变量$\alpha_1,\alpha_2$
+
+由等式约束可以得到
+
+$\alpha_1=-y_1\sum\limits_{i=2}^N\alpha_iy_i$
+
+所以这个问题实质上是单变量优化问题。
 $$
 \begin{align}
 \min_{\alpha_1,\alpha_2} W(\alpha_1,\alpha_2)=&\frac{1}{2}K_{11}\alpha_1^2+\frac{1}{2}K_{22}\alpha_2^2+y_1y_2K_{12}\alpha_1\alpha_2\nonumber\\
 &-(\alpha_1+\alpha_2)+y_1\alpha_1\sum_{i=3}^Ny_i\alpha_iK_{il}+y_2\alpha_2\sum_{i=3}^Ny_i\alpha_iK_{i2}\\
-s.t. \ \ \ &\alpha_1y_1+\alpha_2y_2=-\sum_{i=3}^Ny_i\alpha_i=\varsigma\nonumber\\
-&0\leqslant\alpha_i\leqslant C, i=1,2\nonumber
+s.t. \ \ \ &\alpha_1y_1+\alpha_2y_2=-\sum_{i=3}^Ny_i\alpha_i=\varsigma\\
+&0\leqslant\alpha_i\leqslant C, i=1,2
 \end{align}
 $$
 
-#### 第二步
+上面存在两个约束：
+
+1. **线性**等式约束
+1. 边界约束
+
+这里有个$\color{red}配图$，其中这样一段描述**等式约束使得$(\alpha_1,\alpha_2)$在平行于盒子$[0,C]\times [0,C]$的对角线的直线上**
+
+这句怎么理解？
+
+$y_i\in \mathcal Y=\{+1,-1\}$所以又等式约束导出的关系式中两个变量的系数相等，所以平行于对角线。
+
+要时刻记得，支持向量机是个二类分类模型。后面有研究者对这个问题做多分类扩展，应该不是简单的OvO或者OvR吧，不然能专门发文章写一下？
+
+书中**剪辑**的概念对应了文献[^1]中的**clipped**，剪辑的操作对应的是clipping，也叫truncation或者shortening。
+
+#### Part II
 
 变量的选择方法
 
-1. 第一个变量
-1. 第二个变量
+1. 第一个变量$\alpha_1$
+   外层循环
+   违反KKT条件**最严重**的样本点
+1. 第二个变量$\alpha_2$
+   内层循环
+   希望能使$\alpha_2$有足够大的变化
 1. 计算阈值$b$和差值$E_i$
+
+### 算法7.5
+
+> 输入：训练数据集$T={(x_1,y_1),(x_2,y_2),\dots, (x_N,y_N)}$，其中$x_i\in\mathcal X=\bf R^n, y_i\in\mathcal Y=\{-1,+1\}, i=1,2,\dots,N$,精度$\epsilon$
+>
+> 输出：近似解$\hat\alpha$
+>
+> 1. 取初值$\alpha_0=0$，令$k=0$
+>
+> 1. **选取**优化变量$\alpha_1^{(k)},\alpha_2^{(k)}$，解析求解两个变量的最优化问题，求得最优解$\alpha_1^{(k+1)},\alpha_2^{(k+1)}$，更新$\alpha$为$\alpha^{k+1}$
+>
+> 1. 若在精度$\epsilon$范围内满足停机条件
+>    $$
+>    \sum_{i=1}^{N}\alpha_iy_i=0\\
+>    0\leqslant\alpha_i\leqslant C,i=1,2,\dots,N\\
+>    y_i\cdot g(x_i)=
+>    \begin{cases}
+>    \geqslant1,\{x_i|\alpha_i=0\}\\
+>    =1,\{x_i|0<\alpha_i<C\}\\
+>    \leqslant1,\{x_i|\alpha_i=C\}
+>    \end{cases}\\
+>    g(x_i)=\sum_{j=1}^{N}\alpha_jy_jK(x_j,x_i)+b
+>    $$
+>    则转4,否则，$k=k+1$转2
+>
+> 1. 取$\hat\alpha=\alpha^{(k+1)}$
 
 TODO:
 
@@ -356,7 +429,11 @@ TODO:
 
 ### 对比支持向量机和提升方法
 
+### 对比二次规划求解工具和SMO
+
 
 
 ## 参考
+
+1. [^1]: [Fast training of support vector machines using sequential minimal optimization](http://www.cs.utsa.edu/~bylander/cs6243/smo-book.pdf)
 
