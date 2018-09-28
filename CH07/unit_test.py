@@ -5,6 +5,7 @@
 # Date: 9/27/18
 # Author: 😏 <smirk dot cao at gmail dot com>
 from scipy import optimize
+from svm import *
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy
@@ -14,6 +15,9 @@ import unittest
 
 
 class TestSVM(unittest.TestCase):
+    skip_flag = True
+
+    @unittest.skipIf(skip_flag, "debug")
     def test_e71(self):
         # data 2.1
         # x_1 = (3, 3), x_2 = (4, 3), x_3 = (1, 1)
@@ -55,6 +59,7 @@ class TestSVM(unittest.TestCase):
         plt.ylabel("$x^{(2)}$")
         plt.show()
 
+    @unittest.skipIf(skip_flag, "debug")
     def test_e72(self):
         # data 2.1
         data = np.array([[3, 3],
@@ -82,16 +87,44 @@ class TestSVM(unittest.TestCase):
         logger.info("\nw is %s \n" % str(w.round(2)))
         logger.info("\nb is %s \n" % str(b.round(2)))
 
+    @unittest.skipIf(skip_flag, "debug")
     def test_e73(self):
         logger.info("This ex is for introduce H and phi have not only one expression.")
         pass
 
     def test_e71_(self):
         # use this solver project
-        pass
+        # data 2.1
+        data = np.array([[3, 3],
+                         [4, 3],
+                         [1, 1]])
+        label = np.array([1, 1, -1])
 
+        clf = SVM()
+        clf.fit(data, label)
+        print("test_e71_:", clf.alpha, clf.b)
+
+    @unittest.skipIf(skip_flag, "debug")
     def test_e72_(self):
         # use this solver project
+        # data 2.1
+        data = np.array([[3, 3],
+                         [4, 3],
+                         [1, 1]])
+        label = np.array([1, 1, -1])
+
+        clf = SVM()
+        clf.fit(data, label)
+        print(clf.alpha)
+
+    @unittest.skipIf(skip_flag, "debug")
+    def test_mlia(self):
+        # use dataset from mlia
+        # load data
+        # X = 0
+        # clf = SVM()
+        # clf.fit(X)
+        # print(clf.alpha)
         pass
 
 
