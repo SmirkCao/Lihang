@@ -9,6 +9,7 @@
 from collections import namedtuple
 from operator import itemgetter
 from pprint import pformat
+import numpy as np
 
 
 class Node(namedtuple('Node', 'location left_child right_child')):
@@ -17,13 +18,20 @@ class Node(namedtuple('Node', 'location left_child right_child')):
 
 
 class KNN(object):
-    def __init__(self, k=3, p=2):
+    def __init__(self,
+                 k=3,
+                 p=2):
+        """
+
+        :param k: knn
+        :param p:
+        """
         self.k = k
         self.p = p
         self.kdtree = None
 
     def lp_distance(self):
-        print(self.k)
+
         return 1
 
     @staticmethod
@@ -49,14 +57,14 @@ class KNN(object):
     def _search(self, point):
         self.kdtree[0]
 
-    def fit(self, x_):
-        self.kdtree = KNN._fit(x_)
+    def fit(self, X):
+        self.kdtree = KNN._fit(X)
         return self.kdtree
 
-    def predict(self, x_):
+    def predict(self, X):
         return[[2]]
 
-    def predict_proba(self, x_):
+    def predict_proba(self, X):
         pass
 
 
