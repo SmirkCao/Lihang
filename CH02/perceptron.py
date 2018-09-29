@@ -1,33 +1,33 @@
 # -*-coding:utf-8-*-
-# Project: CH2  
+# Project: CH02
 # Filename: perceptron
 # Author: 😏 <smirk dot cao at gmail dot com>
-import pandas as pd
 import numpy as np
 import random
-
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+import argparse
+import logging
 
 
 class Perceptron(object):
-
     def __init__(self,
                  max_iter=5000,
-                 eta=0.00001):
+                 eta=0.00001,
+                 verbose=True):
         self.eta_ = eta
         self.max_iter_ = max_iter
+        self.w = 0
+        self.verbose = verbose
 
-    def fit(self, x_, y_):
-        self.w = np.zeros(x_[0].shape[0] + 1)
+    def fit(self, X, y):
+        self.w = np.zeros(X.shape[1] + 1)
         correct_count = 0
         n_iter_ = 0
 
         while n_iter_ < self.max_iter_:
-            index = random.randint(0, y_.shape[0] - 1)
-            xx_ = np.hstack([x_[index], 1])
-            yy_ = 2 * y_[index] - 1
-            wx = sum((self.w*xx_).T)
+            index = random.randint(0, y.shape[0] - 1)
+            xx_ = np.hstack([X[index], 1])
+            yy_ = 2 * y[index] - 1
+            wx = np.dot(self.w, xx_)
 
             if wx * yy_ > 0:
                 correct_count += 1
@@ -35,31 +35,25 @@ class Perceptron(object):
                     break
                 continue
 
-            self.w += self.eta_*yy_*xx_
+            self.w += self.eta_ * yy_ * xx_
             n_iter_ += 1
+            if self.verbose:
+                print(n_iter_)
 
-    def predict(self, x_):
-        x_ = np.hstack([x_, np.ones(x_.shape[0]).reshape((-1, 1))])
-        rst = np.array([1 if rst else 0 for rst in sum((x_ * self.w).T) > 0])
+    def predict(self, X):
+        # for b
+        X = np.hstack([X, np.ones(X.shape[0]).reshape((-1, 1))])
+        # activation function for perceptron: sign
+        rst = np.array([1 if rst else -1 for rst in np.dot(X, self.w) > 0])
+        # np.sign(0) == 0
+        # rst = np.sign(np.dot(X, self.w))
         return rst
 
 
 if __name__ == '__main__':
-    print('Start read data')
-    raw_data = pd.read_csv('./data/train_binary.csv', header=0)
-    data = raw_data.values
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
 
-    X = data[0::, 1::]
-    y = data[::, 0]
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=2018)
-
-    print('Start training')
-    p = Perceptron()
-    p.fit(X_train, y_train)
-
-    print('Start predicting')
-    test_predict = p.predict(X_test)
-
-    score = accuracy_score(y_test, test_predict)
-    print("The accruacy socre is ", score)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-p", "--path", required=False, help="path to input data file")
+    args = vars(ap.parse_args())
