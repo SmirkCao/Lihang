@@ -80,13 +80,13 @@
 
 | 示例 | 代码 | 备注 |
 | - | - | - |
-| $\rm {ABCdefXYZ123}$ | \rm {ABCdefXYZ123} | 罗马体 |
-| $\it{ABCdefXYZ123}$ | \it{ABCdefXYZ123} | 意大利体 |
-| $\bf{ABCdefXYZ123}$ | \bf{ABCdefXYZ123} | 黑体 |
-| $\cal {ABCdefXYZ123}$ | \cal {ABCdefXYZ123} | 花体 |
+| $\rm {ABCdefxyzXYZ123}$ | \rm {ABCdefXYZ123} | 罗马体 |
+| $\it{ABCdefxyzXYZ123}$ | \it{ABCdefXYZ123} | 意大利体 |
+| $\bf{ABCdefxyzXYZ123}$ | \bf{ABCdefXYZ123} | 黑体 |
+| $\cal {ABCdefxyzXYZ123}$ | \cal {ABCdefXYZ123} | 花体 |
 | $\sf{ABCdefXYZ123}$ | \sf{ABCdefXYZ123} | 等线体 |
-| $\mit{ABCdefXYZ123}$ | \mit{ABCdefXYZ123} | 数字斜体 |
-| $\tt{ABCdefXYZ123}$ | \tt{ABCdefXYZ123} | 打印机字体 |
+| $\mit{ABCdefxyzXYZ123}$ | \mit{ABCdefXYZ123} | 数字斜体 |
+| $\tt{ABCdefxyzXYZ123}$ | \tt{ABCdefXYZ123} | 打印机字体 |
 
 ### 表9: 分段函数与公式对齐
 
