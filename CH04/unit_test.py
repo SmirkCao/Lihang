@@ -3,9 +3,11 @@
 # Filename: unit_test
 # Date: 8/16/18
 # Author: 😏 <smirk dot cao at gmail dot com>
-import unittest
+from nb import *
 import pandas as pd
-import nb
+import unittest
+import argparse
+import logging
 
 
 class TestnbMethods(unittest.TestCase):
@@ -14,7 +16,7 @@ class TestnbMethods(unittest.TestCase):
         data = pd.read_csv("./Input/data_4-1.txt", header=None, sep=",")
         x = data[data.columns[0:2]]
         y = data[data.columns[2]]
-        clf = nb.NB(1)
+        clf = NB(1)
         clf.fit(x, y)
         rst = clf.predict([2, "S"])
         self.assertEqual(rst, -1)
@@ -23,7 +25,7 @@ class TestnbMethods(unittest.TestCase):
         data = pd.read_csv("./Input/data_4-1.txt", header=None, sep=",")
         x = data[data.columns[0:2]].values
         y = data[data.columns[2]].values
-        clf = nb.NB(1)
+        clf = NB(1)
         clf.fit(x, y)
         rst = clf.predict([2, "S"])
         self.assertEqual(rst, -1)

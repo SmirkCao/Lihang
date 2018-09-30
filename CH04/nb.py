@@ -5,6 +5,8 @@
 # Author: 😏 <smirk dot cao at gmail dot com>
 import numpy as np
 import pandas as pd
+import argparse
+import logging
 
 
 class NB(object):
@@ -45,4 +47,9 @@ class NB(object):
 
 
 if __name__ == '__main__':
-    pass
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-p", "--path", required=False, help="path to input data file")
+    args = vars(ap.parse_args())
