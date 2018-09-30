@@ -7,8 +7,8 @@
 # refs: https://en.wikipedia.org/wiki/K-d_tree
 
 from collections import namedtuple
-from operator import itemgetter
 from pprint import pformat
+import numpy as np
 
 
 class Node(namedtuple('Node', 'location left_child right_child')):
@@ -17,46 +17,71 @@ class Node(namedtuple('Node', 'location left_child right_child')):
 
 
 class KNN(object):
-    def __init__(self, k=3, p=2):
+
+    def __init__(self,
+                 k=1,
+                 p=2):
+        """
+
+        :param k: knn
+        :param p:
+        """
         self.k = k
         self.p = p
         self.kdtree = None
 
-    def lp_distance(self):
-        print(self.k)
-        return 1
-
     @staticmethod
-    def _fit(point_list, depth=0):
+    def _fit(X, depth=0):
         try:
-            k = len(point_list[0])  # assumes all points have the same dimension
-        except IndexError as e:  # if not point_list:
+            k = X.shape[1]
+        except IndexError as e:
             return None
-        # Select axis based on depth so that axis cycles through all valid values
+        # todo: 这里可以展开，通过方差选择
         axis = depth % k
+        X = X[X[:, axis].argsort()]
+        median = X.shape[0] // 2
 
-        # Sort point list and choose median as pivot element
-        point_list.sort(key=itemgetter(axis))
-        median = len(point_list) // 2  # choose median
+        try:
+            X[median]
+        except IndexError:
+            return None
 
-        # Create node and construct subtrees
         return Node(
-            location=point_list[median],
-            left_child=KNN._fit(point_list[:median], depth + 1),
-            right_child=KNN._fit(point_list[median + 1:], depth + 1)
+            location=X[median],
+            left_child=KNN._fit(X[:median], depth + 1),
+            right_child=KNN._fit(X[median + 1:], depth + 1)
         )
 
-    def _search(self, point):
-        self.kdtree[0]
+    def _distance(self, x, y):
+        return np.linalg.norm(x-y, ord=self.p)
 
-    def fit(self, x_):
-        self.kdtree = KNN._fit(x_)
+    def _search(self, point, tree=None, depth=0, best=None):
+        if tree is None:
+            return best
+
+        k = point.shape[0]
+        # update best
+        if best is None or self._distance(point, tree.location) < self._distance(best, tree.location):
+            next_best = tree.location
+        else:
+            next_best = best
+
+        # update branch
+        if point[depth%k] < tree.location[depth%k]:
+            next_branch = tree.left_child
+        else:
+            next_branch = tree.right_child
+        return self._search(point, tree=next_branch, depth=depth+1, best=next_best)
+
+    def fit(self, X):
+        self.kdtree = KNN._fit(X)
         return self.kdtree
 
-    def predict(self, x_):
-        return[[2]]
+    def predict(self, X):
+        rst = self._search(X, self.kdtree)
+        return rst
 
-    def predict_proba(self, x_):
+    def predict_proba(self, X):
         pass
 
 
