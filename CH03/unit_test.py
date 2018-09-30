@@ -25,17 +25,12 @@ class TestStringMethods(unittest.TestCase):
         # print(np.round(rst[:, 2], 2).tolist())
 
     def test_e32(self):
-        x = [[2, 3], [5, 4], [9, 6], [4, 7], [8, 1], [7, 2]]
-        y = [1, 2, 3, 4, 5, 6]
-        clf_knn = KNN(k=1, p=2)
-        clf_knn.fit(x)
-        self.assertEqual(clf_knn.kdtree, ([7, 2],
-                                          ([5, 4],
-                                           ([2, 3], None, None),
-                                           ([4, 7], None, None)),
-                                          ([9, 6],
-                                           ([8, 1], None, None),
-                                           None)))
+        X = np.loadtxt("Input/data_3-2.txt")
+        clf = KNN()
+        clf.fit(X)
+        print(clf.kdtree)
+        # self.assertEqual(clf.kdtree, ([7, 2], ([5, 4], ([2, 3], None, None), ([4, 7], None, None)),
+        #                                       ([9, 6], ([8, 1], None, None), None)))
 
     def test_e33(self):
         x = [1, 2, 3, 4, 5, 6, 7]

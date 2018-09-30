@@ -19,7 +19,7 @@ class Node(namedtuple('Node', 'location left_child right_child')):
 
 class KNN(object):
     def __init__(self,
-                 k=3,
+                 k=1,
                  p=2):
         """
 
@@ -30,28 +30,25 @@ class KNN(object):
         self.p = p
         self.kdtree = None
 
-    def lp_distance(self):
-
-        return 1
-
     @staticmethod
-    def _fit(point_list, depth=0):
+    def _fit(X, depth=0):
         try:
-            k = len(point_list[0])  # assumes all points have the same dimension
-        except IndexError as e:  # if not point_list:
+            k = X.shape[1]
+        except IndexError as e:
             return None
-        # Select axis based on depth so that axis cycles through all valid values
+
         axis = depth % k
+        X = X[X[:, axis].argsort()]
+        median = X.shape[0] // 2  # choose median
 
-        # Sort point list and choose median as pivot element
-        point_list.sort(key=itemgetter(axis))
-        median = len(point_list) // 2  # choose median
-
-        # Create node and construct subtrees
+        try:
+            X[median]
+        except IndexError:
+            return None
         return Node(
-            location=point_list[median],
-            left_child=KNN._fit(point_list[:median], depth + 1),
-            right_child=KNN._fit(point_list[median + 1:], depth + 1)
+            location=X[median],
+            left_child=KNN._fit(X[:median], depth + 1),
+            right_child=KNN._fit(X[median + 1:], depth + 1)
         )
 
     def _search(self, point):
