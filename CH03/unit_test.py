@@ -28,14 +28,24 @@ class TestStringMethods(unittest.TestCase):
         X = np.loadtxt("Input/data_3-2.txt")
         clf = KNN()
         clf.fit(X)
-        print(clf.kdtree)
-        # self.assertEqual(clf.kdtree, ([7, 2], ([5, 4], ([2, 3], None, None), ([4, 7], None, None)),
-        #                                       ([9, 6], ([8, 1], None, None), None)))
+        logger.info(clf.kdtree)
 
     def test_e33(self):
-        x = [1, 2, 3, 4, 5, 6, 7]
-        y = [1, 2, 3, 4, 5, 6, 7]
+        pass
 
+    def test_q31(self):
+        pass
+
+    def test_q32(self):
+        X = np.loadtxt("Input/data_3-2.txt")
+        target = np.array([3, 4.5])
+        clf = KNN()
+        clf.fit(X)
+        rst = clf.predict(target)
+        self.assertListEqual([4, 7], rst.tolist())
+        logger.info(rst)
+
+    def test_q33(self):
         pass
 
 
