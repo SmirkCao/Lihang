@@ -11,7 +11,8 @@ import logging
 
 class NB(object):
 
-    def __init__(self, lambda_):
+    def __init__(self,
+                 lambda_):
         self.lambda_ = lambda_
         self.classes_ = None
         self.prior_ = None

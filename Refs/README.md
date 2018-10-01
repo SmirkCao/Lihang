@@ -11,6 +11,14 @@
 1. Bishop, 2006 PRML 这本书火的不得了
 1. Brian, 1996 PRNN 这本书早发十年, 不火. 居然早发了十年, 只有英文版本, 没有中文翻译. 
 
+## CH04 朴素贝叶斯法
+
+1. [Mitchell TM, 2017](http://www.cs.cmu.edu/~tom/mlbook/NBayesLogReg.pdf)
+   这是机器学习第二版的手稿，这部分讲的内容很经典，推荐阅读。
+1. ESL
+   书中说的是关于朴素贝叶斯法的介绍，这本书中有描述，但是，暂时没找到。后面再详细看。
+1. 
+
 ## CH06 逻辑斯谛回归与最大熵模型
 
 1. [Berger, 1996](http://www.cs.cornell.edu/courses/cs5740/2016sp/resources/maxent.pdf)
