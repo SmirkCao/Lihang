@@ -6,27 +6,25 @@
 from nb import *
 import pandas as pd
 import unittest
-import argparse
-import logging
 
 
 class TestnbMethods(unittest.TestCase):
 
     def test_e41(self):
         data = pd.read_csv("./Input/data_4-1.txt", header=None, sep=",")
-        x = data[data.columns[0:2]]
+        X = data[data.columns[0:2]]
         y = data[data.columns[2]]
         clf = NB(1)
-        clf.fit(x, y)
+        clf.fit(X, y)
         rst = clf.predict([2, "S"])
         self.assertEqual(rst, -1)
 
-    def _test_e42(self):
+    def test_e42(self):
         data = pd.read_csv("./Input/data_4-1.txt", header=None, sep=",")
-        x = data[data.columns[0:2]].values
-        y = data[data.columns[2]].values
+        X = data[data.columns[0:2]].values
+        y = data[data.columns[2]]
         clf = NB(1)
-        clf.fit(x, y)
+        clf.fit(X, y)
         rst = clf.predict([2, "S"])
         self.assertEqual(rst, -1)
 

@@ -19,28 +19,28 @@ class NB(object):
         self.class_prior_ = None
         self.class_count_ = None
 
-    def fit(self, x_, y_):
-        self.classes_ = list(set(y_))
+    def fit(self, X, y):
+        self.classes_ = np.unique(y)
         # to df
-        x_ = pd.DataFrame(x_)
-        y_ = pd.DataFrame(y_)
+        X = pd.DataFrame(X)
+        y = pd.DataFrame(y)
 
-        self.class_count_ = y_[y_.columns[0]].value_counts()
-        self.class_prior_ = self.class_count_/y_.shape[0]
+        self.class_count_ = y[y.columns[0]].value_counts()
+        self.class_prior_ = self.class_count_/y.shape[0]
         # prior
         self.prior_ = dict()
-        for idx in x_.columns:
+        for idx in X.columns:
             for j in self.classes_:
-                p_x_y = x_[(y_ == j).values][idx].value_counts()
+                p_x_y = X[(y == j).values][idx].value_counts()
                 for i in p_x_y.index:
                     self.prior_[(idx, i, j)] = p_x_y[i]/self.class_count_[j]
 
-    def predict(self, x_):
+    def predict(self, X):
         rst = []
         for class_ in self.classes_:
             py = self.class_prior_[class_]
             pxy = 1
-            for idx, x in enumerate(x_):
+            for idx, x in enumerate(X):
                 pxy *= self.prior_[(idx, x, class_)]
 
             rst.append(py*pxy)
