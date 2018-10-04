@@ -35,6 +35,14 @@
 
 另外关于公式中常系数的问题, 如果用迭代求解的方式, 有时对公式做一定的简化, 可能会改善收敛速度. 个中细节可以实践中慢慢体会.
 
+### 关于篇幅
+
+![各章节篇幅占比 ](assets/各章节篇幅占比 .png)
+
+这里插入个图表，列举了各个章节所占篇幅，其中SVM是大部头，占了很大的篇幅，另外DT，HMM，CRF也占了相对较大的篇幅。
+
+章节之间彼此又有联系，比如NB和LR，DT和AdaBoost，Perceptron和SVM，HMM和CRF等等，如果有大章节遇到困难，可以回顾前面章节的内容，或查看具体章节的参考，一般都给出了更详细的参考文献。
+
 ## CH01 统计学习方法概论
 
 [Introduction](CH01/README.md)
@@ -59,30 +67,29 @@
 
 [NB](CH04/README.md)
 - 朴素贝叶斯法是基于贝叶斯定理与特征条件独立假设的分类方法.
-1. IID->输入输出的联合概率分布
-1. Bayes->后验概率最大的输出
+1. $IID\rightarrow$输入输出的联合概率分布
+1. $Bayes\rightarrow$后验概率最大的输出
 - x的某种组合在先验中没有出现的情况, 会出现概率为0的情况, 对应平滑处理方案
-$$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c_k)}+\lambda}{\sum_{i=1}^{N}{I(y_i=c_k)+S_j\lambda}}$$
-1. lambda = 0 对应极大似然估计
-1. lambda = 1 对应拉普拉斯平滑
-
+  $$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c_k)}+\lambda}{\sum_{i=1}^{N}{I(y_i=c_k)+S_j\lambda}}$$
+  - $\lambda = 0$ 对应极大似然估计
+  - $\lambda = 1$ 对应拉普拉斯平滑
 - 朴素贝叶斯法实际上学习到生成数据的机制, 所以属于生成模型.
 
 ## CH05 决策树
 
-[Decision Tree](CH05/README.md)
+[DT](CH05/README.md)
 
 - 决策树是一种基本的分类与回归方法
 ## CH06 逻辑斯谛回归与最大熵模型
 
-[Logistic Regression and Maxent](CH06/README.md)
+[LR](CH06/README.md)
 
 - 逻辑斯谛回归是统计学中的经典分类方法
 - 最大熵是概率模型学习的一个准则, 将其推广到分类问题得到最大熵模型
 
 关于最大熵的学习，推荐阅读该章节的参考文献1，[Berger, 1996](Refs/README.md), 有益于书中例子的理解以及最大熵原理的把握。
 
-那么, **为什么LR和Maxent要放在一章**
+那么, **为什么LR和Maxent要放在一章?**
 - 都属于对数线性模型
 
 - 都可用于二分类和多分类
@@ -99,7 +106,7 @@ $$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c
 
 ## CH07 支持向量机
 
-[Support Vector Machines, SVM](CH07/README.md)
+[SVM](CH07/README.md)
 
 - 支持向量机是一种二分类模型.
 - 基本模型是定义在特征空间上的间隔最大化的线性分类器, 间隔最大使他有别于[感知机](CH02/README.md)
@@ -156,17 +163,15 @@ $$P_\lambda(X^{(j)}=a_{jl}|Y=c_k)=\frac{\sum_{i=1}^{N}{I(x_i^{(j)}=a_{jl}, y_i=c
 graph LR
 	subgraph 算法
 	KNN
-	SLP
-	NB
-	DT
-	LR
-	ME
-	SVM
+	NB--G-D Pair---LR
+	LR---ME
+	SLP---SVM
+	DT--entropy-->LR
 	DT-->AdaBoost
 	EM-->HMM
 	EM-->GMM
 	GMM-->HMM
-	CRF
+	HMM--G-D Pair---CRF
 	end
 	subgraph 数据集
 	MNIST-->KNN
