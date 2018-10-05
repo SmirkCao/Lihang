@@ -11,15 +11,18 @@ import warnings
 
 
 class dt(object):
+
     def __init__(self,
                  tol=10e-3,
-                 criterion = 'ID3'):
+                 criterion='gain'):
         self.tree = dict()
         self.tol = tol
         self.criterion = criterion
+        self.criteria = {"gain": self._gain,
+                         "gain_ratio": self._gain_ratio}
 
     def fit(self, X, y):
-        self._build_tree(X, y)
+        return self._build_tree(X, y)
 
     def predict(self, X):
         pass
@@ -68,10 +71,10 @@ class dt(object):
             cols = X.columns.tolist()
             rst_col = cols[0]
             for col in cols:
-                gain = dt._gain(X[col], y)
-                if gain >= rst:
-                    rst, rst_col = gain, col
-            if gain < self.tol:
+                criterion = self.criteria[self.criterion](X[col], y)
+                if criterion >= rst:
+                    rst, rst_col = criterion, col
+            if criterion < self.tol:
                 return self.tree
 
             cols.remove(rst_col)

@@ -38,12 +38,21 @@ class TestDT(unittest.TestCase):
         cols = raw_data.columns
         X = raw_data[cols[1:-1]]
         y = raw_data[cols[-1]]
-
+        # default criterion: gain
         clf = dt()
         clf.fit(X, y)
-        logger.info(clf.tree)
+        logger.info("gain")
         rst = {'有自己的房子': {'否': {'有工作': {'否': {'否': None}, '是': {'是': None}}}, '是': {'是': None}}}
         self.assertEqual(rst, clf.tree)
+        logger.info(clf.tree)
+
+        # criterion: gain_ratio
+        clf = dt(criterion="gain_ratio")
+        clf.fit(X, y)
+        logger.info("gain_ratio")
+        rst = {'有自己的房子': {'否': {'有工作': {'否': {'否': None}, '是': {'是': None}}}, '是': {'是': None}}}
+        self.assertEqual(rst, clf.tree)
+        logger.info(clf.tree)
 
     def test_e54(self):
         pass
