@@ -19,13 +19,19 @@ class TestDT(unittest.TestCase):
 
     def test_e52(self):
         raw_data = pd.read_csv("./Input/data_5-1.txt")
-        hd = cal_ent(raw_data[raw_data.columns[-1]])
+        hd = dt._cal_entropy(raw_data[raw_data.columns[-1]])
 
-        for idx in raw_data.columns[:-1]:
-            hda = gain(raw_data[idx], raw_data[raw_data.columns[-1]])
+        rst = np.zeros(raw_data.columns.shape[0] - 1)
+        # note: _gain(ID, y) = ent(y)
+        for idx, col in enumerate(raw_data.columns[1:-1]):
+            hda = dt._gain(raw_data[col], raw_data[raw_data.columns[-1]])
             logger.info(hda)
-
+            rst[idx] = hda
+            # print(idx, col, hda)
+        # logger.info(rst)
+        # logger.info(np.argmax(rst))
         logger.info(hd)
+        self.assertEqual(np.argmax(rst), 2) # index = 2 -> A3
 
     def test_e53(self):
         pass

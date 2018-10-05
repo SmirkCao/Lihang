@@ -4,6 +4,7 @@
 # Filename: dt
 # Date: 10/5/18
 # Author: 😏 <smirk dot cao at gmail dot com>
+import numpy as np
 import argparse
 import logging
 import warnings
@@ -23,11 +24,23 @@ class dt(object):
 
     @staticmethod
     def _cal_entropy(y):
-        pass
+        if y.shape[0] == 0:
+            return 0
+        unique, cnts = np.unique(y, return_counts=True)
+        freq = cnts/y.shape[0]
+        return -np.sum(freq*np.log2(freq))
 
     @staticmethod
     def _cal_conditioanl_entropy(X, y):
-        pass
+        if X.shape[0] == 0 or y.shape[0] == 0:
+            return 0
+        rst = 0
+        items, cnts = np.unique(X, return_counts=True)
+        for item, cnt in zip(items, cnts):
+            ent = dt._cal_entropy(y[X == item])
+            freq = cnt/X.shape[0]
+            rst += freq*ent
+        return rst
 
     @staticmethod
     def _gain(X, y):
