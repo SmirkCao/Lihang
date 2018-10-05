@@ -34,7 +34,16 @@ class TestDT(unittest.TestCase):
         self.assertEqual(np.argmax(rst), 2) # index = 2 -> A3
 
     def test_e53(self):
-        pass
+        raw_data = pd.read_csv("./Input/data_5-1.txt")
+        cols = raw_data.columns
+        X = raw_data[cols[1:-1]]
+        y = raw_data[cols[-1]]
+
+        clf = dt()
+        clf.fit(X, y)
+        logger.info(clf.tree)
+        rst = {'有自己的房子': {'否': {'有工作': {'否': {'否': None}, '是': {'是': None}}}, '是': {'是': None}}}
+        self.assertEqual(rst, clf.tree)
 
     def test_e54(self):
         pass

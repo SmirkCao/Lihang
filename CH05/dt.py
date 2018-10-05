@@ -12,12 +12,14 @@ import warnings
 
 class dt(object):
     def __init__(self,
-                 tol=10e-3):
-        self.tree = None
+                 tol=10e-3,
+                 criterion = 'ID3'):
+        self.tree = dict()
         self.tol = tol
+        self.criterion = criterion
 
     def fit(self, X, y):
-        pass
+        self._build_tree(X, y)
 
     def predict(self, X):
         pass
@@ -53,6 +55,33 @@ class dt(object):
     @staticmethod
     def _cal_gini(X, y):
         pass
+
+    def _build_tree(self, X, y):
+        ck, cnts = np.unique(y, return_counts=True)
+        # same y
+        if ck.shape[0] == 1:
+            return {ck[0]: None}
+        elif X.shape[1] == 0:
+            return {ck[np.argmax(cnts)]: None}
+        else:
+            rst = 0
+            cols = X.columns.tolist()
+            rst_col = cols[0]
+            for col in cols:
+                gain = dt._gain(X[col], y)
+                if gain >= rst:
+                    rst, rst_col = gain, col
+            if gain < self.tol:
+                return self.tree
+
+            cols.remove(rst_col)
+            rst = dict()
+            X_sub = X[cols]
+            for x in np.unique(X[rst_col]):
+                mask = X[rst_col] == x
+                rst.update({x: self._build_tree(X_sub[mask], y[mask])})
+            self.tree = {rst_col: rst}
+        return self.tree
 
 
 if __name__ == '__main__':
