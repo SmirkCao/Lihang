@@ -89,7 +89,15 @@ class TestDT(unittest.TestCase):
         print("predict: ", rst, "label: ", y[:1])
 
     def test_pruning(self):
-        pass
+        raw_data = pd.read_csv("./Input/mdata_5-1.txt")
+        cols = raw_data.columns
+        X = raw_data[cols[1:-1]]
+        y = raw_data[cols[-1]]
+
+        clf = dt(criterion="gain_ratio")
+        clf.fit(X, y)
+        print(clf.tree)
+        print(clf.num_leaf)
 
 
 if __name__ == '__main__':

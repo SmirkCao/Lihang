@@ -20,6 +20,9 @@ class dt(object):
         self.criterion = criterion
         self.criteria = {"gain": self._gain,
                          "gain_ratio": self._gain_ratio}
+        self.alpha = 0
+        self.num_leaf = 0
+        self.importance = None
 
     def fit(self,
             X,
@@ -46,6 +49,11 @@ class dt(object):
         return self._search(X)
 
     def _cal_loss(self, X, y):
+        #
+        pass
+
+    def _pruning(self):
+
         pass
 
     @staticmethod
@@ -84,8 +92,10 @@ class dt(object):
         ck, cnts = np.unique(y, return_counts=True)
         # same y
         if ck.shape[0] == 1:
+            self.num_leaf += 1
             return {ck[0]: None}
         elif X.shape[1] == 0:
+            self.num_leaf += 1
             return {ck[np.argmax(cnts)]: None}
         else:
             rst = 0
