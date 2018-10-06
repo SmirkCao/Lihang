@@ -1,10 +1,12 @@
-# -*-coding:utf-8-*-
-# Project: Lihang_CH5  
-# Filename: decision_tree
-# Author: Smirk <smirk dot cao at gmail dot com>
+#! /usr/bin/env python
+#! -*- coding=utf-8 -*-
+# Project:  Lihang
+# Filename: dt
+# Date: 10/4/18
+# Author: 😏 <smirk dot cao at gmail dot com>
+from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
 
 
 class Tree(object):
@@ -196,7 +198,7 @@ def cal_ent(x):
     """
     calculate shannon ent of x
     :param x:
-    :return ent:
+    :return ent: H(D)=-\sum_{k=1}^K\frac{|C_k|}{|D|}\log_2\frac{|C_k|}{|D|}
     """
     x_values = list(set(x))
     ent = 0
@@ -244,7 +246,7 @@ def gain_ratio(x, y):
 
 
 if __name__ == '__main__':
-    df = pd.read_csv("./data/mdata_5-1.txt", index_col=0)
+    df = pd.read_csv("./Input/mdata_5-1.txt", index_col=0)
 
     # print(df.head())
     # print(cal_ent(df["类别"]))
