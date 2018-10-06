@@ -13,10 +13,14 @@ import unittest
 
 
 class TestDT(unittest.TestCase):
+    DEBUG = True
+
+    @unittest.skipIf(DEBUG, "debug")
     def test_e51(self):
         raw_data = pd.read_csv("./Input/data_5-1.txt")
         logger.info(raw_data)
 
+    @unittest.skipIf(DEBUG, "debug")
     def test_e52(self):
         raw_data = pd.read_csv("./Input/data_5-1.txt")
         hd = dt._cal_entropy(raw_data[raw_data.columns[-1]])
@@ -33,6 +37,7 @@ class TestDT(unittest.TestCase):
         logger.info(hd)
         self.assertEqual(np.argmax(rst), 2) # index = 2 -> A3
 
+    @unittest.skipIf(DEBUG, "debug")
     def test_e53(self):
         raw_data = pd.read_csv("./Input/data_5-1.txt")
         cols = raw_data.columns
@@ -46,6 +51,12 @@ class TestDT(unittest.TestCase):
         self.assertEqual(rst, clf.tree)
         logger.info(clf.tree)
 
+    @unittest.skipIf(DEBUG, "debug")
+    def test_q51(self):
+        raw_data = pd.read_csv("./Input/data_5-1.txt")
+        cols = raw_data.columns
+        X = raw_data[cols[1:-1]]
+        y = raw_data[cols[-1]]
         # criterion: gain_ratio
         clf = dt(criterion="gain_ratio")
         clf.fit(X, y)
@@ -54,7 +65,30 @@ class TestDT(unittest.TestCase):
         self.assertEqual(rst, clf.tree)
         logger.info(clf.tree)
 
+    @unittest.skipIf(DEBUG, "debug")
     def test_e54(self):
+        raw_data = pd.read_csv("./Input/mdata_5-1.txt")
+        cols = raw_data.columns
+        X = raw_data[cols[1:-1]]
+        y = raw_data[cols[-1]]
+
+        clf = dt()
+        clf.fit(X, y)
+        logger.info(clf.tree)
+
+    def test_predict(self):
+        raw_data = pd.read_csv("./Input/mdata_5-1.txt")
+        cols = raw_data.columns
+        X = raw_data[cols[1:-1]]
+        y = raw_data[cols[-1]]
+
+        clf = dt(criterion="gain_ratio")
+        clf.fit(X, y)
+        rst = clf.predict(X[:1])
+        self.assertEqual(rst, y[:1].values)
+        print("predict: ", rst, "label: ", y[:1])
+
+    def test_pruning(self):
         pass
 
 

@@ -21,10 +21,31 @@ class dt(object):
         self.criteria = {"gain": self._gain,
                          "gain_ratio": self._gain_ratio}
 
-    def fit(self, X, y):
+    def fit(self,
+            X,
+            y):
         return self._build_tree(X, y)
 
-    def predict(self, X):
+    def _search(self,
+                X,
+                parent=None):
+        if parent is None:
+            parent = self.tree
+        key_x = list(parent.keys())[0]
+        # is leaf
+        if parent[key_x] is None:
+            # {key_x: None} is leaf node
+            return key_x
+        else:
+            key_child = X[key_x].values[0]
+            # print("\n%s|%s|%s|%s\n" % (parent, key_x, key_child, parent[key_x][key_child].keys()))
+            return self._search(X, parent=parent[key_x][key_child])
+
+    def predict(self,
+                X):
+        return self._search(X)
+
+    def _cal_loss(self, X, y):
         pass
 
     @staticmethod
