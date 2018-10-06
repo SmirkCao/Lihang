@@ -94,7 +94,12 @@ class TestDT(unittest.TestCase):
         X = raw_data[cols[1:-1]]
         y = raw_data[cols[-1]]
 
-        clf = dt(criterion="gain_ratio")
+        # pre pruning
+        clf = dt(criterion="gain_ratio", min_samples_leaf=4)
+        clf.fit(X, y)
+        print(clf.tree)
+        print(clf.num_leaf)
+        clf = dt(criterion="gain_ratio", min_samples_leaf=3)
         clf.fit(X, y)
         print(clf.tree)
         print(clf.num_leaf)

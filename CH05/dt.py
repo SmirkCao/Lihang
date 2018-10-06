@@ -14,7 +14,8 @@ class dt(object):
 
     def __init__(self,
                  tol=10e-3,
-                 criterion='gain'):
+                 criterion='gain',
+                 min_samples_leaf=5):
         self.tree = dict()
         self.tol = tol
         self.criterion = criterion
@@ -23,6 +24,7 @@ class dt(object):
         self.alpha = 0
         self.num_leaf = 0
         self.importance = None
+        self.min_samples_leaf = min_samples_leaf
 
     def fit(self,
             X,
@@ -88,7 +90,14 @@ class dt(object):
     def _cal_gini(X, y):
         pass
 
-    def _build_tree(self, X, y):
+    def _min_samples_leaf_check(self,
+                                X):
+        items, cnts = np.unique(X, return_counts=True)
+        return np.min(cnts) < self.min_samples_leaf
+
+    def _build_tree(self,
+                    X,
+                    y):
         ck, cnts = np.unique(y, return_counts=True)
         # same y
         if ck.shape[0] == 1:
@@ -106,7 +115,13 @@ class dt(object):
                 if criterion >= rst:
                     rst, rst_col = criterion, col
             if criterion < self.tol:
-                return self.tree
+                self.num_leaf += 1
+                return {ck[np.argmax(cnts)]: None}
+
+            # min_leaf_node check
+            if self._min_samples_leaf_check(X[rst_col]):
+                self.num_leaf += 1
+                return {ck[np.argmax(cnts)]: None}
 
             cols.remove(rst_col)
             rst = dict()
