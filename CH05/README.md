@@ -28,7 +28,7 @@
 
 - 决策树是一种基本的分类与回归方法. 在书中CART算法之前的章节说的都是分类树，ID3和C4.5都只能处理分类问题，从CART(Classification and Regression Tree)开始有回归树，统称为决策树
 - 以上在章节目录部分添加了一部分标记，把这个章节按照模型，策略与算法进行划分，进一步重新整理了结构，希望可以帮助理清章节内容之间的关系
-- 在[CH12](../CH12/README.md)中有提到，决策树学习的损失函数是**对数似然损失**
+- 在[CH12](../CH12/README.md)中有提到，决策树学习的损失函数是**对数似然损失**，关于决策树的剪枝，最重要的在于这个损失函数的理解。
 - 这个章节的主题是决策树，内容内涵和外延都很广，这个章节推荐阅读图灵社区的一个访谈[^1]，了解一下李航老师的故事，也可以对本章的最后三个参考文献[^2][^3][^4]有进一步的了解.
 - 引文中关于CART的介绍，是一本368页的书，2017年10月有了[Kindle版本](https://www.amazon.com/Classification-Regression-Trees-Leo-Breiman-ebook/dp/B076M7QKC6)，书的共同作者Friedman JH也是另一本神书ESL[参考文献7]的共同作者。
 - CART虽然在本书中排在ID3和C4.5后面，但是发表的时间顺序为CART->ID3->C4.5，了解决策树历史可以参考Loh的报告[^5]
@@ -80,7 +80,9 @@ $$
 {'有自己的房子': {'否': {'有工作': {'否': {'拒绝': None}, '是': {'批准': None}}}, '是': {'批准': None}}}
 ```
 
-### 算法5.1 信息增益
+### 先导
+
+#### 算法5.1 信息增益
 
 > 输入：训练数据集$D$和特征$A$
 >
@@ -90,7 +92,7 @@ $$
 > 1. $H(D|A)$
 > 1. $g(D,A)$
 
-### 算法5.2 ID3
+#### 算法5.2 ID3生成
 
 > 输入：训练数据集$D$, 特征集$A$，阈值$\epsilon$
 > 输出：决策树$T$
@@ -104,7 +106,7 @@ $$
 
 
 
-### 算法5.3 C4.5生成算法
+#### 算法5.3 C4.5生成
 
 > 输入：训练数据集$D$, 特征集$A$，阈值$\epsilon$
 > 输出：决策树$T$
@@ -117,8 +119,7 @@ $$
 > 1. $D_i$训练集，$A-A_g$为特征集，递归调用前面步骤，得到$T_i$，返回$T_i$
 ID3和C4.5在生成上，差异只在准则的差异。
 
-
-### 算法5.4 树的剪枝算法
+#### 算法5.4 树的剪枝
 
 决策树损失函数摘录如下：
 
@@ -220,15 +221,21 @@ def _min_samples_leaf_check(self,
 
 这里面没有具体的实现例子，给出的参考文献是李航老师在CL上的文章，文章介绍的MDL是模型选择的一种具体框架，里面有介绍KL散度，这部分可以参考下。
 
-### 算法5.5 最小二乘回归树生成算法
+### CART
 
-### 算法5.6 CART分类树生成算法
+关于CART的算法可以看下十大算法里面的第十章[^6]，一转眼就十大数据挖掘算法都发表十年了，这个本书第十章作者放在了ResearchGate上，链接见参考部分。
+
+#### 算法5.5 最小二乘回归树生成
+
+
+
+#### 算法5.6 CART分类树生成
 
 这个算法用到的策略是基尼系数，所以是分类树的生成算法。
 
 
 
-### 算法5.7 CART剪枝算法
+#### 算法5.7 CART剪枝
 
 
 
@@ -257,3 +264,5 @@ def _min_samples_leaf_check(self,
 1. [^4]: [李航，安倍，CL文章，Generalizing case frames using a thesaurus and the MDL principle](http://www.aclweb.org/anthology/J98-2002)
 
 1. [^5]: [A Brief History of Classification and Regression Trees](http://washstat.org/presentations/20150604/loh_slides.pdf)
+
+1. [^6]: [The Top Ten Algorithms in Data Mining](https://www.researchgate.net/publication/265031802_Chapter_10_CART_Classification_and_Regression_Trees)
