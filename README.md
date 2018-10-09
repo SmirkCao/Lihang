@@ -37,7 +37,7 @@
 
 ### 关于篇幅
 
-![各章节篇幅占比 ](assets/各章节篇幅占比 .png)
+![各章节篇幅占比 ](assets/content_distribution.png)
 
 这里插入个图表，列举了各个章节所占篇幅，其中SVM是大部头，占了很大的篇幅，另外DT，HMM，CRF也占了相对较大的篇幅。
 
