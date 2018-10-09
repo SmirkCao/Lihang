@@ -30,7 +30,14 @@
 
 这里的**熵函数**是条件熵.
 
-这一章放在决策树后面，可能就因为熵的概念，对比前面[CH05](../CH05/README.md)部分理解对应的损失函数，发现其中的区别和联系。
+- 这一章放在决策树后面，可能就因为熵的概念，对比前面[CH05](../CH05/README.md)部分理解对应的损失函数，发现其中的区别和联系。
+
+- 本章从逻辑斯谛分布开始，在[CH04](../CH04/README.mc)的时候，应该熟悉狄利克雷分布和高斯分布，对于离散和连续型的情况应该熟悉这两个分布，这样在这一章看到逻辑斯谛分布的时候会更适应。在书上有这样一句
+
+  > 二项逻辑斯谛回归模型是一种分类模型，由条件概率分布$P(Y|X)$表示，**形式为参数化的逻辑斯谛分布**。
+
+  这一句是这两小节唯一的联系，可能不是很好理解。
+  因为书中第四章并没有讲到高斯朴素贝叶斯(GNB)，有GNB做类比，这里可能更容易理解一点，这里重新推荐一下第四章的参考文献1[^1]，配合理解NB和LR的关系。
 
 ## 模型
 
@@ -183,6 +190,7 @@ $h(x)=-\log_2{p(x)}$, 符号保证了非负性. 低概率事件对应了高的�
    &=H(p)+KL(p||q)
    \end{aligned}
    $$
+
 
 
 
@@ -516,16 +524,27 @@ $$
 ## 参考
 
 1. [Berger,1995, A Brief Maxent Tutorial](https://www.cs.cmu.edu/afs/cs/user/aberger/www/html/tutorial/tutorial.html)
-1. [数学之美:信息的度量和作用]
-1. [数学之美:不要把鸡蛋放在一个篮子里 谈谈最大熵模型]
-1. [李航·统计学习方法笔记·第6章 logistic regression与最大熵模型（2）·最大熵模型](https://blog.csdn.net/tina_ttl/article/details/53542004)
-1. [最大熵模型与GIS ,IIS算法](https://blog.csdn.net/u014688145/article/details/55003910)
-1. [关于最大熵模型的严重困惑：为什么没有解析解？](https://www.zhihu.com/question/49139674/answer/114670380)
-1. [最大熵模型介绍](http://www.cnblogs.com/hexinuaa/p/3353479.html) 这个是Berger的文章的翻译.
-1. [理论简介](https://vimsky.com/article/714.html)  [代码实现](https://vimsky.com/article/776.html) 
-1. [另外一份代码](https://github.com/WenDesi/lihang_book_algorithm/tree/master/maxENT)
-1. [如何理解最大熵模型里面的特征？](https://www.zhihu.com/question/24094554)
-1. [Iterative Scaling and Coordinate Descent Methods for
-   Maximum Entropy Models](https://www.csie.ntu.edu.tw/~cjlin/papers/maxent_journal.pdf)
 
+1. [数学之美:信息的度量和作用]
+
+1. [数学之美:不要把鸡蛋放在一个篮子里 谈谈最大熵模型]
+
+1. [李航·统计学习方法笔记·第6章 logistic regression与最大熵模型（2）·最大熵模型](https://blog.csdn.net/tina_ttl/article/details/53542004)
+
+1. [最大熵模型与GIS ,IIS算法](https://blog.csdn.net/u014688145/article/details/55003910)
+
+1. [关于最大熵模型的严重困惑：为什么没有解析解？](https://www.zhihu.com/question/49139674/answer/114670380)
+
+1. [最大熵模型介绍](http://www.cnblogs.com/hexinuaa/p/3353479.html) 这个是Berger的文章的翻译.
+
+1. [理论简介](https://vimsky.com/article/714.html)  [代码实现](https://vimsky.com/article/776.html) 
+
+1. [另外一份代码](https://github.com/WenDesi/lihang_book_algorithm/tree/master/maxENT)
+
+1. [如何理解最大熵模型里面的特征？](https://www.zhihu.com/question/24094554)
+
+1. [Iterative Scaling and Coordinate Descent Methods for
+    Maximum Entropy Models](https://www.csie.ntu.edu.tw/~cjlin/papers/maxent_journal.pdf)
+
+1. [^1]: [Generative and discriminative classifiers: Naive Bayes and logistic regression](http://www.cs.cmu.edu/~tom/mlbook/NBayeslogReg.pdf)
 
