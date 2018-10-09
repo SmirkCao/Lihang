@@ -39,6 +39,8 @@
   这一句是这两小节唯一的联系，可能不是很好理解。
   因为书中第四章并没有讲到高斯朴素贝叶斯(GNB)，有GNB做类比，这里可能更容易理解一点，这里重新推荐一下第四章的参考文献1[^1]，配合理解NB和LR的关系。
 
+- 在模型参数估计的部分用到了$\pi$，这个应该联想到狄利克雷分布
+
 ## 模型
 
 > Logistic regression is a special case of maximum entropy with two labels +1 and −1.
