@@ -41,13 +41,35 @@
 
 - 在模型参数估计的部分用到了$\pi$，这个应该联想到狄利克雷分布
 
+- 关于NB和LR的对比，Ng也有一篇文章[^2]
+
 ## 模型
 
 > Logistic regression is a special case of maximum entropy with two labels +1 and −1.
 
 ### 逻辑斯谛回归模型
 
-在<机器学习>上把这个叫做对数几率回归
+这一章的这个部分，可以认为是对第四章的一个补充与延续，只是第四章最后没有说高斯朴素贝叶斯。在<机器学习>上把这个叫做对数几率回归
+
+#### 逻辑斯谛分布
+
+注意分布函数中关于位置参数，形状参数的说明，可以大致的和高斯对应理解。
+$$
+F(x)=P(X\leqslant x)=\frac{1}{1+\exp(-(x-\mu)/\gamma)}
+$$
+
+
+#### 二项逻辑斯谛回归模型
+
+这部分提到了几率，但是怎么就想到几率了。
+
+
+
+#### 模型参数估计
+
+
+
+#### 多项逻辑斯谛回归
 
 
 
@@ -192,6 +214,7 @@ $h(x)=-\log_2{p(x)}$, 符号保证了非负性. 低概率事件对应了高的�
    &=H(p)+KL(p||q)
    \end{aligned}
    $$
+
 
 
 
@@ -549,4 +572,6 @@ $$
     Maximum Entropy Models](https://www.csie.ntu.edu.tw/~cjlin/papers/maxent_journal.pdf)
 
 1. [^1]: [Generative and discriminative classifiers: Naive Bayes and logistic regression](http://www.cs.cmu.edu/~tom/mlbook/NBayeslogReg.pdf)
+
+1. [^2]: [On Discriminative vs. Generative Classifiers: A comparison of Logistic Regression and Naive Bayes](-)
 
