@@ -3,7 +3,8 @@
 # Filename: unit_test
 # Author: 😏 <smirk dot cao at gmail dot com>
 
-
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 from logistic_regression import *
 from maxent import *
 from sympy import *
@@ -11,6 +12,7 @@ import numpy as np
 import unittest
 import argparse
 import logging
+import time
 
 
 class TestMEMethods(unittest.TestCase):
@@ -123,6 +125,36 @@ class TestMEMethods(unittest.TestCase):
         clf.g = g
         clf.fit(x, y)
         rst = clf.predict(x,)
+        logger.info(rst)
+
+    def test_maxent(self):
+        logger.info('Start read data')
+        time_1 = time.time()
+        imgs, labels = load_data()
+        train_features, test_features, train_labels, test_labels = train_test_split(imgs, labels,
+                                                                                    test_size=0.33,
+                                                                                    random_state=2018,
+                                                                                    stratify=labels)
+
+        logger.info("train test features %d, %d, %s" % (len(train_features), len(test_features), train_features[0]))
+        time_2 = time.time()
+        logger.info('read data cost %f second' % (time_2 - time_1))
+        logger.info('Start training')
+        met = Maxent(max_iter=100)
+        print("train_features", train_features[:2])
+        met.fit(train_features, train_labels)
+
+        time_3 = time.time()
+        logger.info('training cost %f second' % (time_3 - time_2))
+        logger.info('Start predicting')
+        test_predict = met.predict(test_features)
+        print(test_labels, test_predict)
+        time_4 = time.time()
+        logger.info('predicting cost %d second' % (time_4 - time_3))
+        score = accuracy_score(test_labels, test_predict)
+        logger.info("The accruacy socre is %1.4f" % score)
+        # 全零数据
+        rst = met.predict_proba([np.zeros(len(train_features[0]))])
         logger.info(rst)
 
 

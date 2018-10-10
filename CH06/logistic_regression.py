@@ -1,5 +1,5 @@
 # -*-coding:utf-8-*-
-# Project: CH06
+# Project: Lihang
 # Filename: logistic_regression
 # Author: 😏 <smirk dot cao at gmail dot com>
 
