@@ -1,5 +1,5 @@
 # -*-coding:utf-8-*-
-# Project: CH8  
+# Project: Lihang
 # Filename: adaboost
 # Author: 😏 <smirk dot cao at gmail dot com>
 
