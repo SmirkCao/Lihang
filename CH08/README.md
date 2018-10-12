@@ -22,7 +22,8 @@
 ### 导读
 
 - 可能会有疑问，为什么支持向量机前置在这一章之前，可以参考本章的第一个参考文献[^1]，Yoav Freund和Robert Schapire因此获得了[2003年的哥德尔奖](https://en.wikipedia.org/wiki/G%C3%B6del_Prize)
-- 
+- 如果看过林轩田老师的课程(只需看第一课)，可能对hypothesis这个概念迷糊，没有sense。那可以翻下前面提到的这个文章，可能会对这些概念的理解有帮助。另外文章中有提到VC维，用来度量hypotheses的复杂度。
+- 另外一篇 文献，推荐下RE Schapire的文章[^2]关于间隔的理解
 
 ###  加法模型+前向分步算法
 
@@ -166,3 +167,5 @@ m=3
 ## 参考
 
 1. [^1]: [A Short Introduction to Boosting](https://cseweb.ucsd.edu/~yfreund/papers/IntroToBoosting.pdf)
+
+2. [^2]: [Boosting the margin: A new explanation for the effectiveness of voting methods](https://www.cc.gatech.edu/~isbell/tutorials/boostingmargins.pdf)
