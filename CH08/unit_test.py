@@ -1,10 +1,10 @@
 # -*-coding:utf-8-*-
-# Project: CH8  
+# Project: Lihang
 # Filename: unit_test
 # Author: 😏 <smirk dot cao at gmail dot com>
 
-from adaboost import *
 from sklearn.metrics import accuracy_score
+from adaboost import *
 import pandas as pd
 import numpy as np
 
