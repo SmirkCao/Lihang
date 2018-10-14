@@ -70,7 +70,7 @@ $$
 > race**, you have probably encountered another representation of probability,
 > called odds
 
-这本书有中文版,  希望从这部分内容的补充能增加一些博彩业的直觉...
+这本书有中文版,  希望这部分内容的补充能增加一些博彩业的直觉...
 
 写到这里, 突然想到一个人: 吴军博士. 不记得数学之美中关于LR是如何描述的, 但是觉得能外延阐述几率和概率的这种联系的内容也许会出现在他的某部作品里. 于是翻了数学之美. 但, 并没有.
 
