@@ -63,6 +63,28 @@ $$
 
 这部分提到了几率，但是怎么就想到几率了。
 
+之前一直不清楚为什么就联想到几率了, 从哪里建立了这种联系. 直到看了Think Bayes[^3].
+
+> One way to represent a probability is with a number between 0 and 1, **but
+> that’s not the only way**. If you have ever bet on a **football game or a horse
+> race**, you have probably encountered another representation of probability,
+> called odds
+
+这本书有中文版,  希望从这部分内容的补充能增加一些博彩业的直觉...
+
+写到这里, 突然想到一个人: 吴军博士. 不记得数学之美中关于LR是如何描述的, 但是觉得能外延阐述几率和概率的这种联系的内容也许会出现在他的某部作品里. 于是翻了数学之美. 但, 并没有.
+
+数学之美中有这样一个公式
+$$
+f(z)=\color{red}\frac{e^z}{e^z+1}\color{black}=\frac{1}{1+e^{-z}}
+$$
+然后几率和概率之间的关系有这样一种表达
+$$
+o=\frac{p}{1-p} \nonumber\\
+\color{red}p=\frac{o}{1+o}
+$$
+看上面红色部分, **逻辑斯谛分布**对应了一种**概率**, **几率**为指数形式$e^z$, $z$为**对数几率**$logit$.
+
 
 
 #### 模型参数估计
@@ -224,6 +246,7 @@ $h(x)=-\log_2{p(x)}$, 符号保证了非负性. 低概率事件对应了高的�
    &=H(p)+KL(p||q)
    \end{aligned}
    $$
+
 
 
 
@@ -576,4 +599,6 @@ $$
 1. [^1]: [Generative and discriminative classifiers: Naive Bayes and logistic regression](http://www.cs.cmu.edu/~tom/mlbook/NBayeslogReg.pdf)
 
 1. [^2]: [On Discriminative vs. Generative Classifiers: A comparison of Logistic Regression and Naive Bayes](-)
+
+1. [^3]: [ThinkBayes](http://www.greenteapress.com/thinkbayes/thinkbayes.pdf)
 
