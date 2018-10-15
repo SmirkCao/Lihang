@@ -97,6 +97,8 @@ $$
 
 $kmeans \rightarrow GMM \rightarrow EM$
 
+所以, EM应用举例子为kmeans也OK.
+
 ### 统计学习方法
 
 1. $MLE \rightarrow B$
@@ -114,9 +116,75 @@ $$
 $$
 \phi(y|\theta_k)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(y-\mu_k)^2}{2\sigma_k^2}\right)
 $$
-上式表示第k个分模型.
+上式表示第k个**分**模型.
 
 高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用.
+
+### GMM的EM算法
+
+问题描述:
+
+已知观测数据$y_1, y_2, \dots, y_N$, 由高斯混合模型生成
+$$
+P(y|\theta)=\sum_{k=1}^K\alpha_k\phi(y|\theta_k)
+$$
+其中, $\theta=(\alpha_1,\alpha_2,\dots,\alpha_K;\theta_1,\theta_2,\dots,\theta_K)$
+
+使用EM算法估计GMM的参数$\theta$
+
+#### 1. 明确隐变量
+
+- 观测数据$y_j, j=1,2,\dots,N$这样产生, 是**已知的**:
+  首先依概率$\alpha_k$选择第$k$个高斯分布分模型$\phi(y|\theta_k)$;
+  然后依第$k$个分模型的概率分布$\phi(y|\theta_k)$生成观测数据$y_j$
+
+- 反映观测数据$y_j$来自第$k$个分模型的数据是**未知的**,$k=1,2,\dots,K$以隐变量$\gamma_{jk}$表示
+  $$
+  \gamma_{jk}=
+  \begin{cases}
+  1, &第j个观测来自第k个分模型\\
+  0, &否则
+  \end{cases}\\
+  j=1,2,\dots,N; k=1,2,\dots,K; \gamma_{jk}\in\{0,1\}
+  $$
+
+- 完全数据为$(y_j,\gamma_{j1},\gamma_{j2},\dots,\gamma_{jK},k=1,2,\dots,N)$
+
+- 完全数据似然函数
+  $$
+  \begin{aligned}
+  P(y,\gamma|\theta)=&\prod_{j=1}^NP(y_j,\gamma_{j1},\gamma_{j2},\dots,\gamma_{jK}|\theta)\\
+  =&\prod_{k=1}^K\prod_{j=1}^N\left[\alpha_k\phi(y_j|\theta_k)\right]^{\gamma_{jk}}\\
+  =&\prod_{k=1}^K\alpha_k^{n_k}\prod_{j=1}^N\left[\phi(y_j|\theta_k)\right]^{\gamma_{jk}}\\
+  =&\prod_{k=1}^K\alpha_k^{n_k}\prod_{j=1}^N\left[\frac{1}{\sqrt{2\pi}\sigma_k}\exp\left(-\frac{(y_j-\mu_k)^2}{2\sigma^2}\right)\right]^{\gamma_{jk}}\\
+  \end{aligned}
+  $$
+  其中$n_k=\sum_{j=1}^N\gamma_{jk}, \sum_{k=1}^Kn_k=N$
+
+- 完全数据对数似然函数
+  $$
+  \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
+  $$
+
+
+#### 2. E步,确定Q函数
+
+$$
+\begin{aligned}
+Q(\theta,\theta^{(i)})=&E[\log P(y,\gamma|\theta)|y,\theta^{(i)}]\\
+=&E
+\end{aligned}
+$$
+
+​    注意这里$E(\gamma_{jk}|y,\theta)$,记为$\hat\gamma_{jk}$,E步求的**期望**就是这个.
+
+​    
+
+#### 3. M步
+
+#### 4. 停止条件
+
+
 
 ### K怎么定?
 
