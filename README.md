@@ -168,8 +168,9 @@ graph LR
 	NB--G-D Pair---LR
 	LR---ME
 	SLP---SVM
-	DT--entropy-->LR
 	DT-->AdaBoost
+	DT--entropy-->LR
+	EM-->NB
 	EM-->HMM
 	EM-->GMM
 	GMM-->HMM

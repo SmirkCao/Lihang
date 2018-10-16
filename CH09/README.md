@@ -19,9 +19,17 @@
 
 ### 导读
 
-EM算法可以用于**生成模型**的非监督学习, EM算法是个一般方法, 不具有具体模型.
+- EM算法可以用于**生成模型**的非监督学习, EM算法是个一般方法, 不具有具体模型.
 
-> EM算法是一种迭代算法, 用于含有隐变量的概率模型的极大似然估计,或极大后验概率估计.
+  > EM算法是一种迭代算法, 用于含有隐变量的概率模型的极大似然估计,或极大后验概率估计. 
+
+- 这里面注意体会不同变量的大小以及对应的取值范围.
+
+- 一个$m\times n\times k$的矩阵可能可以划分成$n$个$m\times k$的形式, 这点理解下.
+
+- 这部分推导有很多求和, 注意体会是按照**样本**做的, 还是按照**模型**做的
+
+
 
 ## 符号说明
 
@@ -138,7 +146,8 @@ $$
   首先依概率$\alpha_k$选择第$k$个高斯分布分模型$\phi(y|\theta_k)$;
   然后依第$k$个分模型的概率分布$\phi(y|\theta_k)$生成观测数据$y_j$
 
-- 反映观测数据$y_j$来自第$k$个分模型的数据是**未知的**,$k=1,2,\dots,K$以隐变量$\gamma_{jk}$表示
+- 反映观测数据$y_j$来自第$k$个分模型的数据是**未知的**,$k=1,2,\dots,K$以**隐变量$\gamma_{jk}$**表示
+  **注意这里$\gamma_{jk}$的维度**
   $$
   \gamma_{jk}=
   \begin{cases}
@@ -169,30 +178,77 @@ $$
 
 #### 2. E步,确定Q函数
 
+把Q函数表示成参数形式
 $$
 \begin{aligned}
 Q(\theta,\theta^{(i)})=&E[\log P(y,\gamma|\theta)|y,\theta^{(i)}]\\
-=&E
+=&\color{green}E\color{black}\left\{\sum_{k=1}^K\left\{\color{red}n_k\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\right\}\\
+=&\sum_{k=1}^K\left\{\color{red}\sum_{j=1}^{N}(\color{green}E\color{red}\gamma_{jk})\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N(\color{green}E\color{blue}\gamma _{jk})\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\\
 \end{aligned}
 $$
 
-​    注意这里$E(\gamma_{jk}|y,\theta)$,记为$\hat\gamma_{jk}$,E步求的**期望**就是这个.
+$$
+\begin{align}
+\hat \gamma _{jk}= &E(\gamma_{jk}|y,\theta)=P(\gamma_{jk}=1|y,\theta)\\
+=&\frac{P(\gamma_{jk}=1,y_j|\theta)}{\sum_{k=1}^KP(\gamma_{jk}=1,y_j|\theta)}\\
+=&\frac{P(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)}{\sum_{k=1}^KP(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)}\\
+=&\frac{\alpha_k\phi(y_j|\theta_k)}{\sum_{k=1}^K\alpha_k\phi(y_j|\theta_k)}
+\end{align}
+$$
 
-​    
+
+
+​    这部分内容就是搬运了书上的公式, 有几点说明:
+
+1. 注意这里$E(\gamma_{jk}|y,\theta)$,记为$\hat\gamma_{jk}$,E步求的**期望**就是这个.
+
+1. 对应理解一下上面公式中的红色,蓝色和绿色部分.
+
+1. 这里用到了$n_k=\sum_{j=1}^N\gamma_{jk}$
+
+1. $\hat \gamma_{jk}$为分模型$k$对观测数据$y_j$的响应度. 这里, 第一行参考伯努利分布的期望.
+
+$$
+Q(\theta,\theta^{(i)})=\sum_{k=1}^Kn_k\log \alpha_k+\sum_{j=1}^N\hat \gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k-\frac{1}{2\sigma_k^2}(y_j-\mu_k)^2\right]
+$$
+
+其中$i$表示第$i$步迭代
+
+其实抄公式没有什么意义,主要是能放慢看公式的速度. 和图表一样, 公式简洁的表达了很多含义, 公式中也许更能体会到数学之美.
 
 #### 3. M步
 
+求函数$Q(\theta,\theta^{(i)})$对$\theta$的极大值, 分别求$\sigma, \mu, \alpha$
+$$
+\theta^{(i+1)}=\arg\max_\theta Q(\theta,\theta^{(i)})
+$$
+
+- $Q$对$\mu_k, \sigma^2$求偏导得到$\hat\mu_k, \hat \sigma_k^2$
+- $\sum_{k=1}^K\alpha_k=1$条件下求偏导得到$\alpha_k$
+
+TODO: 推导
+
 #### 4. 停止条件
 
+重复以上计算, 直到对数似然函数值不再有明显的变化为止.
 
+### 算法9.2
+
+这部分摘要总结了前面的公式.
+
+因为公式比较集中, 方便对比, 注意体会以下两个方面:
+
+1. 这几个公式中待求的变量的维度和角标的关系.
+1. 这里面有求和, 前面提到过, 注意体会每一步刷的是模型, 还是样本
 
 ### K怎么定?
 
-
+- 手肘法
+- Gap Statistics[^1]
 
 ## 广义期望极大
 
-广义期望极大(generalized expectation maximization, $GEM$)
+广义期望极大(generalized expectation maximization, $GEM​$)
 
 ## 其他
 
@@ -203,5 +259,8 @@ $$
 ## 参考
 
 1. 
+
 2. [Sklearn Gaussian Mixed Model](http://scikit-learn.org/stable/modules/mixture.html)
+
+3. [^1]: [Gap Statistics](https://web.stanford.edu/~hastie/Papers/gap.pdf)
 
