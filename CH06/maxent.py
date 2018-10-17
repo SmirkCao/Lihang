@@ -152,7 +152,7 @@ def load_data(path=None):
         raw_data = load_digits()
         imgs, labels = raw_data.data, raw_data.target
     else:
-        raw_data = pd.read_csv(path, sep="[,\t]", header=0)
+        raw_data = pd.read_csv(path, sep="[,\t]", header=0, engine="python")
         data = raw_data.values
         imgs, labels = data[0::, 1::], data[::, 0]
     return imgs, labels
