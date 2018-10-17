@@ -29,6 +29,8 @@
 
 - 这部分推导有很多求和, 注意体会是按照**样本**做的, 还是按照**模型**做的
 
+- 如果对PDF的概念不清楚, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收货.
+
 
 
 ## 符号说明
@@ -114,19 +116,31 @@ $kmeans \rightarrow GMM \rightarrow EM$
 
 ## 高斯混合模型
 
-**混合模型**, 有多种, 高斯混合模型是最常用的.
+**混合模型**, 有多种, 高斯混合模型是最常用的. 
 
-高斯混合模型(Gaussian Mixture Model)是具有如下概率分布的模型:
+高斯混合模型(Gaussian Mixture Model)是具有如下**概率分布**的模型:
 $$
 P(y|\theta)=\sum\limits^{K}_{k=1}\alpha_k\phi(y|\theta_k)
 $$
-其中, $\alpha_k$是系数, $\alpha_k\ge0$, $\sum\limits^{K}_{k=1}\alpha_k=1$, $\phi(y|\theta_k)$是高斯分布密度, $\theta_k=(\mu,\sigma^2)$
+其中, $\alpha_k$是系数, $\alpha_k\ge0$, $\sum\limits^{K}_{k=1}\alpha_k=1$, $\phi(y|\theta_k)$是**高斯分布密度**, $\theta_k=(\mu,\sigma^2)$
 $$
 \phi(y|\theta_k)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(y-\mu_k)^2}{2\sigma_k^2}\right)
 $$
 上式表示第k个**分**模型.
 
-高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用.
+以上, 注意几点:
+1. GMM的描述是概率分布, 形式上可以看成是加权求和
+
+1. 加权求和的权重$\alpha$满足$\sum_{k=1}^K\alpha_k=1$的约束
+
+1. 求和符号中除去权重的部分, 是高斯分布密度(PDF). 高斯混合模型是一种$\sum(权重\times 分布密度)=分布$的表达
+  高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用. 
+
+1. 书中描述的是一维的高斯混合模型, d维的形式如下[^2]:
+  $$
+  \phi(y|\theta_k)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}\exp\left(-\frac{(y-\mu_k)^T\Sigma^{-1}(y-\mu_k)}{2}\right)
+  $$
+
 
 ### GMM的EM算法
 
@@ -174,6 +188,7 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
 
 
 
@@ -268,9 +283,10 @@ TODO: 推导
 
 ## 参考
 
-1. 
+1. [EM Algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm)
 
 2. [Sklearn Gaussian Mixed Model](http://scikit-learn.org/stable/modules/mixture.html)
 
 3. [^1]: [Gap Statistics](https://web.stanford.edu/~hastie/Papers/gap.pdf)
 
+4. [^2]: [多元正态分布](https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)
