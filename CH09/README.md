@@ -29,7 +29,9 @@
 
 - 这部分推导有很多求和, 注意体会是按照**样本**做的, 还是按照**模型**做的
 
-- 如果对PDF的概念不清楚, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收货.
+- 如果对PDF, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收获.
+
+- 似然和概率的关系可以推广了解, 这章关于概率和似然的符号表示, 可能会有点看不懂, 比如$P_{157}$中的部分表述.
 
 
 
@@ -37,7 +39,7 @@
 
 > 一般地, 用$Y$表示观测随机变量的数据, $Z$表示隐随机变量的数据. $Y$和$Z$一起称为**完全数据**(complete-data), 观测数据$Y$又称为**不完全数据**(incomplete-data)
 
-上面这个概念很重要, Dempster在1977年提出EM算法的时候文章题目就是<Maximum likelihood from incomplete data vi the EM algorithm>, 具体看书中本章参考文献[1]
+上面这个概念很重要, Dempster在1977年提出EM算法的时候文章题目就是<Maximum likelihood from incomplete data via the EM algorithm>, 具体看书中本章参考文献[^3]
 
 >假设给定观测数据$Y$, 其概率分布是$P(Y|\theta)$, 其中$\theta$是需要估计的模型参数
 >那么不完全数据$Y$的似然函数是$P(Y|\theta)$, 对数似然函数是$L(\theta)=\log P(Y|\theta)$
@@ -107,7 +109,7 @@ $$
 
 $kmeans \rightarrow GMM \rightarrow EM$
 
-所以, EM应用举例子为kmeans也OK.
+所以, EM应用举例子为kmeans也OK. 而且, 西瓜书$P_{165}$上有说, `k均值聚类算法就是一个典型的EM算法`
 
 ### 统计学习方法
 
@@ -134,12 +136,12 @@ $$
 1. 加权求和的权重$\alpha$满足$\sum_{k=1}^K\alpha_k=1$的约束
 
 1. 求和符号中除去权重的部分, 是高斯分布密度(PDF). 高斯混合模型是一种$\sum(权重\times 分布密度)=分布$的表达
-  高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用. 
+    高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用. 
 
 1. 书中描述的是一维的高斯混合模型, d维的形式如下[^2]:
-  $$
+$$
   \phi(y|\theta_k)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}\exp\left(-\frac{(y-\mu_k)^T\Sigma^{-1}(y-\mu_k)}{2}\right)
-  $$
+$$
 
 
 ### GMM的EM算法
@@ -152,16 +154,26 @@ P(y|\theta)=\sum_{k=1}^K\alpha_k\phi(y|\theta_k)
 $$
 其中, $\theta=(\alpha_1,\alpha_2,\dots,\alpha_K;\theta_1,\theta_2,\dots,\theta_K)$
 
+补充下, 不完全数据的似然函数应该是
+$$
+\begin{align}
+P(y|\theta)=&\prod_{j=1}^NP(y_j|\theta)\\
+=&\prod_{j=1}^N\sum_{k=1}^K\alpha_k\phi(y|\theta_k)
+\end{align}
+$$
+
+
 使用EM算法估计GMM的参数$\theta$
 
 #### 1. 明确隐变量
 
 - 观测数据$y_j, j=1,2,\dots,N$这样产生, 是**已知的**:
-  首先依概率$\alpha_k$选择第$k$个高斯分布分模型$\phi(y|\theta_k)$;
-  然后依第$k$个分模型的概率分布$\phi(y|\theta_k)$生成观测数据$y_j$
 
-- 反映观测数据$y_j$来自第$k$个分模型的数据是**未知的**,$k=1,2,\dots,K$以**隐变量$\gamma_{jk}$**表示
-  **注意这里$\gamma_{jk}$的维度**
+  1. 依概率$\alpha_k$**选择第$k$个**高斯分布分模型$\phi(y|\theta_k)$;
+  1. 依第$k$个分模型的概率分布$\phi(y|\theta_k)$生成观测数据$y_j$
+  1. 反映观测数据$y_j$来自第$k$个分模型的数据是**未知的**, $k=1,2,\dots,K$ 以**隐变量$\gamma_{jk}$**表示
+     **注意这里$\gamma_{jk}$的维度$(j\times k)$**
+
   $$
   \gamma_{jk}=
   \begin{cases}
@@ -170,6 +182,11 @@ $$
   \end{cases}\\
   j=1,2,\dots,N; k=1,2,\dots,K; \gamma_{jk}\in\{0,1\}
   $$
+
+  注意, 以上说明有几个假设:
+
+  1. 隐变量和观测变量的数据对应, 每个观测数据, 对应了一个隐变量, $\gamma_{jk}$是一种one-hot的形式.
+  1. 具体的单一观测数据是混合模型中的某一个模型产生的
 
 - 完全数据为$(y_j,\gamma_{j1},\gamma_{j2},\dots,\gamma_{jK},k=1,2,\dots,N)$
 
@@ -188,6 +205,8 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
+
 
 
 
@@ -283,10 +302,12 @@ TODO: 推导
 
 ## 参考
 
-1. [EM Algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm)
+1. [^3]: [Maximum-likelihood from incomplete data via the EM algorithm](-)
 
-2. [Sklearn Gaussian Mixed Model](http://scikit-learn.org/stable/modules/mixture.html)
+2. [EM Algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm)
 
-3. [^1]: [Gap Statistics](https://web.stanford.edu/~hastie/Papers/gap.pdf)
+3. [Sklearn Gaussian Mixed Model](http://scikit-learn.org/stable/modules/mixture.html)
 
-4. [^2]: [多元正态分布](https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)
+4. [^1]: [Gap Statistics](https://web.stanford.edu/~hastie/Papers/gap.pdf)
+
+5. [^2]: [多元正态分布](https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)
