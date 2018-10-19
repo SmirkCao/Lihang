@@ -138,11 +138,12 @@ $$
 1. 求和符号中除去权重的部分, 是高斯分布密度(PDF). 高斯混合模型是一种$\sum(权重\times 分布密度)=分布$的表达
     高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用. 
 
-1. 书中描述的是一维的高斯混合模型, d维的形式如下[^2]:
+1. 书中描述的是一维的高斯混合模型, d维的形式如下[^2], 被称作多元正态分布, 也叫多元高斯分布:
 $$
-  \phi(y|\theta_k)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}\exp\left(-\frac{(y-\mu_k)^T\Sigma^{-1}(y-\mu_k)}{2}\right)
+\phi(y|\theta_k)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}\exp\left(-\frac{(y-\mu_k)^T\Sigma^{-1}(y-\mu_k)}{2}\right)其中,协方差矩阵
 $$
 
+其中,协方差矩阵$\Sigma\in \R^{n\times n}$
 
 ### GMM的EM算法
 
@@ -205,6 +206,7 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
 
 
 
@@ -312,3 +314,5 @@ TODO: 推导
 4. [^1]: [Gap Statistics](https://web.stanford.edu/~hastie/Papers/gap.pdf)
 
 5. [^2]: [多元正态分布](https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)
+
+6. [mml]([https://mml-book.com](https://mml-book.com/))
