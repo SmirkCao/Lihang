@@ -20,7 +20,7 @@ class TestMEMethods(unittest.TestCase):
         p = 0.5
         q = 0.5
         logger.info("init prob pi=%1.1f, p=%1.1f, q=%1.1f" % (pi, p, q))
-        mu = np.ones(sample.shape)/2
+        mu = np.ones(sample.shape) / 2
         logger.info(("mu: %s" % mu))
         for n_iter in range(10):
             # E Step
@@ -40,7 +40,7 @@ class TestMEMethods(unittest.TestCase):
         p = 0.6
         q = 0.7
         logger.info("init prob pi=%1.1f, p=%1.1f, q=%1.1f" % (pi, p, q))
-        mu = np.ones(sample.shape)/2
+        mu = np.ones(sample.shape) / 2
         logger.info(("mu: %s" % mu))
         for n_iter in range(10):
             # E Step
@@ -60,14 +60,19 @@ class TestMEMethods(unittest.TestCase):
         pass
 
     def test_t91(self):
-        tc = TripleCoin(pi=0.3, p=0.6, q=0.2)
-        sample = tc.sample()
+        # 可以通过TripleCoin来实现采样
+        # tc = TripleCoin(pi=0.3, p=0.6, q=0.2)
+        # sample = tc.sample()
+        # 对比说明同分布的不同序列的参数估计
         sample = np.array([1, 1, 0, 1, 0, 0, 1, 0, 1, 1])
+        sample = np.array([1, 1, 1, 1, 1, 1, 0, 0, 0, 0])
         logger.info(sample)
         pi = 0.5
         p = 0.5
         q = 0.5
-        mu = np.ones(sample.shape)/2
+        # mu = sample*pi
+        # mu += (1-sample)*(1-pi)
+        mu = np.ones(sample.shape) * 0.5
         logger.info(("mu: %s" % mu))
         for n_iter in range(10):
             for j, yj in enumerate(sample):
