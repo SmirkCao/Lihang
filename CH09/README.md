@@ -29,7 +29,9 @@
 
 - 这部分推导有很多求和, 注意体会是按照**样本**做的, 还是按照**模型**做的
 
-- 如果对PDF的概念不清楚, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收货.
+- 如果对PDF, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收获.
+
+- 似然和概率的关系可以推广了解, 这章关于概率和似然的符号表示, 可能会有点看不懂, 比如$P_{157}$中的部分表述.
 
 
 
@@ -37,7 +39,7 @@
 
 > 一般地, 用$Y$表示观测随机变量的数据, $Z$表示隐随机变量的数据. $Y$和$Z$一起称为**完全数据**(complete-data), 观测数据$Y$又称为**不完全数据**(incomplete-data)
 
-上面这个概念很重要, Dempster在1977年提出EM算法的时候文章题目就是<Maximum likelihood from incomplete data vi the EM algorithm>, 具体看书中本章参考文献[1]
+上面这个概念很重要, Dempster在1977年提出EM算法的时候文章题目就是<Maximum likelihood from incomplete data via the EM algorithm>, 具体看书中本章参考文献[^3]
 
 >假设给定观测数据$Y$, 其概率分布是$P(Y|\theta)$, 其中$\theta$是需要估计的模型参数
 >那么不完全数据$Y$的似然函数是$P(Y|\theta)$, 对数似然函数是$L(\theta)=\log P(Y|\theta)$
@@ -64,7 +66,50 @@
 
 ## 问题描述
 
-书中用例子来介绍EM算法的问题, 并给出了EM算法迭代求解的过程, 具体例子描述见**例9.1**,解的过程记录在这里. 
+### 三硬币模型
+
+书中用例子来介绍EM算法的问题, 并给出了EM算法迭代求解的过程, 具体例子描述见**例9.1**.
+
+问题的描述过程中有这样一句: 独立的重复$n$次实验(这里$n=10$), 观测结果如下:
+
+`1,1,0,1,0,0,1,0,1,1`
+
+上面这个观测, 和`1,1,1,1,1,1,0,0,0,0`有区别么?
+
+没有任何信息的前提下, 我们得到上面的观测数据可以假定是一个二项分布的形式, 参数$n=10, p=0.6$
+
+把$k=6$次成功,分布在$n=10$次试验中有$C(10,6)$种可能.
+
+所以上面两个观测序列, 可能出自同一个模型. 在这个问题的求解上是没有区别的, 测试案例$test\_t91$做了这个说明. 可以参考.
+
+我们通过一段代码来生成这个数据
+
+```python
+import numpy as np
+p = 0.6
+n = 10
+# np.random.seed(2018)
+flag_a = 1
+flag_b = 1
+cnt = 0
+while flag_a or flag_b:
+    tmp = np.random.binomial(1, p, n)
+    if (tmp == np.array([1,1,1,1,1,1,0,0,0,0])).all():
+        flag_a = 0
+        print("[1,1,1,1,1,1,0,0,0,0] at %d\n" % cnt)
+    if (tmp == np.array([1,1,0,1,0,0,1,0,1,1])).all():
+        flag_b = 0
+        print("[1,1,0,1,0,0,1,0,1,1] at %d\n" % cnt)
+    cnt += 1
+```
+
+
+
+实际上题目的描述中说明了观测数据生成的过程, 这些参数是未知的, 所以需要对这些参数进行估计.
+
+
+
+解的过程记录在这里. 
 
 三硬币模型可以写作
 $$
@@ -98,6 +143,64 @@ $$
 \hat \theta = \arg\max\limits_{\theta}\log P(Y|\theta)
 $$
 
+这个题目的标准答案实际上也是未知的. 因为可能生成这样的观测的假设空间太大.
+
+### 三硬币模型求解
+
+#### 初值
+
+EM算法首选参数初值, 记作$\theta^{(0)}=(\pi^{(0)},p^{(0)}, q^{(0)})$, 然后迭代计算参数的估计值.
+
+如果第$i$次迭代的模型参数估计值为$\theta^{(i)}=(\pi^{(i)}, p^{(i)}, q^{(i)})$
+
+#### E步
+
+那么第$i+1$次迭代的模型参数估计值表示为
+$$
+\mu_j^{i+1} = \frac{\pi^{(i)}(p^{(i)})^{y_j}(1-p^{(i)})^{1-y_j}}{\pi^{(i)}(p^{(i)})^{y_j}(1-p^{(i)})^{1-y_j} + (1-\pi^{(i)})(q^{(i)})^{y_j}(1-q^{(i)})^{1-y_j}}
+$$
+
+因为是硬币, 只有0,1两种可能, 所有有上面的表达.
+
+这个表达方式还可以拆成如下形式
+$$
+\mu_j^{i+1} = 
+\begin{cases}
+\frac{\pi^{(i)}p^{(i)}}{\pi^{(i)}p^{(i)} + (1-\pi^{(i)})q^{(i)}}&, y_j = 1\\
+\frac{\pi^{(i)}(1-p^{(i)})}{\pi^{(i)}(1-p^{(i)}) + (1-\pi^{(i)})(1-q^{(i)})}&, y_j = 0\\
+\end{cases}
+$$
+
+
+所以, 这步干了什么, 样本起到了什么作用?
+
+这一步, 通过假设的参数, 计算了不同的样本对假设模型的响应, 因为这里面样本就两种可能的值, 所以不同样本的响应情况也是二值的.
+
+这一步是什么的期望? 书中有写, **观测数据来自硬币$B$的概率, 在二项分布的情况下, 响应度和概率是一个概念. **这个说明, 有助于后面M步公式的理解.
+
+#### M步
+
+$$
+\begin{align}
+\pi^{(i+1)} &= \frac{1}{n}\sum_{j=1}^{n}\mu_j^{(i+1)}\\
+\color{red}
+p^{(i+1)} &= \frac{\sum_{j=1}^{n}\mu_j^{(i+1)}y_j}{\sum_{j=1}^{n}\mu_j^{(i+1)}}\\
+\color{red}
+q^{(i+1)} &= \frac{\sum_{j=1}^{n}(1-\mu_j^{(i+1)})y_j}{\sum_{j=1}^{n}(1-\mu_j^{(i+1)})}
+\end{align}
+$$
+
+上面, 红色部分的公式从`观测数据是来自硬币B的概率`这句来理解.
+
+#### 初值影响
+
+这个例子里面0.5是个合理又牛逼的初值. 迭代收敛的最后结果是(0.5, 0.6, 0.6)
+
+这个结果说明, 如果A是均匀的, 那么一个合理的解就是B, C是同质的. 他们的分布情况和观测的分布一致.
+
+在测试案例$test\_e91$中有计算这部分的结果, 注意看, 这种简单的模型其实收敛的很快. 
+
+
 
 ## EM算法的解释
 
@@ -107,7 +210,7 @@ $$
 
 $kmeans \rightarrow GMM \rightarrow EM$
 
-所以, EM应用举例子为kmeans也OK.
+所以, EM应用举例子为kmeans也OK. 而且, 西瓜书$P_{165}$上有说, `k均值聚类算法就是一个典型的EM算法`
 
 ### 统计学习方法
 
@@ -134,13 +237,14 @@ $$
 1. 加权求和的权重$\alpha$满足$\sum_{k=1}^K\alpha_k=1$的约束
 
 1. 求和符号中除去权重的部分, 是高斯分布密度(PDF). 高斯混合模型是一种$\sum(权重\times 分布密度)=分布$的表达
-  高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用. 
+    高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用. 
 
-1. 书中描述的是一维的高斯混合模型, d维的形式如下[^2]:
-  $$
-  \phi(y|\theta_k)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}\exp\left(-\frac{(y-\mu_k)^T\Sigma^{-1}(y-\mu_k)}{2}\right)
-  $$
+1. 书中描述的是一维的高斯混合模型, d维的形式如下[^2], 被称作多元正态分布, 也叫多元高斯分布:
+$$
+\phi(y|\theta_k)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}\exp\left(-\frac{(y-\mu_k)^T\Sigma^{-1}(y-\mu_k)}{2}\right)其中,协方差矩阵
+$$
 
+其中,协方差矩阵$\Sigma\in \R^{n\times n}$
 
 ### GMM的EM算法
 
@@ -152,16 +256,26 @@ P(y|\theta)=\sum_{k=1}^K\alpha_k\phi(y|\theta_k)
 $$
 其中, $\theta=(\alpha_1,\alpha_2,\dots,\alpha_K;\theta_1,\theta_2,\dots,\theta_K)$
 
+补充下, 不完全数据的似然函数应该是
+$$
+\begin{align}
+P(y|\theta)=&\prod_{j=1}^NP(y_j|\theta)\\
+=&\prod_{j=1}^N\sum_{k=1}^K\alpha_k\phi(y|\theta_k)
+\end{align}
+$$
+
+
 使用EM算法估计GMM的参数$\theta$
 
 #### 1. 明确隐变量
 
 - 观测数据$y_j, j=1,2,\dots,N$这样产生, 是**已知的**:
-  首先依概率$\alpha_k$选择第$k$个高斯分布分模型$\phi(y|\theta_k)$;
-  然后依第$k$个分模型的概率分布$\phi(y|\theta_k)$生成观测数据$y_j$
 
-- 反映观测数据$y_j$来自第$k$个分模型的数据是**未知的**,$k=1,2,\dots,K$以**隐变量$\gamma_{jk}$**表示
-  **注意这里$\gamma_{jk}$的维度**
+  1. 依概率$\alpha_k$**选择第$k$个**高斯分布分模型$\phi(y|\theta_k)$;
+  1. 依第$k$个分模型的概率分布$\phi(y|\theta_k)$生成观测数据$y_j$
+  1. 反映观测数据$y_j$来自第$k$个分模型的数据是**未知的**, $k=1,2,\dots,K$ 以**隐变量$\gamma_{jk}$**表示
+     **注意这里$\gamma_{jk}$的维度$(j\times k)$**
+
   $$
   \gamma_{jk}=
   \begin{cases}
@@ -170,6 +284,11 @@ $$
   \end{cases}\\
   j=1,2,\dots,N; k=1,2,\dots,K; \gamma_{jk}\in\{0,1\}
   $$
+
+  注意, 以上说明有几个假设:
+
+  1. 隐变量和观测变量的数据对应, 每个观测数据, 对应了一个隐变量, $\gamma_{jk}$是一种one-hot的形式.
+  1. 具体的单一观测数据是混合模型中的某一个模型产生的
 
 - 完全数据为$(y_j,\gamma_{j1},\gamma_{j2},\dots,\gamma_{jK},k=1,2,\dots,N)$
 
@@ -188,6 +307,14 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
+
+
+
+
+
+
+
 
 
 
@@ -283,10 +410,14 @@ TODO: 推导
 
 ## 参考
 
-1. [EM Algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm)
+1. [^3]: [Maximum-likelihood from incomplete data via the EM algorithm](-)
 
-2. [Sklearn Gaussian Mixed Model](http://scikit-learn.org/stable/modules/mixture.html)
+2. [EM Algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm)
 
-3. [^1]: [Gap Statistics](https://web.stanford.edu/~hastie/Papers/gap.pdf)
+3. [Sklearn Gaussian Mixed Model](http://scikit-learn.org/stable/modules/mixture.html)
 
-4. [^2]: [多元正态分布](https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)
+4. [^1]: [Gap Statistics](https://web.stanford.edu/~hastie/Papers/gap.pdf)
+
+5. [^2]: [多元正态分布](https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)
+
+6. [mml]([https://mml-book.com](https://mml-book.com/))

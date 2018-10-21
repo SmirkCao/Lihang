@@ -6,12 +6,14 @@
 # Author: 😏 <smirk dot cao at gmail dot com>
 
 import numpy as np
+import argparse
+import logging
 
 tol = 0.0001
 
 
 def get_dummy():
-    mu1 = 2
+    mu1 = 5
     mu2 = 6
     sigma1 = 0.1
     sigma2 = 0.5
@@ -34,7 +36,7 @@ def gmm(X):
     mu_ = np.random.rand(k, 1)
     sigma_ = np.random.rand(k, 1)
     alpha_ = np.random.rand(k, 1)
-    print('init mu= \n%s \n init sigma=\n%s \n init alpha=\n%s' % (mu_, sigma_, alpha_))
+    logger.info('\n init mu= \n%s \n init sigma=\n%s \n init alpha=\n%s' % (mu_, sigma_, alpha_))
 
     X_ = np.reshape(np.tile(X, 2), (-1, 2), order="F")
     for n_iter in range(1000):
@@ -57,11 +59,18 @@ def gmm(X):
         if ((abs(mu_ - mu_last)).sum() < tol) and \
                 ((abs(alpha_ - alpha_last)).sum() < tol) and \
                 ((abs(sigma_ - sigma_last)).sum() < tol):
-            print('init mu= \n%s \n init sigma=\n%s \n init alpha=\n%s' % (mu_, sigma_, alpha_))
-            print(n_iter)
+            logger.info('\n mu= \n%s \n sigma=\n%s \n alpha=\n%s' % (mu_, sigma_, alpha_))
+            logger.info(n_iter)
             break
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-p", "--path", required=False, help="path to input data file")
+    args = vars(ap.parse_args())
+
     X = get_dummy()
     gmm(X)
