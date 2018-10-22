@@ -31,7 +31,12 @@
 
 - 如果对PDF, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收获.
 
-- 似然和概率的关系可以推广了解, 这章关于概率和似然的符号表示, 可能会有点看不懂, 比如$P_{157}$中的部分表述.
+- 似然和概率的关系可以推广了解, 这章关于概率和似然的符号表示, 可能会有点看不懂, 比如$P_{157}$中的部分表述. 可以参考引用内容[^3], 概率和似然是同样的形式, $P(Y|\theta)$是一个两变量的函数.
+
+  > Suppose you have a probability model with parameters $\theta$.
+  > $p(x|\theta)$ has two names.
+  > It can be called the **probability of $x$ ** (given $\theta$),
+  > or the **likelihood of $\theta$** (given that $x​$  was observed).
 
 - 学习过程中注意观测数据在每次EM算法中的意义.
 
@@ -213,16 +218,17 @@ $$
 > 1. 选择参数的初值$\theta^{(0)}​$, 开始迭代
 >
 > 1. E步:记$\theta^{(i)}$为第 $i$ 次迭代参数$\theta$的估计值, 在第$i+1$次迭代的$E$步,计算
->   $$ \begin{aligned}
->   Q(\theta, \theta^{(i)}) =& E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]\\
->   =&\sum_Z\log P(Y,Z|\theta)P(Z|Y, \theta^{(i)})
->   \end{aligned} $$
+>     $$ \begin{aligned}
+>     Q(\theta, \theta^{(i)}) =& E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]\\
+>     =&\sum_Z\log P(Y,Z|\theta)P(Z|Y, \theta^{(i)})
+>     \end{aligned} $$
 >
 > 1. M步
->   求使$Q(\theta, \theta^{(i)})$最大化的$\theta$,确定第$i+1$次迭代的参数估计值
->   $$
+>     求使$Q(\theta, \theta^{(i)})$最大化的$\theta$,确定第$i+1$次迭代的参数估计值
+>
+> $$
 >   \theta^{(i+1)}=\arg\max_\theta Q(\theta, \theta^{(i)})
->   $$
+> $$
 >
 
 ### Q 函数
@@ -230,6 +236,8 @@ $$
 注意Q函数的定义
 
 完全数据的**对数似然函数$\log P(Y, Z|\theta)$关于**给定观测数据$Y$的当前参数$\theta^{(i)}$下对为观测数据$Z$的**条件概率分布$P(Z|Y,\theta^{(i)})$的期望**称为Q函数.
+
+
 
 那么问题来了, 三硬币模型的 Q 函数如何描述, 具体的EM算法如何实现.
 
@@ -356,6 +364,7 @@ $$
 
 
 
+
 #### 2. E步,确定Q函数
 
 把Q函数表示成参数形式
@@ -458,3 +467,5 @@ TODO: 推导
 5. [^2]: [多元正态分布](https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)
 
 6. [mml]([https://mml-book.com](https://mml-book.com/))
+
+7. [^3 ]: [probability and likelihood](https://www.quora.com/What-is-the-difference-between-probability-and-likelihood-1/answer/Jason-Eisner)
