@@ -40,9 +40,14 @@
 
 - 学习过程中注意观测数据在每次EM算法中的意义.
 
-- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异, 直觉上都有一种归属的感觉, $\gamma_{jk}$是二值函数, $\alpha_k$是一种概率的表示.
+- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异, 直觉上都有一种归属的感觉, $\gamma_{jk}$是二值函数, $\alpha_k$是一种概率的表示. $\gamma_j​$是one-hot encoding(also: 1-of-K representation)
 
 - GMM这里面实际上还涉及到一个概念叫做凸组合(Convex Combination)[^4] . 是凸几何领域的一个概念, 点的线性组合, 所有系数都非负且和为1. 点集的凸包等价于该点集的凸组合.
+
+- 无论是三硬币还是GMM, 采样的过程都是如下:
+
+  > 1. Sample $z_i \sim p(z|\pi) $
+  > 1. Sample $x_i \sim p(x|\pi)$
 
 
 
@@ -291,6 +296,14 @@ $$
 
 其中,协方差矩阵$\Sigma\in \R^{n\times n}$
 
+### GMM的图模型
+
+这个弄的不咋好看, plate notation
+
+![](assets/gmm_graph_model.png)
+
+
+
 ### GMM的EM算法
 
 问题描述:
@@ -358,23 +371,9 @@ $$
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #### 2. E步,确定Q函数
 
-把Q函数表示成参数形式
+把$Q$函数表示成参数形式
 $$
 \begin{aligned}
 Q(\theta,\theta^{(i)})=&E[\log P(y,\gamma|\theta)|y,\theta^{(i)}]\\
@@ -478,4 +477,3 @@ TODO: 推导
 7. [^3 ]: [probability and likelihood](https://www.quora.com/What-is-the-difference-between-probability-and-likelihood-1/answer/Jason-Eisner)
 
 8. [^4]: [Convex Combination](https://en.wikipedia.org/wiki/Convex_combination)
-
