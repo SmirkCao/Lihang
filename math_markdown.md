@@ -50,7 +50,7 @@
 | $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | \left\|w\right\| |
 | $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
-| $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup |  |  |
+| $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  |   |   |
 
 ### 表 6: 常用箭头
@@ -69,7 +69,7 @@
 | - | - | - | - | - | - |
 |$\therefore$ | \therefore | $\because$ | \because  | $\min \limits_{f \in {H}}$ | \min \limits_{f \in {H}} |
 | $\leqslant$ | \leqslant | $\geqslant$ | \geqslant | $\cal {C} \equiv 1$ | \equiv |
-| $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
+| $\thickapprox$ | \thickapprox | $\thicksim \sim$ | \thicksim \sim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
 | $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} | $\geq \leq$ | \geq \leq |
 | $\bot $ | \bot | $\angle$ | \angle | $\varpropto$ | \varpropto |
