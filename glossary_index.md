@@ -105,4 +105,11 @@ $$
 \end{aligned}
 $$
 
+### One-hot Encoding
+
+$P_{163}$ 注意这里书中没有明确的说明$\gamma_j$是One-hot encoding, 也叫做1-of-K representation
+
+$\gamma_j=\sum_{k=1}^K\gamma_{jk}=1, j=1,2,3,\dots, n$
+
+
 
