@@ -2,6 +2,8 @@
 
 [TOC]
 
+## 数学相关LaTeX表达
+
 ### 表 1: 数学模式重音符
 
 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 |
@@ -227,9 +229,9 @@ M_3(x)=
 \end{aligned}
 ```
 
+## Emoji
 
-
-### 表X:Emoji
+### 表X: Emoji
 
 | :smirk: smirk          | :smile:smile | :laughing:laughing | :blush:blush       | :smiley:smiley | :heart_eyes:heart_eyes |
 | ---------------------- | ------------ | ------------------ | ------------------ | -------------- | ---------------------- |
@@ -245,4 +247,6 @@ M_3(x)=
 2. [Cmd Markdown公式指导手册](https://www.zybuluo.com/codeep/note/163962)
 3. [Equals_Sign](https://en.wikipedia.org/wiki/Equals_sign#Other_related_symbols)
 4. [Emoji](https://gist.github.com/rxaviers/7360908)
+5. [Short Math Guide for LaTeX](http://ctan.math.utah.edu/ctan/tex-archive/info/short-math-guide/short-math-guide.pdf)
+6. [List of mathematical symbols](https://en.wikipedia.org/wiki/List_of_mathematical_symbols)
 
