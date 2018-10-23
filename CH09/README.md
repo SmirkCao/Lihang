@@ -31,14 +31,18 @@
 
 - 如果对PDF, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收获.
 
-- 似然和概率的关系可以推广了解, 这章关于概率和似然的符号表示, 可能会有点看不懂, 比如$P_{157}$中的部分表述. 可以参考引用内容[^3], 概率和似然是同样的形式, $P(Y|\theta)$是一个两变量的函数.
+- 似然和概率的关系可以推广了解, 这章关于概率和似然的符号表示, 可能会有点看不懂, 比如$P_{157}$中的部分表述. 可以参考引用内容[^3], 概率和似然是同样的形式描述的都是**可能性**, $P(Y|\theta)$是一个两变量的函数, 似然是给定结果, 求参数可能性; 概率是给定参数求结果可能性.
 
   > Suppose you have a probability model with parameters $\theta$.
   > $p(x|\theta)$ has two names.
   > It can be called the **probability of $x$ ** (given $\theta$),
-  > or the **likelihood of $\theta$** (given that $x​$  was observed).
+  > or the **likelihood of $\theta$** (given that $x$  was observed).
 
 - 学习过程中注意观测数据在每次EM算法中的意义.
+
+- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异, 直觉上都有一种归属的感觉, $\gamma_{jk}$是二值函数, $\alpha_k$是一种概率的表示.
+
+- GMM这里面实际上还涉及到一个概念叫做凸组合(Convex Combination)[^4] . 是凸几何领域的一个概念, 点的线性组合, 所有系数都非负且和为1. 点集的凸包等价于该点集的凸组合.
 
 
 
@@ -241,6 +245,8 @@ $$
 
 那么问题来了, 三硬币模型的 Q 函数如何描述, 具体的EM算法如何实现.
 
+
+
 ## EM算法的解释
 
 注意这里EM不是模型, 是个一般方法, 不具有具体的模型.
@@ -365,6 +371,7 @@ $$
 
 
 
+
 #### 2. E步,确定Q函数
 
 把Q函数表示成参数形式
@@ -469,3 +476,6 @@ TODO: 推导
 6. [mml]([https://mml-book.com](https://mml-book.com/))
 
 7. [^3 ]: [probability and likelihood](https://www.quora.com/What-is-the-difference-between-probability-and-likelihood-1/answer/Jason-Eisner)
+
+8. [^4]: [Convex Combination](https://en.wikipedia.org/wiki/Convex_combination)
+
