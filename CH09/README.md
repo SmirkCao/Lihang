@@ -31,7 +31,18 @@
 
 - 如果对PDF, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收获.
 
-- 似然和概率的关系可以推广了解, 这章关于概率和似然的符号表示, 可能会有点看不懂, 比如$P_{157}$中的部分表述.
+- 似然和概率的关系可以推广了解, 这章关于概率和似然的符号表示, 可能会有点看不懂, 比如$P_{157}$中的部分表述. 可以参考引用内容[^3], 概率和似然是同样的形式描述的都是**可能性**, $P(Y|\theta)$是一个两变量的函数, 似然是给定结果, 求参数可能性; 概率是给定参数求结果可能性.
+
+  > Suppose you have a probability model with parameters $\theta$.
+  > $p(x|\theta)$ has two names.
+  > It can be called the **probability of $x$ ** (given $\theta$),
+  > or the **likelihood of $\theta$** (given that $x$  was observed).
+
+- 学习过程中注意观测数据在每次EM算法中的意义.
+
+- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异, 直觉上都有一种归属的感觉, $\gamma_{jk}$是二值函数, $\alpha_k$是一种概率的表示.
+
+- GMM这里面实际上还涉及到一个概念叫做凸组合(Convex Combination)[^4] . 是凸几何领域的一个概念, 点的线性组合, 所有系数都非负且和为1. 点集的凸包等价于该点集的凸组合.
 
 
 
@@ -65,6 +76,8 @@
 有时候, 只观测显变量看不到关系, 就需要把隐变量引进来.
 
 ## 问题描述
+
+书中用三硬币模型做为引子, 在学习这部分内容的时候, 注意体会观测数据的作用.
 
 ### 三硬币模型
 
@@ -200,6 +213,38 @@ $$
 
 在测试案例$test\_e91$中有计算这部分的结果, 注意看, 这种简单的模型其实收敛的很快. 
 
+### EM算法
+
+> 输入: 观测变量数据$Y$, 隐变量数据$Z$, 联合分布$P(Y,Z|\theta)$, 条件分布$P(Z|Y,\theta)$
+>
+> 输出: 模型参数$\theta$
+>
+> 1. 选择参数的初值$\theta^{(0)}​$, 开始迭代
+>
+> 1. E步:记$\theta^{(i)}$为第 $i$ 次迭代参数$\theta$的估计值, 在第$i+1$次迭代的$E$步,计算
+>     $$ \begin{aligned}
+>     Q(\theta, \theta^{(i)}) =& E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]\\
+>     =&\sum_Z\log P(Y,Z|\theta)P(Z|Y, \theta^{(i)})
+>     \end{aligned} $$
+>
+> 1. M步
+>     求使$Q(\theta, \theta^{(i)})$最大化的$\theta$,确定第$i+1$次迭代的参数估计值
+>
+> $$
+>   \theta^{(i+1)}=\arg\max_\theta Q(\theta, \theta^{(i)})
+> $$
+>
+
+### Q 函数
+
+注意Q函数的定义
+
+完全数据的**对数似然函数$\log P(Y, Z|\theta)$关于**给定观测数据$Y$的当前参数$\theta^{(i)}$下对为观测数据$Z$的**条件概率分布$P(Z|Y,\theta^{(i)})$的期望**称为Q函数.
+
+
+
+那么问题来了, 三硬币模型的 Q 函数如何描述, 具体的EM算法如何实现.
+
 
 
 ## EM算法的解释
@@ -319,6 +364,14 @@ $$
 
 
 
+
+
+
+
+
+
+
+
 #### 2. E步,确定Q函数
 
 把Q函数表示成参数形式
@@ -421,3 +474,8 @@ TODO: 推导
 5. [^2]: [多元正态分布](https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)
 
 6. [mml]([https://mml-book.com](https://mml-book.com/))
+
+7. [^3 ]: [probability and likelihood](https://www.quora.com/What-is-the-difference-between-probability-and-likelihood-1/answer/Jason-Eisner)
+
+8. [^4]: [Convex Combination](https://en.wikipedia.org/wiki/Convex_combination)
+

@@ -91,3 +91,18 @@ $P_{27},P_{97}$在[感知机](CH02/README.md)和[支持向量机](CH07/README.md
 ### 概率分布密度
 
 $P_{162}$ 高斯分布密度, 书中的内容扩展下去看二维混合高斯模型, 对协方差矩阵的理解会有帮助.
+
+### 对数似然损失
+
+$P_7$ 对数损失函数或者对数似然损失函数 $L(Y,P(Y|X))=-\log P(Y|X)$
+
+### 对数似然函数
+
+$P_{158}$ 面对一个含有隐变量的概率模型, 目标是极大化观测数据(不完全数据)Y关于参数$\theta$的对数似然函数, 即极大化
+$$
+\begin{aligned}L(\theta)=&\log P(Y|\theta)=\log \sum_Z P(Y, Z|\theta) \\
+=&\log\left(\sum_ZP(Y|Z,\theta)P(Z|\theta)\right)
+\end{aligned}
+$$
+
+
