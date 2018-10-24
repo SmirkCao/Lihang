@@ -271,7 +271,9 @@ $$
 >
 > 1. E步: 
 > $$\hat\gamma_{jk}=\frac{\alpha_kBern(y_j|\theta_k)}{\sum_{k=1}^K\alpha_kBern(y_j|\theta_k)}, j=1,2,\dots,N; k=1,2,\dots,K$$
-> 1. M步: $$\hat\mu_k$$
+> 1. M步: 
+> $$\hat\mu_k=\frac{\sum_{j=1}^N\hat\gamma_{jk}y_j}{\sum_{j=1}^N\hat\gamma_{jk}}\\
+> \hat\alpha_k=\frac{n_k}{N}$$
 
 
 ### 高斯混合模型
@@ -372,10 +374,6 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
-
-
-
-
 
 
 
