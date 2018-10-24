@@ -172,7 +172,7 @@ $$
 
 这个题目的标准答案实际上也是未知的. 因为可能生成这样的观测的假设空间太大.
 
-#### 三硬币模型求解
+#### 三硬币模型的EM算法
 
 ##### 1.初值
 
@@ -261,8 +261,17 @@ $$
 
 
 
-那么问题来了, 三硬币模型的 Q 函数如何描述, 具体的EM算法如何实现.
+#### BMM的EM算法
 
+> 输入: 观测变量数据$y_1, y_2, \dots, y_N$, 伯努利混合模型
+>
+> 输出: 伯努利混合模型参数
+>
+> 1. 选择参数的初始值开始迭代, $2K$ 个参数
+>
+> 1. E步: 
+> $$\hat\gamma_{jk}=\frac{\alpha_kBern(y_j|\theta_k)}{\sum_{k=1}^K\alpha_kBern(y_j|\theta_k)}, j=1,2,\dots,N; k=1,2,\dots,K$$
+> 1. M步: $$\hat\mu_k$$
 
 
 ### 高斯混合模型
@@ -306,11 +315,11 @@ $$
 
 问题描述:
 
-已知观测数据$y_1, y_2, \dots, y_N$, 由高斯混合模型生成
+已知观测数据$y_1, y_2, \dots , y_N$, 由高斯混合模型生成
 $$
 P(y|\theta)=\sum_{k=1}^K\alpha_k\phi(y|\theta_k)
 $$
-其中, $\theta=(\alpha_1,\alpha_2,\dots,\alpha_K;\theta_1,\theta_2,\dots,\theta_K)$
+其中, $\theta=(\alpha_1,\alpha_2,\dots,\alpha_K;\theta_1,\theta_2,\dots,\theta_K)​$
 
 补充下, 不完全数据的似然函数应该是
 $$
@@ -372,23 +381,25 @@ $$
 
 
 
+
 ##### 2. E步,确定Q函数
 
-把$Q$函数表示成参数形式
+把$Q$ 函数表示成参数形式
 $$
 \begin{aligned}
 Q(\theta,\theta^{(i)})=&E[\log P(y,\gamma|\theta)|y,\theta^{(i)}]\\
 =&\color{green}E\color{black}\left\{\sum_{k=1}^K\left\{\color{red}n_k\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\right\}\\
+=&\color{green}E\color{black}\left\{\sum_{k=1}^K\left\{\color{red}\sum_{j=1}^N\gamma_{jk}\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\right\}\\
 =&\sum_{k=1}^K\left\{\color{red}\sum_{j=1}^{N}(\color{green}E\color{red}\gamma_{jk})\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N(\color{green}E\color{blue}\gamma _{jk})\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\\
 \end{aligned}
 $$
 
 $$
 \begin{align}
-\hat \gamma _{jk}= &E(\gamma_{jk}|y,\theta)=P(\gamma_{jk}=1|y,\theta)\\
+\hat \gamma _{jk}= &\color{purple}E(\gamma_{jk}|y,\theta)=P(\gamma_{jk}=1|y,\theta)\\
 =&\frac{P(\gamma_{jk}=1,y_j|\theta)}{\sum_{k=1}^KP(\gamma_{jk}=1,y_j|\theta)}\\
-=&\frac{P(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)}{\sum_{k=1}^KP(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)}\\
-=&\frac{\alpha_k\phi(y_j|\theta_k)}{\sum_{k=1}^K\alpha_k\phi(y_j|\theta_k)}
+=&\frac{P(y_j|\color{red}\gamma_{jk}=1,\theta\color{black})\color{green}P(\gamma_{jk}=1|\theta)}{\sum_{k=1}^KP(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)}\\
+=&\frac{\color{green}\alpha_k\color{black}\phi(y_j|\color{red}\theta_k)}{\sum_{k=1}^K\alpha_k\phi(y_j|\theta_k)}
 \end{align}
 $$
 
@@ -396,20 +407,13 @@ $$
 
 ​    这部分内容就是搬运了书上的公式, 有几点说明:
 
-1. 注意这里$E(\gamma_{jk}|y,\theta)$,记为$\hat\gamma_{jk}$,E步求的**期望**就是这个.
-
-1. 对应理解一下上面公式中的红色,蓝色和绿色部分.
-
+1. 注意这里$E(\gamma_{jk}|y,\theta)$,记为$\hat\gamma_{jk}$, 对应了E步求的**期望**中的一部分.
+1. 对应理解一下上面公式中的红色,蓝色和绿色部分, 以及$\hat\gamma_{jk}$中红色和绿色的对应关系
 1. 这里用到了$n_k=\sum_{j=1}^N\gamma_{jk}$
-
-1. $\hat \gamma_{jk}$为分模型$k$对观测数据$y_j$的响应度. 这里, 第一行参考伯努利分布的期望.
-
-$$
-Q(\theta,\theta^{(i)})=\sum_{k=1}^Kn_k\log \alpha_k+\sum_{j=1}^N\hat \gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k-\frac{1}{2\sigma_k^2}(y_j-\mu_k)^2\right]
-$$
-
+1. $\hat \gamma_{jk}$为分模型$k$对观测数据$y_j$的响应度. 这里, 紫色标记的第一行参考伯努利分布的期望.
+$$Q(\theta,\theta^{(i)})=\sum_{k=1}^Kn_k\log \alpha_k+\sum_{j=1}^N\hat \gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k-\frac{1}{2\sigma_k^2}(y_j-\mu_k)^2\right]$$
 其中$i$表示第$i$步迭代
-
+1. 写出$Q$ 函数在推导的时候有用, 但是在程序计算的时候, E步需要计算的就是$\hat\gamma_{jk}$, M步用到了这个结果.
 其实抄公式没有什么意义,主要是能放慢看公式的速度. 和图表一样, 公式简洁的表达了很多含义, 公式中也许更能体会到数学之美.
 
 ##### 3. M步
@@ -419,10 +423,11 @@ $$
 \theta^{(i+1)}=\arg\max_\theta Q(\theta,\theta^{(i)})
 $$
 
-- $Q$对$\mu_k, \sigma^2$求偏导得到$\hat\mu_k, \hat \sigma_k^2$
-- $\sum_{k=1}^K\alpha_k=1$条件下求偏导得到$\alpha_k$
+- $\arg\max$ 就是求Q的极值对应的参数$\theta$, 如说是离散的, 遍历所有值, 最大查找, 如果是连续的, 偏导为零求极值.
+- $\frac {\partial Q}{\partial \mu_k}=0, \frac {\partial{Q}}{\partial{\sigma^2}}= 0$  得到$\hat\mu_k, \hat \sigma_k^2$
+- $\sum_{k=1}^K\alpha_k=1, \frac{\partial{Q}}{\partial{\alpha_k}}=0$ 得到$\alpha_k$
 
-TODO: 推导
+
 
 ##### 4. 停止条件
 
