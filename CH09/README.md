@@ -182,7 +182,7 @@ EM算法首选参数初值, 记作$\theta^{(0)}=(\pi^{(0)},p^{(0)}, q^{(0)})$, �
 
 ##### 2.E步
 
-那么第$i+1$次迭代的模型参数估计值表示为
+那么第$i+1$ 次迭代的模型参数估计值表示为
 $$
 \mu_j^{i+1} = \frac{\pi^{(i)}(p^{(i)})^{y_j}(1-p^{(i)})^{1-y_j}}{\pi^{(i)}(p^{(i)})^{y_j}(1-p^{(i)})^{1-y_j} + (1-\pi^{(i)})(q^{(i)})^{y_j}(1-q^{(i)})^{1-y_j}}
 $$
@@ -236,10 +236,12 @@ $$
 > 1. 选择参数的初值$\theta^{(0)}​$, 开始迭代
 >
 > 1. E步:记$\theta^{(i)}$为第 $i$ 次迭代参数$\theta$的估计值, 在第$i+1$次迭代的$E$步,计算
->     $$ \begin{aligned}
+>     $$
+>     \begin{align}
 >     Q(\theta, \theta^{(i)}) =& E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]\\
->     =&\sum_Z\log P(Y,Z|\theta)P(Z|Y, \theta^{(i)})
->     \end{aligned} $$
+>     =&\sum_Z\color{red}\log P(Y,Z|\theta)\color{green}P(Z|Y, \theta^{(i)})
+>     \end{align}
+>     $$
 >
 > 1. M步
 >     求使$Q(\theta, \theta^{(i)})$最大化的$\theta$,确定第$i+1$次迭代的参数估计值
@@ -269,7 +271,7 @@ $$
 $$
 P(y|\theta)=\sum\limits^{K}_{k=1}\alpha_k\phi(y|\theta_k)
 $$
-其中, $\alpha_k$是系数, $\alpha_k\ge0$, $\sum\limits^{K}_{k=1}\alpha_k=1$, $\phi(y|\theta_k)$是**高斯分布密度**, $\theta_k=(\mu,\sigma^2)$
+其中, $\alpha_k$是系数, $\alpha_k\ge0$, $\sum\limits^{K}_{k=1}\alpha_k=1$, $\phi(y|\theta_k)$ 是**高斯分布密度**, $\theta_k=(\mu,\sigma^2)$
 $$
 \phi(y|\theta_k)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(y-\mu_k)^2}{2\sigma_k^2}\right)
 $$
@@ -359,6 +361,8 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
+
 
 
 

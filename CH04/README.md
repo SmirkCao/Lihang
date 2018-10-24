@@ -91,7 +91,7 @@ $$
 
 > 为了估计状态变量的条件分布, 利用贝叶斯法则, 有
 > $$
-> P(X|Y)=\frac{P(Y|X)P(X)}{P(Y)}
+> \underbrace{P(X|Y)}_{posterior}=\frac{\overbrace{P(Y|X)}^{likelihood}\overbrace{P(X)}^{prior}}{\underbrace{P(Y)}_{evidence}}
 > $$
 > 其中$P(X|Y)$为后验概率(Posterior), $P(Y|X)$称为似然, $P(Y)$称为先验(Prior)[^1].
 >
