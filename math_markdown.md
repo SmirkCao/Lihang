@@ -2,6 +2,8 @@
 
 [TOC]
 
+## 数学相关LaTeX表达
+
 ### 表 1: 数学模式重音符
 
 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 |
@@ -50,7 +52,7 @@
 | $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | \left\|w\right\| |
 | $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
-| $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup |  |  |
+| $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  |   |   |
 
 ### 表 6: 常用箭头
@@ -69,7 +71,7 @@
 | - | - | - | - | - | - |
 |$\therefore$ | \therefore | $\because$ | \because  | $\min \limits_{f \in {H}}$ | \min \limits_{f \in {H}} |
 | $\leqslant$ | \leqslant | $\geqslant$ | \geqslant | $\cal {C} \equiv 1$ | \equiv |
-| $\thickapprox$ | \thickapprox | $\thicksim$ | \thicksim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
+| $\thickapprox$ | \thickapprox | $\thicksim \sim$ | \thicksim \sim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
 | $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} | $\geq \leq$ | \geq \leq |
 | $\bot $ | \bot | $\angle$ | \angle | $\varpropto$ | \varpropto |
@@ -227,9 +229,9 @@ M_3(x)=
 \end{aligned}
 ```
 
+## Emoji
 
-
-### 表X:Emoji
+### 表X: Emoji
 
 | :smirk: smirk          | :smile:smile | :laughing:laughing | :blush:blush       | :smiley:smiley | :heart_eyes:heart_eyes |
 | ---------------------- | ------------ | ------------------ | ------------------ | -------------- | ---------------------- |
@@ -245,4 +247,6 @@ M_3(x)=
 2. [Cmd Markdown公式指导手册](https://www.zybuluo.com/codeep/note/163962)
 3. [Equals_Sign](https://en.wikipedia.org/wiki/Equals_sign#Other_related_symbols)
 4. [Emoji](https://gist.github.com/rxaviers/7360908)
+5. [Short Math Guide for LaTeX](http://ctan.math.utah.edu/ctan/tex-archive/info/short-math-guide/short-math-guide.pdf)
+6. [List of mathematical symbols](https://en.wikipedia.org/wiki/List_of_mathematical_symbols)
 

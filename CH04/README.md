@@ -22,17 +22,10 @@
 
 - 给定数据集的时候，我们能知道不同类别的分布，这个很好统计的量叫**先验**$P(Y=c_k)$
 
-- 垃圾邮件识别可以用朴素贝叶斯的方法
+  - 垃圾邮件识别可以用朴素贝叶斯的方法
 
 - NB是常见的概率图模型之一
-
-  ```mermaid
-  graph TD
-  	y((y))-->x((x))
-  	subgraph N
-  		x
-  	end
-  ```
+  ![nb_pgm](../CH04/assets/nb_pgm.png)
 
 - 第一个参考文献[^1]，这里推荐阅读，链接中的手稿在2017年还有更新，开头部分介绍了很多符号的定义，可以配合[CH01](../CH01/README.md)的内容来理解。讲述了生成模型和判别模型，朴素贝叶斯和逻辑回归
 
@@ -98,9 +91,9 @@ $$
 
 > 为了估计状态变量的条件分布, 利用贝叶斯法则, 有
 > $$
-> P(X|Y)=\frac{P(Y|X)P(X)}{P(Y)}
+> \underbrace{P(X|Y)}_{posterior}=\frac{\overbrace{P(Y|X)}^{likelihood}\overbrace{P(X)}^{prior}}{\underbrace{P(Y)}_{evidence}}
 > $$
-> 其中$P(X|Y)$为后验概率(Posterior), $P(Y|X)$称为似然, $P(Y)$称为先验(Prior)[^1].
+> 其中$P(X|Y)$为后验概率(Posterior), $P(Y|X)$称为似然, $P(X)$称为先验(Prior)[^1].
 >
 
 - 后验概率最大化的含义
