@@ -93,7 +93,7 @@ $$
 > $$
 > \underbrace{P(X|Y)}_{posterior}=\frac{\overbrace{P(Y|X)}^{likelihood}\overbrace{P(X)}^{prior}}{\underbrace{P(Y)}_{evidence}}
 > $$
-> 其中$P(X|Y)$为后验概率(Posterior), $P(Y|X)$称为似然, $P(Y)$称为先验(Prior)[^1].
+> 其中$P(X|Y)$为后验概率(Posterior), $P(Y|X)$称为似然, $P(X)$称为先验(Prior)[^1].
 >
 
 - 后验概率最大化的含义
