@@ -4,14 +4,17 @@
 # Filename: unit_test
 # Date: 9/6/18
 # Author: 😏 <smirk dot cao at gmail dot com>
-import numpy as np
+from sklearn.datasets import load_digits
 from gmm import *
+from bmm import *
 from model import *
+import numpy as np
 import logging
 import unittest
 
 
 class TestMEMethods(unittest.TestCase):
+    @unittest.skip
     def test_e91(self):
         # 这个是个伯努利分布, 例子讲的是EM算法, 不是GMM. 理解这里的关系
         sample = np.array([1, 1, 0, 1, 0, 0, 1, 0, 1, 1])
@@ -59,6 +62,7 @@ class TestMEMethods(unittest.TestCase):
     def test_t93(self):
         pass
 
+    @unittest.skip
     def test_t91(self):
         # 可以通过TripleCoin来实现采样
         # tc = TripleCoin(pi=0.3, p=0.6, q=0.2)
@@ -89,6 +93,17 @@ class TestMEMethods(unittest.TestCase):
     def test_simulation(self):
         # 使用高斯生成数据, 然后用gmm拿到模型参数, 对比生成参数与学习到的参数.
         pass
+
+    def test_bmm(self):
+        # load data to X
+        X = ((load_digits().data[:100])>0.5)*1
+        X = np.array([1, 1, 0, 1, 0, 0, 1, 0, 1, 1])
+        bmm = BMM(n_components=2, max_iter=10)
+        bmm.fit(X)
+        # logger.info("----bmm----start----")
+        # logger.info(bmm.alpha)
+        # logger.info(bmm.mu)
+        # logger.info("----bmm----end----")
 
 
 if __name__ == '__main__':
