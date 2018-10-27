@@ -96,14 +96,14 @@ class TestMEMethods(unittest.TestCase):
 
     def test_bmm(self):
         # load data to X
-        X = ((load_digits().data[:100])>0.5)*1
+        X = ((load_digits().data[:100]) > 0.5)*1
         X = np.array([1, 1, 0, 1, 0, 0, 1, 0, 1, 1])
-        bmm = BMM(n_components=2, max_iter=10)
+        bmm = BMM(n_components=2, max_iter=2)
         bmm.fit(X)
-        # logger.info("----bmm----start----")
-        # logger.info(bmm.alpha)
-        # logger.info(bmm.mu)
-        # logger.info("----bmm----end----")
+        logger.info("----bmm----start----")
+        logger.info(bmm.alpha)
+        logger.info(bmm.mu)
+        logger.info("----bmm----end----")
 
 
 if __name__ == '__main__':

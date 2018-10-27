@@ -7,12 +7,6 @@
 import numpy as np
 import argparse
 import logging
-"""
-方便理解, 书中用到的符号列举在下面
-N
-i
-j
-"""
 
 
 class BMM(object):
@@ -44,24 +38,28 @@ class BMM(object):
         # 如果n > 1 , 分解成n个模型训练, 结果再拼回来
         if y is not None:
             self.label = y
+        # X: (N, 2)
+        self.X = np.eye(k)[X]
         # gamma: (N, k), 样本对子模型的响应度gamma_jk, 按j求和应该是1
         self.gamma = np.ones((N, k))/k
+
         # alpha: (k) , 子模型对混合模型的贡献, 求和为1
-        self.alpha = np.ones(k)/k
-        # self.alpha = np.array([0.4, 0.6])
-        mu = np.ones(k)/k
-        # mu = np.array([0.6, 0.7])
+        self.alpha = 0.4
+        self.alpha = np.stack((1 - self.alpha, self.alpha), axis=-1)
+
         # mu: (k, 2) 2是为了做矩阵乘法, 相对for loop效率应该会高, 这里todo: benchmark
-        self.mu = np.stack((mu, 1-mu), axis=-1)
-        # X: (N, 2)
-        self.X = np.eye(2)[X]
+        mu = np.array([0.7, 0.6])
+        self.mu = np.stack((1 - mu, mu), axis=-1)
 
         for i in range(self.max_iter):
-            print(self.alpha, "\n", self.mu[:, 0], "\n", self.gamma, "\n")
+            # print(self.alpha, "\n", self.mu[:, 0], "\n", self.gamma, "\n")
             self.do_e_step()
             self.do_m_step()
+            logger.info("alpha %s" % self.alpha)
+            logger.info(self.mu)
             if self.is_convergence():
                 break
+
 
     def is_convergence(self):
 
@@ -80,11 +78,13 @@ class BMM(object):
         return self
 
     def do_m_step(self):
-        nk = np.sum(self.gamma, axis=0).reshape(-1, 1)
-        # update mu
-        self.mu = np.dot(self.X[:, 1], self.gamma)/nk
+        nk = np.sum(self.gamma, axis=0)
+        # update mu, 注意这里X[:, 1] 中的1 来自X的取值为1的意思.
+        self.mu = np.sum(self.gamma*self.X, axis=0)/nk
+        self.mu = np.stack((1 - self.mu, self.mu), axis=-1)
+
         # update alpha
-        self.alpha = (nk/self.m).reshape(2)
+        self.alpha = nk/self.m
         return self
 
     def predict(self, X):
