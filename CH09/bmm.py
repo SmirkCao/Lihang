@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-#! -*- coding=utf-8 -*-
+# ! -*- coding=utf-8 -*-
 # Project:  Lihang
 # Filename: bmm
 # Date: 10/24/18
@@ -55,7 +55,7 @@ class BMM(object):
         self.X = np.eye(k)[X]
         # gamma: (N, k), 样本对子模型的响应度gamma_jk, 按j求和应该是1
         if self.gamma is None:
-            self.gamma = np.ones((N, k))/k
+            self.gamma = np.ones((N, k)) / k
 
         # alpha: (k) , 子模型对混合模型的贡献, 求和为1
         if self.alpha is None:
@@ -64,7 +64,7 @@ class BMM(object):
 
         # mu: (k, 2) 2是为了做矩阵乘法, 相对for loop效率应该会高, 这里todo: benchmark
         if self.mu is None:
-            self.mu = np.ones(k)/k
+            self.mu = np.ones(k) / k
 
         self.mu = np.stack((1 - self.mu, self.mu), axis=-1)
 
@@ -78,19 +78,18 @@ class BMM(object):
             if self.is_convergence():
                 break
 
-
     def is_convergence(self):
 
         return False
 
     def density(self):
-        # Bernoulli
+        # Bernoulli Distribution Density
         rst = np.dot(self.X, self.mu.T)
         return rst
 
     def do_e_step(self):
         # 更新gamma
-        self.gamma = self.density()*self.alpha
+        self.gamma = self.density() * self.alpha
         z = np.sum(self.gamma, axis=1).reshape(-1, 1)
         self.gamma /= z
         return self
@@ -99,11 +98,11 @@ class BMM(object):
         nk = np.sum(self.gamma, axis=0)
         # update mu, 注意这里X[:, 1] 中的1 来自X的取值为1的意思.
         # p,q 对应的是A=1, B=1, A=0, C=1, 注意这里用样本刷
-        self.mu = np.sum(self.gamma*self.X[:, 1].reshape(-1, 1), axis=0)/nk
+        self.mu = np.sum(self.gamma * self.X[:, 1].reshape(-1, 1), axis=0) / nk
         self.mu = np.stack((1 - self.mu, self.mu), axis=-1)
 
         # update alpha
-        self.alpha = nk/self.m
+        self.alpha = nk / self.m
         return self
 
     def predict(self, X):
