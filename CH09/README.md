@@ -58,6 +58,8 @@
      1. $MLE \rightarrow B$
      1. $F$函数的极大-极大算法
 
+- 这个repo里面实现了bmm算法git
+
 ### 符号说明
 
 > 一般地, 用$Y$表示观测随机变量的数据, $Z$表示隐随机变量的数据. $Y$和$Z$一起称为**完全数据**(complete-data), 观测数据$Y$又称为**不完全数据**(incomplete-data)
@@ -229,6 +231,21 @@ $$
 
 在测试案例$test\_e91$中有计算这部分的结果, 注意看, 这种简单的模型其实收敛的很快. 
 
+##### p,q 含义
+
+这里面p对应了A =1, B=1, q对应了A=0, C=1
+
+[bmm.py](bmm.py)对伯努利混合模型做了实现, 有几点说明一下:
+
+1. $(p^{(i)})^{y_i}(1-p^{(i)})^{1-y_i}$可以表示成矩阵乘法, 尽量不要用for, 效率会差
+
+1. 书中$e_{91}$的表达中, 采用了$\pi, p, q$来表示, 注意在题目的说明部分有说明三个符号的含义
+
+1. 实际上不怎么抛硬币, 但是01的伯努利分布很多, 在书中算法9.4部分, 有这样一个说明:
+
+   > 当参数$\theta$的维数为$d(d\ge2 )$的时候, 可以采用一种特殊的GEM算法, 它将算法的M步分解成d次条件极大化, 每次只改变参数向量的一个分量,其余量不改变.
+
+
 ### EM算法另外视角
 
 > 输入: 观测变量数据$Y$, 隐变量数据$Z$, 联合分布$P(Y,Z|\theta)$, 条件分布$P(Z|Y,\theta)$
@@ -268,9 +285,8 @@ $$
 > 输出: 伯努利混合模型参数
 >
 > 1. 选择参数的初始值开始迭代, $2K$ 个参数
->
 > 1. E步: 
-> $$\hat\gamma_{jk}=\frac{\alpha_kBern(y_j|\theta_k)}{\sum_{k=1}^K\alpha_kBern(y_j|\theta_k)}=\frac{\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}{\sum_{k=1}^K\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}, j=1,2,\dots,N; k=1,2,\dots,K$$
+>     $$\hat\gamma_{jk}=\frac{\alpha_kBern(y_j|\theta_k)}{\sum_{k=1}^K\alpha_kBern(y_j|\theta_k)}=\frac{\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}{\sum_{k=1}^K\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}, j=1,2,\dots,N; k=1,2,\dots,K$$
 > 1. M步: 
 > $$\hat\mu_k=\frac{\sum_{j=1}^N\hat\gamma_{jk}y_j}{\sum_{j=1}^N\hat\gamma_{jk}}\\
 > \hat\alpha_k=\frac{n_k}{N}$$
@@ -376,13 +392,9 @@ $$
 
 
 
-
-
-
-
 ##### 2. E步,确定Q函数
 
-把$Q$ 函数表示成参数形式
+把$Q​$ 函数表示成参数形式
 $$
 \begin{aligned}
 Q(\theta,\theta^{(i)})=&E[\log P(y,\gamma|\theta)|y,\theta^{(i)}]\\
