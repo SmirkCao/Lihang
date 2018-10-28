@@ -12,9 +12,11 @@ import numpy as np
 import logging
 import unittest
 
+DEBUG = False
+
 
 class TestMEMethods(unittest.TestCase):
-    @unittest.skip
+    @unittest.skipIf(DEBUG, "debug")
     def test_e91(self):
         # 这个是个伯努利分布, 例子讲的是EM算法, 不是GMM. 理解这里的关系
         sample = np.array([1, 1, 0, 1, 0, 0, 1, 0, 1, 1])
@@ -62,7 +64,7 @@ class TestMEMethods(unittest.TestCase):
     def test_t93(self):
         pass
 
-    @unittest.skip
+    @unittest.skipIf(DEBUG, "debug")
     def test_t91(self):
         # 可以通过TripleCoin来实现采样
         # tc = TripleCoin(pi=0.3, p=0.6, q=0.2)
@@ -100,9 +102,15 @@ class TestMEMethods(unittest.TestCase):
         X = np.array([1, 1, 0, 1, 0, 0, 1, 0, 1, 1])
         bmm = BMM(n_components=2, max_iter=2)
         bmm.fit(X)
-        logger.info("----bmm----start----")
-        logger.info(bmm.alpha)
-        logger.info(bmm.mu)
+        logger.info("----bmm 0.5 0.5 0.5----start----")
+        logger.info(bmm.alpha[1])
+        logger.info(bmm.mu[:, 1])
+        logger.info("----bmm----end----")
+        bmm = BMM(n_components=2, max_iter=2, alpha=0.4, mu=np.array([0.7, 0.6]))
+        bmm.fit(X)
+        logger.info("----bmm 0.4 0.6 0.7----start----")
+        logger.info(bmm.alpha[1])
+        logger.info(bmm.mu[:, 1])
         logger.info("----bmm----end----")
 
 

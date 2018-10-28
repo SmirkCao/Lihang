@@ -229,6 +229,10 @@ $$
 
 在测试案例$test\_e91$中有计算这部分的结果, 注意看, 这种简单的模型其实收敛的很快. 
 
+##### p,q 含义
+
+这里面p对应了A =1, B=1, q对应了A=0, C=1
+
 ### EM算法另外视角
 
 > 输入: 观测变量数据$Y$, 隐变量数据$Z$, 联合分布$P(Y,Z|\theta)$, 条件分布$P(Z|Y,\theta)$
@@ -372,6 +376,7 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
 
 
 ##### 2. E步,确定Q函数
