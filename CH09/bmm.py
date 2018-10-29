@@ -55,7 +55,7 @@ class BMM(object):
         self.X = np.eye(k)[X]
         # gamma: (N, k), 样本对子模型的响应度gamma_jk, 按j求和应该是1
         if self.gamma is None:
-            self.gamma = np.ones((N, k)) / k
+            self.gamma = np.full((N, k), 1/k)
 
         # alpha: (k) , 子模型对混合模型的贡献, 求和为1
         if self.alpha is None:
@@ -64,7 +64,7 @@ class BMM(object):
 
         # mu: (k, 2) 2是为了做矩阵乘法, 相对for loop效率应该会高, 这里todo: benchmark
         if self.mu is None:
-            self.mu = np.ones(k) / k
+            self.mu = np.full(k, 1/k)
 
         self.mu = np.stack((1 - self.mu, self.mu), axis=-1)
 
