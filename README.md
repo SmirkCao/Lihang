@@ -126,9 +126,14 @@
 [EM](CH09/README.md)
 
 - EM算法是一种迭代算法, 用于含有隐变量的概率模型参数**极大似然估计**, 或者极大后验概率估计. (这里的极大似然估计和极大后验概率估计是**学习策略**)
+
 - >  如果概率模型的变量都是观测变量, 那么给定数据, 可以直接用极大似然估计法, 或贝叶斯估计法估计模型参数.
 
   注意书上这个描述如果不理解，参考[CH04](CH04/README.md)中朴素贝叶斯法的参数估计部分。
+
+- 这部分代码实现了BMM和GMM, 值得看下
+
+- 关于EM, 这个章节写的不多, EM是十大算法之一, EM和Hinton关系紧密, Hinton在2018年ICLR上发表了Capsule Network的第二篇文章<Matrix Capsules with EM Routing>
 
 ## CH10 隐马尔可夫模型
 
@@ -159,32 +164,12 @@
 
 ## 后记
 
-整个这本书里面各章节也不是完全独立的, 这部分希望整理章节之间的联系以及适用的数据集, 暂时用mermaid可视化.
+整个这本书里面各章节也不是完全独立的, 这部分希望整理章节之间的联系以及适用的数据集. 算法到底实现到什么程度, 能跑什么数据集也是一房面.
 
-```mermaid
-graph LR
-	subgraph 算法
-	KNN
-	NB--G-D Pair---LR
-	LR---ME
-	SLP---SVM
-	DT-->AdaBoost
-	DT--entropy-->LR
-	EM-->NB
-	EM-->HMM
-	EM-->GMM
-	GMM-->HMM
-	HMM--G-D Pair---CRF
-	end
-	subgraph 数据集
-	MNIST-->KNN
-	MNIST-->SLP
-	MNIST-->LR
-	MNIST-->SVM
-	MNIST-->DT
-	人民日报-->HMM
-	end
-	
-	
-	 
-```
+![data_algo_map](assets/data_algo_map.png)
+
+
+
+## Refs
+
+[^1]: [Matrix Capsules with EM Routing](http://arxiv.org/abs/1710.09829)
