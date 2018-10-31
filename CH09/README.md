@@ -152,7 +152,7 @@ P(y|\theta)&=\sum_z P(y,z|\theta) \\
 $$
 以上
 
-1. 随机变量$y$是观测变量, 表示一次试验观测的结果是1或0
+1. 随机变量$y$是观测变量, 表示一次试验观测的结果是**1或0**
 1. 随机变量$z$是隐变量, 表示未观测到的掷硬币$A$的结果
 1. $\theta=(\pi,p,q)$是模型参数
 1. 这个模型是**以上数据**(1,1,0,1,0,0,1,0,1,1)的生成模型.
@@ -160,13 +160,20 @@ $$
 
 
 观测数据表示为$Y=(Y_1, Y_2, Y_3, \dots, Y_n)^T$, 未观测数据表示为$Z=(Z_1,Z_2, Z_3,\dots, Z_n)^T$, 则观测数据的似然函数为
+
+> 其实觉得这里应该是小写的$y=(y_1,y_2,\dots,y_n), z=(z_1, z_2, \dots,z_n)$
+
 $$
 P(Y|\theta) = \sum\limits_{Z}P(Z|\theta)P(Y|Z,\theta)
 $$
+注意这里的求和是下面的"+"描述的部分
+
 即
 $$
 P(Y|\theta)=\prod\limits^{n}_{j=1}[\pi p^{y_j}(1-p)^{1-y_j}+(1-\pi)q^{y_j}(1-q)^{1-y_j}]
 $$
+注意这里连乘是$Y\rightarrow y_j$出来的, 不理解看似然定义.
+
 考虑求模型参数$\theta=(\pi,p,q)$的极大似然估计, 即
 $$
 \hat \theta = \arg\max\limits_{\theta}\log P(Y|\theta)
@@ -389,6 +396,7 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
 
 
 
