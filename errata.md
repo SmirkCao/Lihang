@@ -22,5 +22,5 @@
 1. $P_{156}$观测数据表示为$Y=(Y_1, Y_2, Y_3, \dots, Y_n)^T$, 未观测数据表示为$Z=(Z_1,Z_2, Z_3,\dots, Z_n)^T$, 则观测数据的似然函数为
 
     > 其实觉得这里应该是小写的$y=(y_1,y_2,\dots,y_n), z=(z_1, z_2, \dots,z_n)$
-1. 
+1. $P_{219}$ Hesse matrix -> Hessian Matrix
 
