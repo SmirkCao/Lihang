@@ -24,8 +24,9 @@
 
   - 垃圾邮件识别可以用朴素贝叶斯的方法
 
-- NB是常见的概率图模型之一
+- NB是常见的概率图模型之一[^4]
   ![nb_pgm](../CH04/assets/nb_pgm.png)
+  这个图中, y是输出变量,  x是输入变量, 是观测变量. 生成模型直接描述了输出以多大的概率生成输入.  在图模型里, **观测是灰色的, 变量是白色的**.
 
 - 第一个参考文献[^1]，这里推荐阅读，链接中的手稿在2017年还有更新，开头部分介绍了很多符号的定义，可以配合[CH01](../CH01/README.md)的内容来理解。讲述了生成模型和判别模型，朴素贝叶斯和逻辑回归
 
@@ -160,3 +161,5 @@ I.I.D. 强限制放宽，就是Tree Augmented Naive Bayes, TAN。可以看做是
 2. [^2]: [Generative and discriminative classifiers: Naive Bayes and logistic regression](http://www.cs.cmu.edu/~tom/mlbook/NBayeslogReg.pdf)
 
 3. [^3]: [Machine Learning New Chapter](http://www.cs.cmu.edu/~tom/NewChapters.html)
+
+4. [^4 ]: [An Introduction to Conditional Random Fields for Relational Learning]()
