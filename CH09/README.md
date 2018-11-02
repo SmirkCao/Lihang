@@ -60,6 +60,8 @@
 
 - 这个repo里面实现了bmm算法git
 
+- HMM也是Discrete **Dynamic Model**, 从图模型角度考虑, 可以发现HMM和卡尔曼滤波以及粒子滤波深层之间的联系. 这部分内容在PRML中有讨论.
+
 ### 符号说明
 
 > 一般地, 用$Y$表示观测随机变量的数据, $Z$表示隐随机变量的数据. $Y$和$Z$一起称为**完全数据**(complete-data), 观测数据$Y$又称为**不完全数据**(incomplete-data)
@@ -396,6 +398,7 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
 
 
 
