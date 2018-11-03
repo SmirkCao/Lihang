@@ -244,6 +244,24 @@ $$
 
 这里面p对应了A =1, B=1, q对应了A=0, C=1
 
+这三个公式可以改写成如下形式:
+$$
+\begin{align}
+\pi^{(i+1)} &= \frac{1}{n}\sum_{j=1}^{n}\mu_j^{(i+1)}\\
+\color{red}
+p^{(i+1)} &= \frac{\sum_{j=1}^{n}\mu_j^{(i+1)}y_j}{\sum_{j=1}^{n}(\mu_j^{(i+1)}y_j+\mu_j^{(i+1)}(1-y_j)}\\
+\color{red}
+q^{(i+1)} &= \frac{\sum_{j=1}^{n}(1-\mu_j^{(i+1)})y_j}{\sum_{j=1}^{n}((1-\mu_j^{(i+1)})y_j+(1-\mu_j^{(i+1)})(1-y_j))}
+\end{align}
+$$
+$\pi$的表达式回答这样一个问题:  刷了这么多样本, 拿到一堆数, 那么$\pi$应该是多少, 均值十个比较好的选择.
+
+$p$的表达式回答这样一个问题:  如果我知道每个结果$y_j$以$\mu_j$的可能来自硬币B(A=1), 那么用这些数据刷出来他可能是正面的概率.这里面$\mu_j$对应了$A=1$
+
+$q$的表达式同理, 其中$1-\mu_j$对应了$A=0$
+
+
+
 [bmm.py](bmm.py)对伯努利混合模型做了实现, 有几点说明一下:
 
 1. $(p^{(i)})^{y_i}(1-p^{(i)})^{1-y_i}$可以表示成矩阵乘法, 尽量不要用for, 效率会差
@@ -398,6 +416,7 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
 
 
 
