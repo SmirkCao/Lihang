@@ -19,6 +19,8 @@
 
 ### 导读
 
+- 这章如果看三硬币有疑问, 可以往后继续看, 看到高斯混合模型. 然后再回头理解三硬币. 有不理解的地方, 可以重新看对应问题的定义, 重新理解各个符号的意义. 这样也许对学习有帮助.
+
 - EM算法可以用于**生成模型**的非监督学习, EM算法是个一般方法, 不具有具体模型.
 
   > EM算法是一种迭代算法, 用于含有隐变量的概率模型的极大似然估计,或极大后验概率估计. 
@@ -38,9 +40,9 @@
   > It can be called the **probability of $x$ ** (given $\theta$),
   > or the **likelihood of $\theta$** (given that $x$  was observed).
 
-- 学习过程中注意观测数据在每次EM算法中的意义.
+- 学习过程中注意**观测数据**在每次EM算法中的意义.
 
-- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异, 直觉上都有一种归属的感觉, $\gamma_{jk}$是二值函数, $\alpha_k$是一种概率的表示. $\gamma_j​$是one-hot encoding(also: 1-of-K representation)
+- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异, 直觉上都有一种归属的感觉, $\gamma_{jk}$是二值函数, $\alpha_k$是一种概率的表示. $\gamma_j$是one-hot encoding(also: 1-of-K representation)
 
 - GMM这里面实际上还涉及到一个概念叫做凸组合(Convex Combination)[^4] . 是凸几何领域的一个概念, 点的线性组合, 所有系数都非负且和为1. 点集的凸包等价于该点集的凸组合.
 
@@ -58,7 +60,7 @@
      1. $MLE \rightarrow B$
      1. $F$函数的极大-极大算法
 
-- 这个repo里面实现了bmm算法git
+- 这个repo里面实现了BMM算法和GMM算法两种混合模型
 
 - HMM也是Discrete **Dynamic Model**, 从图模型角度考虑, 可以发现HMM和卡尔曼滤波以及粒子滤波深层之间的联系. 这部分内容在PRML中有讨论.
 
@@ -99,7 +101,7 @@
 
 #### 问题描述
 
-书中用例子来介绍EM算法的问题, 并给出了EM算法迭代求解的过程, 具体例子描述见**例9.1**.
+书中用例子来介绍EM算法的问题, 并给出了EM算法迭代求解的过程, 具体例子描述见**例9.1**, 这块如果不懂, 可以跳过, 看完后面高斯混合模型再回来看.
 
 问题的描述过程中有这样一句: 独立的重复$n$次实验(这里$n=10$), 观测结果如下:
 
@@ -260,11 +262,20 @@ $p$的表达式回答这样一个问题:  如果我知道每个结果$y_j$以$\m
 
 $q$的表达式同理, 其中$1-\mu_j$对应了$A=0$
 
-
+到后面讲高斯混合模型的时候, 可以重新审视这里
+$$
+\begin{aligned}
+\alpha_0& \leftrightarrow \pi \\
+\mu_0& \leftrightarrow p^{y_j}(1-p)^{1-y_j}\\
+\alpha_1& \leftrightarrow 1-\pi\\
+\mu_1& \leftrightarrow q^{y_j}(1-q)^{1-y_j}
+\end{aligned}
+$$
+以上对应了包含两个分量的伯努利混合模型, BMM, 包含四个参数, 因为$\alpha_k$满足等式约束, 所以通常会有三个参数, 另外参见习题$9.3$中有提到`两个分量的高斯混合模型的五个参数`实际上也是因为等式约束.
 
 [bmm.py](bmm.py)对伯努利混合模型做了实现, 有几点说明一下:
 
-1. $(p^{(i)})^{y_i}(1-p^{(i)})^{1-y_i}$可以表示成矩阵乘法, 尽量不要用for, 效率会差
+1. $(p^{(i)})^{y_i}(1-p^{(i)})^{1-y_i}$这个表达式对应了伯努利分布的概率密度, 可以表示成矩阵乘法, 尽量不要用for, 效率会差
 
 1. 书中$e_{91}$的表达中, 采用了$\pi, p, q$来表示, 注意在题目的说明部分有说明三个符号的含义
 
@@ -416,6 +427,9 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
+
+
 
 
 
