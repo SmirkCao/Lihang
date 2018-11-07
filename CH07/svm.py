@@ -121,6 +121,7 @@ class SVM(object):
         return j
 
     @staticmethod
+    # todo: use numpy clip
     def _do_clipalpha(alpha, H, L):
         if alpha > H:
             alpha = H
