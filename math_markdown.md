@@ -22,15 +22,16 @@
 | $\delta$ | **\delta** | $\kappa$ | **\kappa** | $\rho$ | **\rho** | $\chi$ | **\chi** |
 | $\epsilon$ | **\epsilon** | $\lambda$ | **\lambda** | $\varrho$ | **\varrho** | $\psi$ | **\psi** |
 | $\varepsilon$ | **\varepsilon** | $\mu$ | **\mu** | $\sigma$ | **\sigma** | $\omega$ | **\omega** |
-| $\zeta$ | **\zeta** | $\nu$ | **\nu** | $\varsigma$ | **\varsigma** |  | |
+| $\zeta$ | **\zeta** | $\nu$ | **\nu** | $\varsigma$ | **\varsigma** | $\nabla$ | **\nabla** |
 | $\eta$ | **\eta** | $\xi$ | **\xi** | $\tau$ | **\tau** | | |
 
 ### 表 3: 大写希腊字母
+
 | 示例 |代码 |示例|代码|示例|代码|示例|代码|
 | - | - | - | - | - | - | - | - |
 | $\Gamma$ | \Gamma | $\Lambda$ | \Lambda | $\Sigma$ | **\Sigma** | $\Psi$ | **\Psi** |
 | $\Delta$ | **\Delta** |$\Xi$ | **\Xi** | $\Upsilon$ | **\Upsilon** | $\Omega$ | **\Omega** |
-| $\Theta$ | **\Theta** | $\Pi$ | **\Pi** | $\Phi$ | **\Phi** | | |
+| $\Theta$ | **\Theta** | $\Pi$ | **\Pi** | $\Phi$ | **\Phi** |  | |
 
 ### 表 4: 数学字母
 

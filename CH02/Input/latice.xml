@@ -1,0 +1,62 @@
+<LATTICES>
+  <LATTICEGRAPH name="default example - double layer lattice">
+    <FINITELATTICE>
+      <LATTICE dimension="3" name="simple rectangular cubic lattice">
+        <BASIS>
+          <VECTOR>1.0 0.0 0.0</VECTOR>
+          <VECTOR>0.0 1.0 0.0</VECTOR>
+          <VECTOR>0.0 0.0 1.0</VECTOR>
+        </BASIS>
+      </LATTICE>
+      <PARAMETER name="L" />
+      <PARAMETER default="L" name="W" />
+      <PARAMETER default="W" name="H" />
+      <EXTENT dimension="1" size="L" />
+      <EXTENT dimension="2" size="W" />
+      <EXTENT dimension="3" size="H" />
+      <BOUNDARY type="periodic" />
+    </FINITELATTICE>
+    <UNITCELL dimension="3" edges="4" name="double layer" vertices="8">
+      <VERTEX id="1" type="0">
+        <COORDINATE>0.0 0.0 0.0</COORDINATE>
+      </VERTEX>
+      <VERTEX id="2" type="1">
+        <COORDINATE>0.0 0.0 1.0</COORDINATE>
+      </VERTEX>
+      <VERTEX id="3" type="1">
+        <COORDINATE>0.0 1.0 0.0</COORDINATE>
+      </VERTEX>
+      <VERTEX id="4" type="0">
+        <COORDINATE>0.0 1.0 1.0</COORDINATE>
+      </VERTEX>
+      <VERTEX id="5" type="1">
+        <COORDINATE>1.0 0.0 0.0</COORDINATE>
+      </VERTEX>
+      <VERTEX id="6" type="0">
+        <COORDINATE>1.0 0.0 1.0</COORDINATE>
+      </VERTEX>
+      <VERTEX id="7" type="0">
+        <COORDINATE>1.0 1.0 0.0</COORDINATE>
+      </VERTEX>
+      <VERTEX id="8" type="1">
+        <COORDINATE>1.0 1.0 1.0</COORDINATE>
+      </VERTEX>
+      <EDGE id="1" type="1">
+        <SOURCE vertex="4" />
+        <TARGET offset="0 0 0" vertex="5" />
+      </EDGE>
+      <EDGE id="2" type="1">
+        <SOURCE vertex="1" />
+        <TARGET offset="0 0 0" vertex="8" />
+      </EDGE>
+      <EDGE id="3" type="1">
+        <SOURCE vertex="2" />
+        <TARGET offset="0 0 0" vertex="7" />
+      </EDGE>
+      <EDGE id="4" type="1">
+        <SOURCE vertex="3" />
+        <TARGET offset="0 0 0" vertex="6" />
+      </EDGE>
+    </UNITCELL>
+  </LATTICEGRAPH>
+</LATTICES>
