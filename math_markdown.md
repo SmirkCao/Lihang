@@ -249,5 +249,6 @@ M_3(x)=
 3. [Equals_Sign](https://en.wikipedia.org/wiki/Equals_sign#Other_related_symbols)
 4. [Emoji](https://gist.github.com/rxaviers/7360908)
 5. [Short Math Guide for LaTeX](http://ctan.math.utah.edu/ctan/tex-archive/info/short-math-guide/short-math-guide.pdf)
-6. [List of mathematical symbols](https://en.wikipedia.org/wiki/List_of_mathematical_symbols)
+6. [List of Mathematical Symbols](https://en.wikipedia.org/wiki/List_of_mathematical_symbols)
+7. [Matplotlib Math Text](https://matplotlib.org/tutorials/text/mathtext.html)
 
