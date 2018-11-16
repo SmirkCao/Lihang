@@ -1,4 +1,6 @@
 # 统计学习方法
+[![Gitter chat](https://badges.gitter.im/SmirkCao/StatisticalLearningMethods.png)](https://gitter.im/StatisticalLearningMethods/Book)
+
 [TOC]
 
 - GitHub的markdown公式支持一般, 推荐使用Chrome插件[TeX All the Things](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn)来渲染TeX公式, 本地Markdown编辑器推荐[Typora](https://typora.io/).
