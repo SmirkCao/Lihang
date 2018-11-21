@@ -43,7 +43,10 @@
 
 - 关于损失函数，风险函数与目标函数注意体会差异
 
-- Losses, Metrics, 在Keras里面划分了两个模块, 解释是Losses是BP过程用到的, 而Metrics实际和损失函数类似, 用来评价模型的性能, 但是不参与反向传播. 从源码也能看到, Metrics里面import了很多Loss算法
+- 后面插点从深度学习角度拿到的点
+
+    - 关于机器学习三要素, 复旦大学邱锡鹏教授也有解读[^2]: 模型, 学习准则, 优化算法. 这个定义比较接近代码. 以Tensorflow为例. 通常会定义一个网络(模型), 定义Loss(学习准则), 定义优化算法(Optimizer), 然后开Session, 不停的把数据带入用Opitmizer去最小化Loss.
+    - Losses, Metrics, 在Keras里面划分了两个模块, 解释是Losses是BP过程用到的, 而Metrics实际和损失函数类似, 用来评价模型的性能, 但是不参与反向传播. 从源码也能看到, Metrics里面import了很多Loss算法
 
 ## 实现统计学习方法的步骤
 
@@ -177,3 +180,5 @@ Classification, Tagging, Regression
 参考文献都是大部头，ESL，PRML在列
 
 1. [^1]: [ESL:7.10.1:K-Forld Cross Validation](##参考)
+
+2. [^2 ]: [NNDL](https://github.com/nndl/nndl.github.io/blob/master/chap-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%BF%B0.pdf)
