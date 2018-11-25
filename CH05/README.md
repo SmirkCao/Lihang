@@ -32,6 +32,7 @@
 - 这个章节的主题是决策树，内容内涵和外延都很广，这个章节推荐阅读图灵社区的一个访谈[^1]，了解一下李航老师的故事，也可以对本章的最后三个参考文献[^2][^3][^4]有进一步的了解.
 - 引文中关于CART的介绍，是一本368页的书，2017年10月有了[Kindle版本](https://www.amazon.com/Classification-Regression-Trees-Leo-Breiman-ebook/dp/B076M7QKC6)，书的共同作者Friedman JH也是另一本神书ESL[参考文献7]的共同作者。
 - CART虽然在本书中排在ID3和C4.5后面，但是发表的时间顺序为CART->ID3->C4.5，了解决策树历史可以参考Loh的报告[^5]
+- 熵, 基尼指数衡量的都是集合的不确定性, 应用在推荐的场景, 不确定性越大, 覆盖率可能就越大.
 
 ## 概念
 
@@ -234,7 +235,22 @@ def _min_samples_leaf_check(self,
 
 这个算法用到的策略是基尼系数，所以是分类树的生成算法。
 
+>  概率分布的基尼指数定义
 
+$$
+Gini(p) = \sum_{k=1}^Kp_k(1-p_k)=1-\sum_{k=1}^Kp_k^2
+$$
+
+
+
+基尼系数是一个来源于经济学的指标. 范围(0, 1), 有很多中表示形式, 比如衡量收入分布的基尼系数.
+$$
+G=\frac{1}{n-1}\sum_{j=1}^n(2j-n-1)p(i_j)
+$$
+
+![](assets/Economics_Gini_coefficient2.svg)
+
+经济学基尼系数的解释[^7],基尼系数为$\frac{A}{A+B}$
 
 #### 算法5.7 CART剪枝
 
@@ -267,3 +283,5 @@ def _min_samples_leaf_check(self,
 1. [^5]: [A Brief History of Classification and Regression Trees](http://washstat.org/presentations/20150604/loh_slides.pdf)
 
 1. [^6]: [The Top Ten Algorithms in Data Mining](https://www.researchgate.net/publication/265031802_Chapter_10_CART_Classification_and_Regression_Trees)
+
+1. [^7 ]: [Gini Coefficient](https://en.wikipedia.org/wiki/Gini_coefficient#/media/File:Economics_Gini_coefficient2.svg)
