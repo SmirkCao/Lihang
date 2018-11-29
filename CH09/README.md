@@ -51,8 +51,11 @@
   > 1. Sample $z_i \sim p(z|\pi) $
   > 1. Sample $x_i \sim p(x|\pi)$
 
+  注意, 这里用到了$\pi$, 在强化学习中, 随机性策略$\pi(x,a)$表示为状态$x$下选择动作$a$的概率.
+
 - 关于EM算法的解释
   注意这里EM不是模型, 是个一般方法, 不具有具体的模型.
+
   1. PRML
      $kmeans \rightarrow GMM \rightarrow EM$
      所以, EM应用举例子为kmeans也OK. 而且, 西瓜书$P_{165}$上有说, `k均值聚类算法就是一个典型的EM算法`
@@ -427,6 +430,7 @@ $$
   $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
+
 
 
 
