@@ -43,6 +43,8 @@
 
 - 关于NB和LR的对比，Ng也有一篇文章[^2]
 
+- 平方误差经过Sigmoid之后得到的是非凸函数.
+
 ## 模型
 
 > Logistic regression is a special case of maximum entropy with two labels +1 and −1.
@@ -246,6 +248,7 @@ $h(x)=-\log_2{p(x)}$, 符号保证了非负性. 低概率事件对应了高的�
    &=H(p)+KL(p||q)
    \end{aligned}
    $$
+
 
 
 

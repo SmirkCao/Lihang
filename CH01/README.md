@@ -83,7 +83,7 @@
 > **损失函数**度量模型**一次预测**的好坏，**风险函数**度量**平均意义**下模型预测的好坏。
 
 1. 损失函数(loss function)或代价函数(cost function)
-   损失函数定义为给定输入$X$的预测值$f(X)$和真实值$Y$之间的**非负实值**函数, 记作$L(Y,f(X))$
+   损失函数定义为给定输入$X$的**预测值$f(X)$**和**真实值$Y$**之间的**非负实值**函数, 记作$L(Y,f(X))$
 
 1. 风险函数(risk function)或期望损失(expected loss)
    这个和模型的泛化误差的形式是一样的
@@ -155,7 +155,7 @@ $L(Y,P(Y|X))$
 
 ## 生成模型与判别模型
 
-监督学习方法可分为**生成方法**(generative approach)与**判别方法**(discriminative approach)
+**监督学习方法**可分为**生成方法**(generative approach)与**判别方法**(discriminative approach)
 
 ### 生成方法
 
