@@ -60,8 +60,30 @@ $$
 F(x)=P(X\leqslant x)=\frac{1}{1+\exp(-(x-\mu)/\gamma)}
 $$
 
+关于逻辑斯谛， 更常见的一种表达是Logistic function
+$$
+\sigma(z)=\frac{1}{1+\exp(-z)}
+$$
+这个函数把实数域映射到(0, 1)区间，这个范围正好是概率的范围， 而且可导, 对于0输入， 得到的是0.5，可以用来表示等可能性。
+
+ 
 
 #### 二项逻辑斯谛回归模型
+
+书中给出的定义：
+
+二项逻辑斯谛回归模型是如下的条件概率分布：
+$$
+\begin{aligned}
+P(Y=1|x)&=\frac{\exp(w\cdot x)}{1+\exp(w\cdot x)}\\
+&=\frac{\exp(w\cdot x)/\exp(w\cdot x)}{(1+\exp(w\cdot x))/(\exp(w\cdot x))}\\
+&=\frac{1}{e^{-(w\cdot x)}+1}\\
+P(Y=0|x)&=\frac{1}{1+\exp(w\cdot x)}\\
+&=1-\frac{1}{1+e^{-(w\cdot x)}}\\
+&=\frac{e^{-(w\cdot x)}}{1+e^{-(w\cdot x)}}
+\end{aligned}
+$$
+
 
 这部分提到了几率，但是怎么就想到几率了。
 
@@ -85,11 +107,20 @@ $$
 o=\frac{p}{1-p} \nonumber\\
 \color{red}p=\frac{o}{1+o}
 $$
-看上面红色部分, **逻辑斯谛分布**对应了一种**概率**, **几率**为指数形式$e^z$, $z$为**对数几率**$logit$.
+看上面红色部分, **逻辑斯谛分布**对应了一种**概率**, **几率**为指数形式 $e^z$,  $z$ 为**对数几率**$logit$.
 
-
+$$
+logit(p)=\log(o)=\log\frac{p}{1-p}
+$$
+上面是对数几率的定义， 这里对应了事件， 要么发生， 要么不发生。所以逻辑斯谛回归模型就表示成
+$$
+\log\frac{P(Y=1|x)}{1-P(Y=1|x)}=\color{red}\log\frac{P(Y=1|x)}{P(Y=0|x)}\color{black}=w\cdot x
+$$
+上面红色部分留一下，后面推广到多类时候用到。
 
 #### 模型参数估计
+
+通过监督学习的方法来估计模型参数。
 
 参数估计这里， 似然函数书中的表达
 $$
@@ -105,7 +136,82 @@ $$
 
 #### 多项逻辑斯谛回归
 
+假设离散型随机变量$Y$的取值集合是${1,2,\dots,K}$, 多项逻辑斯谛回归模型是
+$$
+\begin{aligned}
+P(Y=k|x)&=\frac{\exp(w_k\cdot x)}{1+\sum_{k=1}^{K-1}\exp(w_k\cdot x)}, k=1,2,\dots,K-1\\
+P(Y=k|x)&=\frac{1}{1+\sum_{k=1}^{K-1}\exp(w_k\cdot x)}\\
+\end{aligned}
+$$
+下面看这个多分类模型怎么来的[^4]。
 
+##### 二元推广
+
+计算$K-1$种可能的取值发生的概率相对取值$K$发生的概率的比值， 假设其取对数的结果是$x$的线性模型， 有
+$$
+\begin{aligned}
+\ln\frac{P(Y=1|x)}{P(Y=K|x)}&=w_1\cdot x\\
+\ln\frac{P(Y=2|x)}{P(Y=K|x)}&=w_2\cdot x\\
+\cdots\\
+\ln\frac{P(Y=K-1|x)}{P(Y=K|x)}&=w_{K-1}\cdot x\\
+\end{aligned}
+$$
+得到取值${1,2，\dots,K-1}$的概率表示
+$$
+\begin{aligned}
+{P(Y=1|x)}&={P(Y=K|x)}\exp(w_1\cdot x)\\
+{P(Y=2|x)}&={P(Y=K|x)}\exp(w_2\cdot x)\\
+\cdots\\
+{P(Y=K-1|x)}&={P(Y=K|x)}\exp(w_{K-1}\cdot x)\\
+\color{red}{P(Y=k|x)}&\color{red}={P(Y=K|x)}\exp(w_k\cdot x), k=1,2,\dots,K-1
+\end{aligned}
+$$
+上面红色部分有点像书上的(6.7)， 又有$K$种可能取值概率和为1，可以得到下面推导
+$$
+\begin{aligned}
+P(Y=K|x)&=1-\sum_{j=1}^{K-1}P(Y=j|x)\\
+&=1-P(Y=K|x)\sum_{j=1}^{K-1}\exp(w_j\cdot x)\\
+&=\frac{1}{1+\sum_{j=1}^{K-1}\exp(w_j\cdot x)}
+\end{aligned}
+$$
+所以之前红色部分的表达可以表示为
+$$
+\begin{aligned}
+\color{red}{P(Y=k|x)}&\color{red}={P(Y=K|x)}\exp(w_k\cdot x), k=1,2,\dots,K-1\\
+&=\frac{1}{1+\sum_{j=1}^{K-1}\exp(w_j\cdot x)}\exp(w_k\cdot x), k=1,2,\dots,K-1\\
+&=\frac{\exp(w_k\cdot x)}{1+\sum_{j=1}^{K-1}\exp(w_j\cdot x)}, k=1,2,\dots,K-1\\
+\end{aligned}
+$$
+
+
+这里公式和书上有点区别， 求和的用了$j$表示， 感觉不太容易造成误解。
+
+##### 对数线性模型
+
+假设归一化因子$Z$， 有如下关系
+$$
+\begin{aligned}
+\ln (ZP(Y=k|x))&=w_k\cdot x, k=1,2,\dots,K\\
+P(Y=k|x)&=\frac{1}{Z}\exp(w_k\cdot x), k=1,2,\dots,K
+\end{aligned}
+$$
+又对所有的$P(Y=k|x)$可以形成概率分布， 有
+$$
+\begin{aligned}
+\sum_{k=1}^KP(Y=k|x)&=1\\
+&=\sum_{k=1}^K\frac{1}{Z}\exp(w_k\cdot x)\\
+&=\frac{1}{Z}\sum_{k=1}^K\exp(w_k\cdot x)
+\end{aligned}
+$$
+得到
+$$
+Z=\sum_{k=1}^K\exp(w_k\cdot x)
+$$
+所以
+$$
+P(Y=k|x)=\frac{1}{Z}\exp(w_k\cdot x)=\frac{\exp(w_k\cdot x)}{\sum_{k=1}^K\exp(w_k\cdot x)}, k=1,2,\dots,K
+$$
+上面这个叫Softmax
 
 ### 最大熵模型
 
@@ -248,6 +354,8 @@ $h(x)=-\log_2{p(x)}$, 符号保证了非负性. 低概率事件对应了高的�
    &=H(p)+KL(p||q)
    \end{aligned}
    $$
+
+
 
 
 
@@ -606,4 +714,6 @@ $$
 1. [^2]: [On Discriminative vs. Generative Classifiers: A comparison of Logistic Regression and Naive Bayes](-)
 
 1. [^3]: [ThinkBayes](http://www.greenteapress.com/thinkbayes/thinkbayes.pdf)
+
+1. [^4]: [Multinomial logistic regression](https://en.wikipedia.org/wiki/Multinomial_logistic_regression)
 
