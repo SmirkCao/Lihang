@@ -243,6 +243,8 @@ $$
 >
 >
 >
+>
+>
 
 - 这里需要**注意**下, 按照后向算法, $\beta$在递推过程中会越来越小, 如果层数较多, 怕是$P(O|\lambda)$会消失
 - 另外一个要注意的点$\color{red}o_{t+1}\beta_{t+1}$
@@ -312,7 +314,7 @@ $$
 
 $\gamma$的维度应该是$N\times T$, 通过$\sum\limits_{t=1}^T$可以降维到$N$, 但是实际上$B$的维度是$N\times M$, 所以有了这个表达, 窃以为这里可以表示成$b_{jk}$, 书中对应部分的表达在$P_{172}的10.3$, 也说明了$b_j(k)$的具体定义. 
 
-这里涉及到实际实现的时候, 可以考虑把观测序列$O$转换成one-hot的形式, $O_{one_hot}$维度为$M\times T$,$B$的维度$N\times M$,  $B\cdot O$之后, 转换成观测序列对应的发射概率矩阵, 维度为$N\times T$.
+这里涉及到实际实现的时候, 可以考虑把观测序列$O$转换成one-hot的形式, $O_{one\_hot}$维度为$M\times T$,$B$的维度$N\times M$,  $B\cdot O$之后, 转换成观测序列对应的发射概率矩阵, 维度为$N\times T$.
 
 #### $E$步与$M$步的理解
 
@@ -461,3 +463,5 @@ $$
 1. [^3]: [PRML:13.2](## 参考)
 
 1. [Wikipedia: Hidden Markov Model](https://en.wikipedia.org/wiki/Hidden_Markov_model)
+
+**[⬆ top](#导读)**

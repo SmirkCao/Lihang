@@ -363,6 +363,7 @@ $h(x)=-\log_2{p(x)}$, 符号保证了非负性. 低概率事件对应了高的�
 
 
 
+
    CNN时候常用
 
 对于各种熵的理解, 是构建后面的目标函数的基础.
@@ -717,3 +718,4 @@ $$
 
 1. [^4]: [Multinomial logistic regression](https://en.wikipedia.org/wiki/Multinomial_logistic_regression)
 
+**[⬆ top](#导读)**

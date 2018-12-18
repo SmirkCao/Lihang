@@ -442,6 +442,7 @@ $$
 
 
 
+
 ##### 2. E步,确定Q函数
 
 把$Q​$ 函数表示成参数形式
@@ -543,3 +544,5 @@ $$
 7. [^3 ]: [probability and likelihood](https://www.quora.com/What-is-the-difference-between-probability-and-likelihood-1/answer/Jason-Eisner)
 
 8. [^4]: [Convex Combination](https://en.wikipedia.org/wiki/Convex_combination)
+
+**[⬆ top](#导读)**
