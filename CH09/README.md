@@ -23,7 +23,7 @@
 
 - EM算法可以用于**生成模型**的非监督学习, EM算法是个一般方法, 不具有具体模型.
 
-  > EM算法是一种迭代算法, 用于含有隐变量的概率模型的极大似然估计,或极大后验概率估计. 
+  > EM算法是一种迭代算法, 用于含有隐变量的概率模型的极大似然估计,或极大后验概率估计.
 
 - 这里面注意体会不同变量的大小以及对应的取值范围.
 
@@ -37,7 +37,7 @@
 
   > Suppose you have a probability model with parameters $\theta$.
   > $p(x|\theta)$ has two names.
-  > It can be called the **probability of $x$ ** (given $\theta$),
+  > It can be called the **probability of $x$** (given $\theta$),
   > or the **likelihood of $\theta$** (given that $x$  was observed).
 
 - 学习过程中注意**观测数据**在每次EM算法中的意义.
@@ -48,7 +48,7 @@
 
 - 无论是三硬币还是GMM, 采样的过程都是如下:
 
-  > 1. Sample $z_i \sim p(z|\pi) $
+  > 1. Sample $z_i \sim p(z|\pi)$
   > 1. Sample $x_i \sim p(x|\pi)$
 
   注意, 这里用到了$\pi$, 在强化学习中, 随机性策略$\pi(x,a)$表示为状态$x$下选择动作$a$的概率.
@@ -71,7 +71,7 @@
 
 > 一般地, 用$Y$表示观测随机变量的数据, $Z$表示隐随机变量的数据. $Y$和$Z$一起称为**完全数据**(complete-data), 观测数据$Y$又称为**不完全数据**(incomplete-data)
 
-上面这个概念很重要, Dempster在1977年提出EM算法的时候文章题目就是<Maximum likelihood from incomplete data via the EM algorithm>, 具体看书中本章参考文献[^3]
+上面这个概念很重要, Dempster在1977年提出EM算法的时候文章题目就是《Maximum likelihood from incomplete data via the EM algorithm》, 具体看书中本章参考文献[^3]
 
 >假设给定观测数据$Y$, 其概率分布是$P(Y|\theta)$, 其中$\theta$是需要估计的模型参数
 >那么不完全数据$Y$的似然函数是$P(Y|\theta)$, 对数似然函数是$L(\theta)=\log P(Y|\theta)$
@@ -80,11 +80,11 @@
 
 上面这部分简单对应一下, 这里说明一下, 你看到下面概率分布和似然函数形式看起来一样. 在概率中, $\theta$已知, 求$Y$, 在似然函数中通过已知的Y去求$\theta$
 
-|                   |                                       |                       |                                  |
-| ----------------- | ------------------------------------- | --------------------- | -------------------------------- |
-|                   | 观测数据$Y$                           | 不完全数据$Y$         |                                  |
-| 不完全数据$Y$     | 概率分布$P(Y|\theta)$                 | 似然函数$P(Y|\theta)$ | 对数似然函数$ \log P(Y|\theta)$  |
-| 完全数据 $(Y, Z)$ | $Y$和$Z$的联合概率分布$P(Y,Z|\theta)$ | 似然函数$P(Y,Z|\theta)$ | 对数似然函数$\log P(Y,Z|\theta)$ |
+|   |       |     |       |
+| - | - | - | - |
+|   | 观测数据$Y$ | 不完全数据$Y$ |   |
+| 不完全数据$Y$ | 概率分布$P(Y|\theta)$ | 似然函数$P(Y|\theta )$ | 对数似然函数$\log P(Y|\theta)$ |
+| 完全数据 $(Y, Z)$ | $Y$和$Z$的联合概率分布$P(Y,Z|\theta )$ | 似然函数$P(Y,Z|\theta)$ | 对数似然函数$\log P(Y,Z|\theta)$
 
 观测数据$Y$
 
@@ -139,23 +139,18 @@ while flag_a or flag_b:
     cnt += 1
 ```
 
-
-
 实际上题目的描述中说明了观测数据生成的过程, 这些参数是未知的, 所以需要对这些参数进行估计.
 
-
-
-解的过程记录在这里. 
+解的过程记录在这里.
 
 三硬币模型可以写作
-$$
-\begin{equation}
-\begin{aligned}
-P(y|\theta)&=\sum_z P(y,z|\theta) \\
-&=\sum_z P(z|\theta)P(y|z,\theta) \\
-&=\pi p^y (1-p)^{1-y} + (1-\pi)q^y(1-q)^{1-y}
-\end{aligned}
-\end{equation}
+$$\begin{equation}
+        \begin{aligned}
+            P(y|\theta)&=\sum_z P(y,z|\theta) \\
+            &=\sum_z P(z|\theta)P(y|z,\theta) \\
+            &=\pi p^y (1-p)^{1-y} + (1-\pi)q^y(1-q)^{1-y}
+        \end{aligned}
+    \end{equation}
 $$
 以上
 
@@ -163,8 +158,6 @@ $$
 1. 随机变量$z$是隐变量, 表示未观测到的掷硬币$A$的结果
 1. $\theta=(\pi,p,q)$是模型参数
 1. 这个模型是**以上数据**(1,1,0,1,0,0,1,0,1,1)的生成模型.
-
-
 
 观测数据表示为$Y=(Y_1, Y_2, Y_3, \dots, Y_n)^T$, 未观测数据表示为$Z=(Z_1,Z_2, Z_3,\dots, Z_n)^T$, 则观测数据的似然函数为
 
@@ -207,13 +200,12 @@ $$
 
 这个表达方式还可以拆成如下形式
 $$
-\mu_j^{i+1} = 
+\mu_j^{i+1} =
 \begin{cases}
 \frac{\pi^{(i)}p^{(i)}}{\pi^{(i)}p^{(i)} + (1-\pi^{(i)})q^{(i)}}&, y_j = 1\\
 \frac{\pi^{(i)}(1-p^{(i)})}{\pi^{(i)}(1-p^{(i)}) + (1-\pi^{(i)})(1-q^{(i)})}&, y_j = 0\\
 \end{cases}
 $$
-
 
 所以, 这步(求$\mu_j$)干了什么, 样本起到了什么作用?
 
@@ -243,7 +235,7 @@ $$
 
 这个结果说明, 如果A是均匀的, 那么一个合理的解就是B, C是同质的. 他们的分布情况和观测的分布一致.
 
-在测试案例$test\_e91$中有计算这部分的结果, 注意看, 这种简单的模型其实收敛的很快. 
+在测试案例$test\_e91$中有计算这部分的结果, 注意看, 这种简单的模型其实收敛的很快.
 
 ##### p,q 含义
 
@@ -286,7 +278,6 @@ $$
 
    > 当参数$\theta$的维数为$d(d\ge2 )$的时候, 可以采用一种特殊的GEM算法, 它将算法的M步分解成d次条件极大化, 每次只改变参数向量的一个分量,其余量不改变.
 
-
 ### EM算法另外视角
 
 > 输入: 观测变量数据$Y$, 隐变量数据$Z$, 联合分布$P(Y,Z|\theta)$, 条件分布$P(Z|Y,\theta)$
@@ -296,15 +287,15 @@ $$
 > 1. 选择参数的初值$\theta^{(0)}​$, 开始迭代
 >
 > 1. E步:记$\theta^{(i)}$为第 $i$ 次迭代参数$\theta$的估计值, 在第$i+1$次迭代的$E$步,计算
->     $$
->     \begin{align}
->     Q(\theta, \theta^{(i)}) =& E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]\\
->     =&\sum_Z\color{red}\log P(Y,Z|\theta)\color{green}P(Z|Y, \theta^{(i)})
->     \end{align}
->     $$
+> $$
+> \begin{align}
+> Q(\theta, \theta^{(i)}) =& E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]\\
+> =&\sum_Z\color{red}\log P(Y,Z|\theta)\color{green}P(Z|Y, \theta^{(i)})
+> \end{align}
+> $$
 >
 > 1. M步
->     求使$Q(\theta, \theta^{(i)})$最大化的$\theta$,确定第$i+1$次迭代的参数估计值
+> 求使$Q(\theta, \theta^{(i)})$最大化的$\theta$,确定第$i+1$次迭代的参数估计值
 >
 > $$
 > \theta^{(i+1)}=\arg\max_\theta Q(\theta, \theta^{(i)})
@@ -317,8 +308,6 @@ $$
 
 完全数据的**对数似然函数$\log P(Y, Z|\theta)$关于**给定观测数据$Y$的当前参数$\theta^{(i)}$下对为观测数据$Z$的**条件概率分布$P(Z|Y,\theta^{(i)})$的期望**称为Q函数.
 
-
-
 #### BMM的EM算法
 
 > 输入: 观测变量数据$y_1, y_2, \dots, y_N$, 伯努利混合模型
@@ -326,15 +315,15 @@ $$
 > 输出: 伯努利混合模型参数
 >
 > 1. 选择参数的初始值开始迭代, $2K$ 个参数
-> 1. E步: 
->     $$\hat\gamma_{jk}=\frac{\alpha_kBern(y_j|\theta_k)}{\sum_{k=1}^K\alpha_kBern(y_j|\theta_k)}=\frac{\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}{\sum_{k=1}^K\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}, j=1,2,\dots,N; k=1,2,\dots,K$$
-> 1. M步: 
+> 1. E步:
+> $$\hat\gamma_{jk}=\frac{\alpha_kBern(y_j|\theta_k)}{\sum_{k=1}^K\alpha_kBern(y_j|\theta_k)}=\frac{\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}{\sum_{k=1}^K\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}, j=1,2,\dots,N; k=1,2,\dots,K$$
+> 1. M步:
 > $$\hat\mu_k=\frac{\sum_{j=1}^N\hat\gamma_{jk}y_j}{\sum_{j=1}^N\hat\gamma_{jk}}\\
 > \hat\alpha_k=\frac{n_k}{N}$$
 
 ### 高斯混合模型
 
-**混合模型**, 有多种, 高斯混合模型是最常用的. 
+**混合模型**, 有多种, 高斯混合模型是最常用的.
 
 高斯混合模型(Gaussian Mixture Model)是具有如下**概率分布**的模型:
 $$
@@ -347,14 +336,15 @@ $$
 上式表示第k个**分**模型.
 
 以上, 注意几点:
-1. GMM的描述是概率分布, 形式上可以看成是加权求和
 
+1. GMM的描述是概率分布, 形式上可以看成是加权求和
 1. 加权求和的权重$\alpha$满足$\sum_{k=1}^K\alpha_k=1$的约束
 
 1. 求和符号中除去权重的部分, 是高斯分布密度(PDF). 高斯混合模型是一种$\sum(权重\times 分布密度)=分布$的表达
-    高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用. 
+    高斯混合模型的参数估计是EM算法的一个重要应用, 隐马尔科夫模型的非监督学习也是EM算法的一个重要应用.
 
-1. 书中描述的是一维的高斯混合模型, d维的形式如下[^2], 被称作多元正态分布, 也叫多元高斯分布:
+1. 书中描述的是一维的高斯混合模型, d维的形式如下[^2], 被称作多元正态分布, 也叫多元高斯分布
+
 $$
 \phi(y|\theta_k)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}\exp\left(-\frac{(y-\mu_k)^T\Sigma^{-1}(y-\mu_k)}{2}\right)其中,协方差矩阵
 $$
@@ -365,9 +355,7 @@ $$
 
 这个弄的不咋好看, plate notation
 
-![](assets/gmm_graph_model.png)
-
-
+![图模型](assets/gmm_graph_model.png)
 
 #### GMM的EM算法
 
@@ -386,7 +374,6 @@ P(y|\theta)=&\prod_{j=1}^NP(y_j|\theta)\\
 =&\prod_{j=1}^N\sum_{k=1}^K\alpha_k\phi(y|\theta_k)
 \end{align}
 $$
-
 
 使用EM算法估计GMM的参数$\theta$
 
@@ -431,51 +418,25 @@ $$
   \log P(y,\gamma|\theta)=\sum_{k=1}^K\left\{n_k\log \alpha_k+\sum_{j=1}^N\gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k -\frac{1}{2\sigma^2}(y_j-\mu_k)^2\right]\right\}
   $$
 
-
-
-
-
-
-
-
-
-
-
-
-
 ##### 2. E步,确定Q函数
 
 把$Q​$ 函数表示成参数形式
-$$
-\begin{aligned}
-Q(\theta,\theta^{(i)})=&E[\log P(y,\gamma|\theta)|y,\theta^{(i)}]\\
-=&\color{green}E\color{black}\left\{\sum_{k=1}^K\left\{\color{red}n_k\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\right\}\\
-=&\color{green}E\color{black}\left\{\sum_{k=1}^K\left\{\color{red}\sum_{j=1}^N\gamma_{jk}\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\right\}\\
-=&\sum_{k=1}^K\left\{\color{red}\sum_{j=1}^{N}(\color{green}E\color{red}\gamma_{jk})\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N(\color{green}E\color{blue}\gamma _{jk})\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\\
-\end{aligned}
-$$
 
-$$
-\begin{align}
-\hat \gamma _{jk}= &\color{purple}E(\gamma_{jk}|y,\theta)=P(\gamma_{jk}=1|y,\theta)\\
-=&\frac{P(\gamma_{jk}=1,y_j|\theta)}{\sum_{k=1}^KP(\gamma_{jk}=1,y_j|\theta)}\\
-=&\frac{P(y_j|\color{red}\gamma_{jk}=1,\theta\color{black})\color{green}P(\gamma_{jk}=1|\theta)}{\sum_{k=1}^KP(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)}\\
-=&\frac{\color{green}\alpha_k\color{black}\phi(y_j|\color{red}\theta_k)}{\sum_{k=1}^K\alpha_k\phi(y_j|\theta_k)}
-\end{align}
-$$
+$$\begin{aligned}Q(\theta,\theta^{(i)})=&E[\log P(y,\gamma|\theta)|y,\theta^{(i)}]\\=&\color{green}E\color{black}\left\{\sum_{k=1}^K\left\{\color{red}n_k\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\right\}\\=&\color{green}E\color{black}\left\{\sum_{k=1}^K\left\{\color{red}\sum_{j=1}^N\gamma_{jk}\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\right\}\\=&\sum_{k=1}^K\left\{\color{red}\sum_{j=1}^{N}(\color{green}E\color{red}\gamma_{jk})\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N(\color{green}E\color{blue}\gamma _{jk})\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\\\end{aligned}$$
 
+$$\begin{aligned}\hat \gamma _{jk}= &\color{purple}E(\gamma_{jk}|y,\theta)=P(\gamma_{jk}=1|y,\theta)\\=&\frac{P(\gamma_{jk}=1,y_j|\theta)}{\sum_{k=1}^KP(\gamma_{jk}=1,y_j|\theta)}\\=&\frac{P(y_j|\color{red}\gamma_{jk}=1,\theta\color{black})\color{green}P(\gamma_{jk}=1|\theta)}{\sum_{k=1}^KP(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)}\\=&\frac{\color{green}\alpha_k\color{black}\phi(y_j|\color{red}\theta_k)}{\sum_{k=1}^K\alpha_k\phi(y_j|\theta_k)}\end{aligned}$$
 
-
-​    这部分内容就是搬运了书上的公式, 有几点说明:
+   这部分内容就是搬运了书上的公式, 有几点说明:
 
 1. 注意这里$E(\gamma_{jk}|y,\theta)$,记为$\hat\gamma_{jk}$, 对应了E步求的**期望**中的一部分.
 1. 对应理解一下上面公式中的红色,蓝色和绿色部分, 以及$\hat\gamma_{jk}$中红色和绿色的对应关系
 1. 这里用到了$n_k=\sum_{j=1}^N\gamma_{jk}$
 1. $\hat \gamma_{jk}$为分模型$k$对观测数据$y_j$的响应度. 这里, 紫色标记的第一行参考伯努利分布的期望.
+
 $$Q(\theta,\theta^{(i)})=\sum_{k=1}^Kn_k\log \alpha_k+\sum_{j=1}^N\hat \gamma_{jk}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma_k-\frac{1}{2\sigma_k^2}(y_j-\mu_k)^2\right]$$
 其中$i$表示第$i$步迭代
-1. 写出$Q$ 函数在推导的时候有用, 但是在程序计算的时候, E步需要计算的就是$\hat\gamma_{jk}$, M步用到了这个结果.
-其实抄公式没有什么意义,主要是能放慢看公式的速度. 和图表一样, 公式简洁的表达了很多含义, 公式中也许更能体会到数学之美.
+
+1. 写出$Q$ 函数在推导的时候有用, 但是在程序计算的时候, E步需要计算的就是$\hat\gamma_{jk}$, M步用到了这个结果.其实抄公式没有什么意义,主要是能放慢看公式的速度. 和图表一样, 公式简洁的表达了很多含义, 公式中也许更能体会到数学之美.
 
 ##### 3. M步
 
@@ -487,8 +448,6 @@ $$
 - $\arg\max$ 就是求Q的极值对应的参数$\theta$, 如说是离散的, 遍历所有值, 最大查找, 如果是连续的, 偏导为零求极值.
 - $\frac {\partial Q}{\partial \mu_k}=0, \frac {\partial{Q}}{\partial{\sigma^2}}= 0$  得到$\hat\mu_k, \hat \sigma_k^2$
 - $\sum_{k=1}^K\alpha_k=1, \frac{\partial{Q}}{\partial{\alpha_k}}=0$ 得到$\alpha_k$
-
-
 
 ##### 4. 停止条件
 
@@ -512,7 +471,7 @@ $$
 1. 那么又是怎么在每轮刷过距离之后, 重新划分样本的分类呢?
    这里对应了响应度, 响应度对应了一个$j \times k$的矩阵, 记录了每一个$y_j$ 对第$k$个模型的响应度, 可以理解为划分了类别.
 
-#### K怎么定?
+#### K怎么定
 
 - 手肘法
 - Gap Statistics[^1]
@@ -523,9 +482,8 @@ $$
 
 ## 其他
 
-1. 关于习题9.3 
-   GMM模型的参数($\alpha _k, \mu _k, \sigma^2_k $)应该是$3k$个, 题目9.3中提出两个分量的高斯混合模型的5个参数, 是因为参数$\alpha_k$满足$\sum_{k=1}^K\alpha _k=1$ 
-1. 
+1. 关于习题9.3
+   GMM模型的参数($\alpha _k, \mu _k, \sigma^2_k $)应该是$3k$个, 题目9.3中提出两个分量的高斯混合模型的5个参数, 是因为参数$\alpha_k$满足$\sum_{k=1}^K\alpha _k=1$
 
 ## 参考
 
