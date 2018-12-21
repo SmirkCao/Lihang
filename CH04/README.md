@@ -167,3 +167,5 @@ I.I.D. 强限制放宽，就是Tree Augmented Naive Bayes, TAN。可以看做是
 3. [^3]: [Machine Learning New Chapter](http://www.cs.cmu.edu/~tom/NewChapters.html)
 
 4. [^4 ]: [An Introduction to Conditional Random Fields for Relational Learning]()
+
+**[⬆ top](#导读)**

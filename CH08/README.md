@@ -173,3 +173,5 @@ m=3
 1. [^1]: [A Short Introduction to Boosting](https://cseweb.ucsd.edu/~yfreund/papers/IntroToBoosting.pdf)
 
 2. [^2]: [Boosting the margin: A new explanation for the effectiveness of voting methods](https://www.cc.gatech.edu/~isbell/tutorials/boostingmargins.pdf)
+
+**[⬆ top](#导读)**

@@ -185,3 +185,5 @@ graph TD
 4. [^3 ]: [KD Tree: k近邻查询和范围查询](https://ask.hellobi.com/blog/zlx19930503/10481)
 
 5. [^4]: [HUD4347](http://acm.hdu.edu.cn/showproblem.php?pid=4347)
+
+**[⬆ top](#导读)**

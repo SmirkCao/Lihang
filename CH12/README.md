@@ -192,3 +192,4 @@ $$ \min \limits_{f \in {H}} \frac {1}{N} \sum \limits^{N}_{i=1} L(y_i , f(x_i)) 
 | HMM       | 标注             |                    | 生成模型 |                          |                    |                      |
 | CRF       | 标注             |                    | 判别模型 |                          |                    |                      |
 
+**[⬆ top](#导读)**
