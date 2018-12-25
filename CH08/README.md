@@ -29,7 +29,11 @@
 - AdaBoost的两个性质：
   1. 能在学习过程中不断减少训练误差
   1. 训练误差是以指数速率下降的
+- 基函数和基本分类器不是一个概念， 在加法模型部分有提到。
 - 提升树针对不同的问题， 选择不同的损失函数：指数损失（分类问题），平方损失（回归问题）， 一般损失（一般问题）， 针对一般问题， 优化方法采用梯度提升就有了GBDT。 
+- 书中讲的AdaBoost是用在二分类上， 和SVM的二分类差不多， 算法8.1中有用到符号函数。
+- 在sklearn中有引用书中参考文献5，sklearn中的实现支持多分类， 引用了参考文献[^3]书中引用了更早的一个实现多分类的文献[^4]
+- 
 
 ###  加法模型+前向分步算法
 
@@ -56,6 +60,7 @@ Boosting方法是一种常用的统计学习方法，应用广泛且有效
 
 ## 提升方法AdaBoost算法
 ### 提升方法的基本思路
+
 概率近似正确(PAC, Probably approximately correct)
 
 在PAC学习框架下，一个概念是强可学习的充分必要条件是这个概念是弱可学习的。
@@ -86,7 +91,7 @@ Adaboost解决方案：
 
 这里面有个描述
 
-> 使用具有权值分布Dm的训练数据集
+> 使用具有权值分布$D_m$的训练数据集
 
 这个怎么理解，是改变了数据么？
 * 这里不是的
@@ -150,6 +155,7 @@ m=3
 ![准确率，误差率，分类器系数之间关系](assets/progress.png)
 ![Adaboost算法示意图](assets/sankey_adaboost.png)
 通过这个图来解释什么是加法模型
+
 - 同样的数据集T，配合不同的权值分布，拿到不同的基分类器G
 - 误差率的定义将权值系数分布与基分类器的结果联系在了一起
 - 权值分布D的宽度代表分类器的*误差率*相对大小，D1➡️D3递减
@@ -203,10 +209,16 @@ $$
 
 
 
+
+
 ## 参考
 
 1. [^1]: [A Short Introduction to Boosting](https://cseweb.ucsd.edu/~yfreund/papers/IntroToBoosting.pdf)
 
 2. [^2]: [Boosting the margin: A new explanation for the effectiveness of voting methods](https://www.cc.gatech.edu/~isbell/tutorials/boostingmargins.pdf)
+
+3. [^3 ]: [Multi-class AdaBoost](https://web.stanford.edu/~hastie/Papers/samme.pdf)
+
+4. [^4]: [Improve boosting algorithms using confidence-rated predictions](https://sci2s.ugr.es/keel/pdf/algorithm/articulo/1999-ML-Improved%20boosting%20algorithms%20using%20confidence-rated%20predictions%20(Schapire%20y%20Singer).pdf)
 
 **[⬆ top](#导读)**
