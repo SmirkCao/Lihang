@@ -6,6 +6,12 @@
 - GitHub的markdown公式支持一般, 推荐使用Chrome插件[TeX All the Things](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn)来渲染TeX公式, 本地Markdown编辑器推荐[Typora](https://typora.io/).
 - math_markdown.pdf为math_markdown.md的导出版本, 方便查看使用, markdown版本为最新版本, 基本覆盖了书中用到的数学公式的LaTeX表达方式.
 
+## 前前言
+
+Review第一遍的时候， 发现之前很多东西整理的不好。所以， 后面会大整改一遍， 期待在Review02版更新吧。
+
+书很薄， 但是很多细节展开之后相对复杂。慢慢来， 希望能理的越来越清晰易懂。
+
 ## 前言
 
 这部分内容并不对应<统计学习方法>中的前言, 书中的**前言**写的也很好, 引用如下:

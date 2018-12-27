@@ -25,15 +25,17 @@
 - 关于AdaBoost和SVM的联系，主要在**函数间隔**的这个概念上文献[^1]和本书[CH02](../CH02/README.md)[CH07](../CH07/README.md)中内容合并理解，本文后面在算法的解释部分会添加一个和SVM关系的对比摘要一下文献中的理解。
 - 间隔包含了分类正确性与确信度的含义。
 - 如果看过林轩田老师的课程(只需看第一课)，可能对hypothesis这个概念迷糊，没有sense。那可以翻下前面提到的这个文章，可能会对这些概念的理解有帮助。另外文章中有提到VC维，用来度量hypotheses的复杂度。
-- 另外一篇 文献，推荐下RE Schapire的文章[^2]关于间隔的理解
+- 另外一篇文献，推荐下RE Schapire的文章[^2]关于间隔的理解
 - AdaBoost的两个性质：
   1. 能在学习过程中不断减少训练误差
   1. 训练误差是以指数速率下降的
 - 基函数和基本分类器不是一个概念， 在加法模型部分有提到。
+- 这章里面提到了，这样一句， `大多数的提升方法都是改变训练数据的概率分布（训练数据的权值分布），针对不同的训练数据分布调用弱学习算法学习一系列弱分类器`， 这里改变训练数据的权值分布，可能不是很容易理解， 字面理解好像是给数据乘了系数， 实际上这个权值分布在计算分类误差率的时候才用到，通过$\alpha_m=\frac{1}{2}\log\frac{1-e_m}{e_m}$生成了对应的弱分类器的系数。另外， 这个权值分布在更新的时候， 做了归一化， 使他满足了概率分布的条件。
 - 提升树针对不同的问题， 选择不同的损失函数：指数损失（分类问题），平方损失（回归问题）， 一般损失（一般问题）， 针对一般问题， 优化方法采用梯度提升就有了GBDT。 
 - 书中讲的AdaBoost是用在二分类上， 和SVM的二分类差不多， 算法8.1中有用到符号函数。公式8.4也用到了$Y=\{1,-1\}$的性质, 和感知机部分的应用类似。 
 - 在sklearn中有引用书中参考文献5，sklearn中的实现支持多分类， 引用了参考文献[^3]书中引用了更早的一个实现多分类的文献[^4]
 - 提升方法最初用来解决分类问题
+- 本章最后介绍了提升树， 关于各种树相关的算法关系， 林轩田有页slides， 可以参考。[^5]
 
 ###  加法模型+前向分步算法
 
@@ -57,8 +59,8 @@ Boosting方法是一种常用的统计学习方法，应用广泛且有效
 - 【在分类问题中】改变训练样本权重，学习多个分类器
 - 线性组合
 
-
 ## 提升方法AdaBoost算法
+
 ### 提升方法的基本思路
 
 概率近似正确(PAC, Probably approximately correct)
@@ -220,5 +222,7 @@ $$
 3. [^3 ]: [Multi-class AdaBoost](https://web.stanford.edu/~hastie/Papers/samme.pdf)
 
 4. [^4]: [Improve boosting algorithms using confidence-rated predictions](https://sci2s.ugr.es/keel/pdf/algorithm/articulo/1999-ML-Improved%20boosting%20algorithms%20using%20confidence-rated%20predictions%20(Schapire%20y%20Singer).pdf)
+
+5. [^5]: [Machine Learning Techniques: Lecture 11: Gradient Boosted Decision Tree ](https://www.csie.ntu.edu.tw/~htlin/mooc/doc/211_handout.pdf)
 
 **[⬆ top](#导读)**
