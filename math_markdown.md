@@ -54,7 +54,7 @@
 | $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
 | $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
-| $\coprod$ | \coprod | $\bigodot$ | \bigodot  |   |   |
+| $\coprod$ | \coprod | $\bigodot$ | \bigodot  | $\partial$ | \partial |
 
 ### 表 6: 常用箭头
 
