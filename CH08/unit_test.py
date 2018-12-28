@@ -8,6 +8,7 @@ from adaboost import *
 import pandas as pd
 import numpy as np
 import unittest
+import logging
 
 
 class TestAdaBoost(unittest.TestCase):
@@ -19,24 +20,7 @@ class TestAdaBoost(unittest.TestCase):
         y = df["y"].values
         return x, y
 
-    def test_predict(self):
-        x, y = self.load_data()
-        clf = BiSection()
-        clf.v_min = 2.5
-
-        clf.predict(x)
-
-    def test_calc_less(self):
-        x, y = load_data()
-        clf = BiSection()
-        clf.calc_less(x, 2.5)
-
-    def test_fit(self):
-        x, y = self.load_data()
-        clf = BiSection()
-        clf.y_ = y
-        clf.fit(x, y)
-
+    # @unittest.skip("")
     def test_adaboost_algo(self):
         # ex8.1
         x, y = self.load_data()
@@ -117,9 +101,9 @@ class TestAdaBoost(unittest.TestCase):
         print("acc3=", acc3)
 
         # for markdown table
-        @staticmethod
         def to_table(x_, name_):
             return "|"+name_+"|"+"|".join(map(str, x_.tolist()))+"|"
+
         print(to_table(d1, "d1"))
         print(to_table(G1, "G1"))
         print(to_table(d2, "d2"))
@@ -134,8 +118,9 @@ class TestAdaBoost(unittest.TestCase):
         print(to_table(f3, "f3"))
         print(to_table(sign_f3, "sign_f3"))
 
+    # @unittest.skip(":")
     def test_adaboost(self):
-        x, y = load_data()
+        x, y = TestAdaBoost.load_data()
 
         clf = AdaBoost(BiSection, max_iter=3)
         clf.fs = [clf_great_than_, clf_less_than_]
@@ -143,9 +128,19 @@ class TestAdaBoost(unittest.TestCase):
         y_pred = clf.predict(x)
         print("final accuracy : ", accuracy_score(y_pred, y))
 
+    # @unittest.skip("::")
     def test_gen_threshold_lst(self):
         pass
 
+    def test_e82(self):
+        # ex8.2
+        x, y = TestAdaBoost.load_data(path_="./Input/data_8-2.txt")
+        rgs = AdaBoostRegressor(max_iter=6)
+        rgs.fit(x, y)
+        print(rgs)
+
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
     unittest.main()

@@ -39,6 +39,7 @@ class BiSection(object):
     threshold classifier
     error rate: $e_m=\sum_{i=1}^{N}P(G_m(x_i)\ne y_i)=\sum_{i=1}^{N}w_{mi}I(G_m(x_i)\ne y_i)$
     """
+
     def __init__(self, ):
         self.v_min = None
         self.f_min = None
@@ -91,7 +92,7 @@ class AdaBoost(object):
         self.clfs_ = []
 
     def fit(self, x_, y_):
-        self.d_ = np.ones(x_.size)/x_.size
+        self.d_ = np.ones(x_.size) / x_.size
         for m in range(self.max_iter_):
             clf = self.ds_()
             clf.fs = self.fs
@@ -117,9 +118,64 @@ class AdaBoost(object):
     def predict(self, x_):
         res = 0
         for clf in self.clfs_:
-            res += clf[0]*clf[1].predict(x_)
+            res += clf[0] * clf[1].predict(x_)
             # print(id(clf), clf[0], clf[1].predict(x_))
         return np.sign(res)
+
+
+class AdaBoostRegressor(object):
+    def __init__(self, max_iter=10):
+        self.max_iter_ = max_iter
+        self.rgs_ = []
+        self.s_ = []
+        self.loss_fn = None
+
+    def __str__(self):
+        return str(self.rgs_)
+
+    def fit(self, x_, y_):
+        self.rgs_ = []
+        rs = y_
+        for m in range(self.max_iter_):
+            ms, theta = AdaBoostRegressor.calc_ms(rs)
+            rs = AdaBoostRegressor.calc_res(x_, rs, theta)
+            loss = np.sum(rs**2)
+            print("rs: %s loss: %f" % (rs, loss))
+            self.rgs_.append(theta)
+
+    def predict(self, x_):
+        pass
+
+    @staticmethod
+    def calc_ms(y):
+        # print(y)
+        ms = np.array([])
+        _c1 = None
+        _c2 = None
+        _s = None
+        _ms = np.inf
+        for idx in range(1, y.shape[0]-1):
+            c1 = y[:idx].mean()
+            c2 = y[idx:].mean()
+            ms_ = ((y[:idx] - c1)**2).sum() + ((y[idx:] - c2)**2).sum()
+            if ms_ < _ms:
+                _c1, _c2, _s = c1, c2, (idx+idx+1)/2
+                _ms = ms_
+            ms = np.append(ms, ms_)
+        theta = (_c1, _c2, _s)
+        # print(theta)
+        # print(ms)
+        return ms, theta
+
+    @staticmethod
+    def calc_res(x, y, theta):
+        rst = np.array([])
+        _c1, _c2, _s = theta
+        # print("---", _c1, _c2, _s)
+
+        for x_, y_ in zip(x, y):
+            rst = np.append(rst, y_ - (_c1 if x_ <= _s else _c2))
+        return rst
 
 
 if __name__ == '__main__':
