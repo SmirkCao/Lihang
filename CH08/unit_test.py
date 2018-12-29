@@ -2,19 +2,17 @@
 # Project: Lihang
 # Filename: unit_test
 # Author: 😏 <smirk dot cao at gmail dot com>
-
-from sklearn.metrics import accuracy_score
 from adaboost import *
 import pandas as pd
 import numpy as np
 import unittest
-import logging
 
 
 class TestAdaBoost(unittest.TestCase):
     @staticmethod
     def load_data(path_="./Input/data_8-1.txt"):
-        # Li Hang p140, ex8.1
+        # p140, ex8.1 -> data_8-1.txt
+        # p149, ex8.2 -> data_8-2.txt
         df = pd.read_csv(path_)
         x = df["x"].values
         y = df["y"].values
@@ -128,10 +126,6 @@ class TestAdaBoost(unittest.TestCase):
         y_pred = clf.predict(x)
         print("final accuracy : ", accuracy_score(y_pred, y))
 
-    # @unittest.skip("::")
-    def test_gen_threshold_lst(self):
-        pass
-
     def test_e82(self):
         # ex8.2
         x, y = TestAdaBoost.load_data(path_="./Input/data_8-2.txt")
@@ -141,6 +135,4 @@ class TestAdaBoost(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    logger = logging.getLogger(__name__)
     unittest.main()
