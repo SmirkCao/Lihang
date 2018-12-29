@@ -33,9 +33,11 @@
 - 这章里面提到了，这样一句， `大多数的提升方法都是改变训练数据的概率分布（训练数据的权值分布），针对不同的训练数据分布调用弱学习算法学习一系列弱分类器`， 这里改变训练数据的权值分布，可能不是很容易理解， 字面理解好像是给数据乘了系数， 实际上这个权值分布在计算分类误差率的时候才用到，通过$\alpha_m=\frac{1}{2}\log\frac{1-e_m}{e_m}$生成了对应的弱分类器的系数。另外， 这个权值分布在更新的时候， 做了归一化， 使他满足了概率分布的条件。
 - 提升树针对不同的问题， 选择不同的损失函数：指数损失（分类问题），平方损失（回归问题）， 一般损失（一般问题）， 针对一般问题， 优化方法采用梯度提升就有了GBDT。 
 - 书中讲的AdaBoost是用在二分类上， 和SVM的二分类差不多， 算法8.1中有用到符号函数。公式8.4也用到了$Y=\{1,-1\}$的性质, 和感知机部分的应用类似。 
-- 在sklearn中有引用书中参考文献5，sklearn中的实现支持多分类， 引用了参考文献[^3]书中引用了更早的一个实现多分类的文献[^4]
-- 提升方法最初用来解决分类问题，这里面算法8.1描述的就是二分类的算法， 
+- 在sklearn中有引用书中参考文献5[^7]，sklearn中的实现支持多分类， 引用了参考文献[^3]， 本书中引用了更早的一个实现多分类的文献[^4]
+- 提升方法最初用来解决分类问题，这里面算法8.1描述的就是二分类的算法，
 - 本章最后介绍了提升树， 关于各种树相关的算法关系， 林轩田有页slides， 可以参考。[^5]
+- 算法8.3用来求回归问题的提升树， 注意**拟合残差**这个内容的理解，可以理解例子8.2
+- 关于参考文献9[^6]， 这个文章，简要说两句， 提到了Bregman distance， 这篇文章的编辑是Bengio
 
 ###  加法模型+前向分步算法
 
@@ -200,6 +202,10 @@ m=3
 
 
 
+
+
+
+
 ## 提升树
 
 提升方法实际采用加法模型（即基函数的线性组合）与前向分步算法。
@@ -236,12 +242,12 @@ $$
 步骤：
 
 1. 初始化$f_0(x)=0$
-1. 对$m=1,2,\dots,M​$
+1. 对$m=1,2,\dots,M$
    1. 计算残差
    $$
    r_{mi}=y_i-f_{m-1}(x_i), i=1,2,\dots,N
    $$
-   1. 拟合残差$r_{mi}$学习一个回归树，得到$T(x;\Theta_m)$
+   1. **拟合残差**$r_{mi}$学习一个回归树，得到$T(x;\Theta_m)$
    1. 更新$f_m(x)=f_{m-1}(x)+T(x;\Theta_m)$
 1. 得到回归问题提升树
    $$
@@ -251,17 +257,53 @@ $$
 
 
 
+
+
+
+
 5.5节中有回归树相关说明。
 
-#### 例子8.3
+#### 例子8.2
+
+可以看代码中测试案例test_e82
 
 
 
 ### 梯度提升(GBDT)
 
 #### 算法8.4
+输入： 训练数据集$T={(x_1,y_1),(x_2,y_2),\dots,(x_N,y_N)}, x_i \in \cal x \sube \R^n, y_i \in \cal y \sube \R$；损失函数$L(y,f(x))$
+输出：回归树$\hat{f}(x)$
+步骤：
+1. 初始化
+   $$
+   f_0(x)=\arg\min\limits_c\sum_{i=1}^NL(y_i, c)
+   $$
+
+1. $m=1,2,\dots,M$
+1. $i=1,2,\dots,N$
+   $$
+   r_{mi}=-\left[\frac{\partial L(y_i, f(x_i))}{\partial f(x_i)}\right]_{f(x)=f_{m-1}(x)}
+   $$
+
+1. 对$r_{mi}$拟合一个回归树，得到第$m$棵树的叶节点区域$R_{mj}, j=1,2,\dots,J$
+1. $j=1,2,\dots,J$
+   $$
+   c_{mj}=\arg\min_c\sum_{xi\in R_{mj}}L(y_i,f_{m-1}(x_i)+c)
+   $$
+
+1. 更新
+   $$
+   f_m(x)=f_{m-1}(x)+\sum_{j=1}^Jc_{mj}I(x\in R_{mj})
+   $$
+
+1. 得到回归树
+   $$
+   \hat{f}(x)=f_M(x)=\sum_{m=1}^M\sum_{j=1}^Jc_{mj}I(x\in R_{mj})
+   $$
 
 
+这个算法里面注意，关键是`用损失函数的负梯度，在当前模型的值作为回归问题提升树算法中的残差近似值，拟合回归树`
 
 ### AdaBoost与SVM的关系
 
@@ -282,5 +324,9 @@ $$
 4. [^4]: [Improve boosting algorithms using confidence-rated predictions](https://sci2s.ugr.es/keel/pdf/algorithm/articulo/1999-ML-Improved%20boosting%20algorithms%20using%20confidence-rated%20predictions%20(Schapire%20y%20Singer).pdf)
 
 5. [^5]: [Machine Learning Techniques: Lecture 11: Gradient Boosted Decision Tree ](https://www.csie.ntu.edu.tw/~htlin/mooc/doc/211_handout.pdf)
+
+6. [^6]: [Logistic regression, AdaBoost and Bregman distances](https://link.springer.com/content/pdf/10.1023%2FA%3A1013912006537.pdf)
+
+7. [^7]: [A decision-theoretic generalization of on-line learning and an application to boosting](http://www.dklevine.com/archive/refs4570.pdf)
 
 **[⬆ top](#导读)**
