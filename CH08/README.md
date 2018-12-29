@@ -21,15 +21,23 @@
 
 ### 导读
 
-- 可能会有疑问，为什么支持向量机前置在这一章之前，可以参考本章的第一个参考文献[^1]，Yoav Freund和Robert Schapire因此获得了[2003年的哥德尔奖](https://en.wikipedia.org/wiki/G%C3%B6del_Prize)
-- 如果看过林轩田老师的课程(只需看第一课)，可能对hypothesis这个概念迷糊，没有sense。那可以翻下前面提到的这个文章，可能会对这些概念的理解有帮助。另外文章中有提到VC维，用来度量hypotheses的复杂度。
-- 另外一篇 文献，推荐下RE Schapire的文章[^2]关于间隔的理解
+- 可能会有疑问，为什么支持向量机前置在这一章之前，可以参考本章的第一个参考文献[^1]，Yoav Freund和Robert Schapire因此获得了[2003年的哥德尔奖](https://en.wikipedia.org/wiki/G%C3%B6del_Prize)， 本书中关于误差率的表述与该文献是一致的， PRML中则对分类误差率进行了归一化。
 - 关于AdaBoost和SVM的联系，主要在**函数间隔**的这个概念上文献[^1]和本书[CH02](../CH02/README.md)[CH07](../CH07/README.md)中内容合并理解，本文后面在算法的解释部分会添加一个和SVM关系的对比摘要一下文献中的理解。
 - 间隔包含了分类正确性与确信度的含义。
+- 如果看过林轩田老师的课程(只需看第一课)，可能对hypothesis这个概念迷糊，没有sense。那可以翻下前面提到的这个文章，可能会对这些概念的理解有帮助。另外文章中有提到VC维，用来度量hypotheses的复杂度。
+- 另外一篇文献，推荐下RE Schapire的文章[^2]关于间隔的理解
 - AdaBoost的两个性质：
   1. 能在学习过程中不断减少训练误差
   1. 训练误差是以指数速率下降的
-- 
+- 基函数和基本分类器不是一个概念， 在加法模型部分有提到。
+- 这章里面提到了，这样一句， `大多数的提升方法都是改变训练数据的概率分布（训练数据的权值分布），针对不同的训练数据分布调用弱学习算法学习一系列弱分类器`， 这里改变训练数据的权值分布，可能不是很容易理解， 字面理解好像是给数据乘了系数， 实际上这个权值分布在计算分类误差率的时候才用到，通过$\alpha_m=\frac{1}{2}\log\frac{1-e_m}{e_m}$生成了对应的弱分类器的系数。另外， 这个权值分布在更新的时候， 做了归一化， 使他满足了概率分布的条件。
+- 提升树针对不同的问题， 选择不同的损失函数：指数损失（分类问题），平方损失（回归问题）， 一般损失（一般问题）， 针对一般问题， 优化方法采用梯度提升就有了GBDT。 
+- 书中讲的AdaBoost是用在二分类上， 和SVM的二分类差不多， 算法8.1中有用到符号函数。公式8.4也用到了$Y=\{1,-1\}$的性质, 和感知机部分的应用类似。 
+- 在sklearn中有引用书中参考文献5[^7]，sklearn中的实现支持多分类， 引用了参考文献[^3]， 本书中引用了更早的一个实现多分类的文献[^4]
+- 提升方法最初用来解决分类问题，这里面算法8.1描述的就是二分类的算法，
+- 本章最后介绍了提升树， 关于各种树相关的算法关系， 林轩田有页slides， 可以参考。[^5]
+- 算法8.3用来求回归问题的提升树， 注意**拟合残差**这个内容的理解，可以理解例子8.2
+- 关于参考文献9[^6]， 这个文章，简要说两句， 提到了Bregman distance， 这篇文章的编辑是Bengio
 
 ###  加法模型+前向分步算法
 
@@ -53,9 +61,10 @@ Boosting方法是一种常用的统计学习方法，应用广泛且有效
 - 【在分类问题中】改变训练样本权重，学习多个分类器
 - 线性组合
 
-
 ## 提升方法AdaBoost算法
+
 ### 提升方法的基本思路
+
 概率近似正确(PAC, Probably approximately correct)
 
 在PAC学习框架下，一个概念是强可学习的充分必要条件是这个概念是弱可学习的。
@@ -70,8 +79,8 @@ Adaboost解决方案：
 ### Adaboost算法
 #### 算法8.1
 
-* 输入：训练数据集T, 弱学习方法
-* 输出：最终分类器G(x)
+* 输入：训练数据集$T={(x_1,y_1), (x_2,y_2),...,(x_N,y_N)}, x\in  \cal X\sube \R^n$, 弱学习方法
+* 输出：最终分类器$G(x)$
 
 步骤
 1. 初始化训练数据的权值分布 $D_1=(w_{11},\cdots,w_{1i},\cdots,w_{1N},w_{1i}=\frac{1}{N})$
@@ -86,7 +95,7 @@ Adaboost解决方案：
 
 这里面有个描述
 
-> 使用具有权值分布Dm的训练数据集
+> 使用具有权值分布$D_m$的训练数据集
 
 这个怎么理解，是改变了数据么？
 * 这里不是的
@@ -150,6 +159,7 @@ m=3
 ![准确率，误差率，分类器系数之间关系](assets/progress.png)
 ![Adaboost算法示意图](assets/sankey_adaboost.png)
 通过这个图来解释什么是加法模型
+
 - 同样的数据集T，配合不同的权值分布，拿到不同的基分类器G
 - 误差率的定义将权值系数分布与基分类器的结果联系在了一起
 - 权值分布D的宽度代表分类器的*误差率*相对大小，D1➡️D3递减
@@ -160,11 +170,146 @@ m=3
 
 ## AdaBoost 算法的解释
 
+加法模型， 指数损失， 前向分步， 二分类。
+
+### 前向分步算法
+
+#### 算法8.2
+
+输入：训练数据集$T={(x_1,y_1),(x_2,y_2),...,(x_N, y_N)}, x_i \in \cal X \sube R^n, y_i\in \{-1, 1\}$， 损失函数$L(y, f(x))$; 基函数集合$\{b(x;\gamma)\}$
+
+输出：加法模型$f(x)$
+
+步骤：
+
+1. 初始化$f_0(x)=0$
+1. 对$m=1,2,\dots,M$
+1. 极小化损失函数
+   $$
+   (\beta_m,\gamma_m)=\arg\min \limits_ {\beta,\gamma}\sum_{i=1}^NL(y_i, f_{m-1}(x_i)+\beta b(x_i;\gamma))
+   $$
+
+1. 更新
+   $$
+   f_m(x)=f_{m-1}(x)+\beta _mb(x;\gamma_m)
+   $$
+
+1. 得到加法模型
+   $$
+   f(x)=f_M(x)=\sum_{m=1}^M\beta_m b(x;\gamma_m)
+   $$
+
+
+
+
+
+
+
+
+## 提升树
+
+提升方法实际采用加法模型（即基函数的线性组合）与前向分步算法。
+
+### 提升树模型
+
+以决策树为基函数的提升方法称为提升树。
+
+决策树$T(x;\Theta_m)$
+
+提升树模型可以表示成决策树的加法模型
+$$
+f_M(x)=\sum_{m=1}^MT(x;\Theta_m)
+$$
+上面这个公式用回归问题理解挺好理解(不等式求和)， 后面给了例子。
+
+
+
+### 提升树算法
+
+不同的问题， 主要区别在于损失函数不同：
+
+1. 平方误差用于回归问题
+1. 指数损失用于分类问题
+
+#### 算法8.3
+
+回归问题的提升树算法
+
+输入：训练数据集
+
+输出：提升树$f_M(x)$
+
+步骤：
+
+1. 初始化$f_0(x)=0$
+1. 对$m=1,2,\dots,M$
+   1. 计算残差
+   $$
+   r_{mi}=y_i-f_{m-1}(x_i), i=1,2,\dots,N
+   $$
+   1. **拟合残差**$r_{mi}$学习一个回归树，得到$T(x;\Theta_m)$
+   1. 更新$f_m(x)=f_{m-1}(x)+T(x;\Theta_m)$
+1. 得到回归问题提升树
+   $$
+   f(x)=f_M(x)=\sum_{m=1}^MT(x;\Theta_m)
+   $$
+
+
+
+
+
+
+
+
+5.5节中有回归树相关说明。
+
+#### 例子8.2
+
+可以看代码中测试案例test_e82
+
+
+
+### 梯度提升(GBDT)
+
+#### 算法8.4
+输入： 训练数据集$T={(x_1,y_1),(x_2,y_2),\dots,(x_N,y_N)}, x_i \in \cal x \sube \R^n, y_i \in \cal y \sube \R$；损失函数$L(y,f(x))$
+输出：回归树$\hat{f}(x)$
+步骤：
+1. 初始化
+   $$
+   f_0(x)=\arg\min\limits_c\sum_{i=1}^NL(y_i, c)
+   $$
+
+1. $m=1,2,\dots,M$
+1. $i=1,2,\dots,N$
+   $$
+   r_{mi}=-\left[\frac{\partial L(y_i, f(x_i))}{\partial f(x_i)}\right]_{f(x)=f_{m-1}(x)}
+   $$
+
+1. 对$r_{mi}$拟合一个回归树，得到第$m$棵树的叶节点区域$R_{mj}, j=1,2,\dots,J$
+1. $j=1,2,\dots,J$
+   $$
+   c_{mj}=\arg\min_c\sum_{xi\in R_{mj}}L(y_i,f_{m-1}(x_i)+c)
+   $$
+
+1. 更新
+   $$
+   f_m(x)=f_{m-1}(x)+\sum_{j=1}^Jc_{mj}I(x\in R_{mj})
+   $$
+
+1. 得到回归树
+   $$
+   \hat{f}(x)=f_M(x)=\sum_{m=1}^M\sum_{j=1}^Jc_{mj}I(x\in R_{mj})
+   $$
+
+
+这个算法里面注意，关键是`用损失函数的负梯度，在当前模型的值作为回归问题提升树算法中的残差近似值，拟合回归树`
+
 ### AdaBoost与SVM的关系
 
 摘要文献中对AdaBoost和SVM的理解。
 
-## 提升树
+
 
 
 
@@ -173,5 +318,15 @@ m=3
 1. [^1]: [A Short Introduction to Boosting](https://cseweb.ucsd.edu/~yfreund/papers/IntroToBoosting.pdf)
 
 2. [^2]: [Boosting the margin: A new explanation for the effectiveness of voting methods](https://www.cc.gatech.edu/~isbell/tutorials/boostingmargins.pdf)
+
+3. [^3 ]: [Multi-class AdaBoost](https://web.stanford.edu/~hastie/Papers/samme.pdf)
+
+4. [^4]: [Improve boosting algorithms using confidence-rated predictions](https://sci2s.ugr.es/keel/pdf/algorithm/articulo/1999-ML-Improved%20boosting%20algorithms%20using%20confidence-rated%20predictions%20(Schapire%20y%20Singer).pdf)
+
+5. [^5]: [Machine Learning Techniques: Lecture 11: Gradient Boosted Decision Tree ](https://www.csie.ntu.edu.tw/~htlin/mooc/doc/211_handout.pdf)
+
+6. [^6]: [Logistic regression, AdaBoost and Bregman distances](https://link.springer.com/content/pdf/10.1023%2FA%3A1013912006537.pdf)
+
+7. [^7]: [A decision-theoretic generalization of on-line learning and an application to boosting](http://www.dklevine.com/archive/refs4570.pdf)
 
 **[⬆ top](#导读)**

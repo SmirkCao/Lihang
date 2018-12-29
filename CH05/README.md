@@ -229,6 +229,30 @@ def _min_samples_leaf_check(self,
 
 #### 算法5.5 最小二乘回归树生成
 
+输入：训练数据集$D$
+
+输出：回归树$f(x)$
+
+步骤：
+
+1. 遍历变量$j$，对固定的切分变量$j$扫描切分点$s$，得到满足上面关系的$(j,s)$
+   $$
+   \min\limits_{j,s}\left[\min\limits_{c_1}\sum\limits_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min\limits_{c_2}\sum\limits_{x_i\in R_2(j,s)}(y_i-c_2)^2\right]
+   $$
+
+1. 用选定的$(j,s)$, 划分区域并决定相应的输出值
+   $$
+   R_1(j,s)=\{x|x^{(j)}\leq s\}, R_2(j,s)=\{x|x^{(j)}> s\} \\
+   \hat{c}_m= \frac{1}{N}\sum\limits_{x_i\in R_m(j,s)} y_j, x\in R_m, m=1,2
+   $$
+
+1. 对两个子区域调用(1)(2)步骤， 直至满足停止条件
+1. 将输入空间划分为$M$个区域$R_1, R_2,\dots,R_M$，生成决策树：
+   $$
+   f(x)=\sum_{m=1}^M\hat{c}_mI(x\in R_m)
+   $$
+
+
 
 
 #### 算法5.6 CART分类树生成
