@@ -29,7 +29,7 @@
 
 - 一个$m\times n\times k$的矩阵可能可以划分成$n$个$m\times k$的形式, 这点理解下.
 
-- 这部分推导有很多求和, 注意体会是按照**样本**做的, 还是按照**模型**做的
+- 涉及混合模型的部分推导有很多求和, 注意体会是按照**样本**做的, 还是按照**模型**做的
 
 - 如果对PDF, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收获.
 
@@ -40,7 +40,7 @@
   > It can be called the **probability of $x$** (given $\theta$),
   > or the **likelihood of $\theta$** (given that $x$  was observed).
 
-- 学习过程中注意**观测数据**在每次EM算法中的意义.
+- 学习过程中注意**观测数据**在EM算法每次迭代中的意义.
 
 - GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异, 直觉上都有一种归属的感觉, $\gamma_{jk}$是二值函数, $\alpha_k$是一种概率的表示. $\gamma_j$是one-hot encoding(also: 1-of-K representation)
 
@@ -144,13 +144,14 @@ while flag_a or flag_b:
 解的过程记录在这里.
 
 三硬币模型可以写作
-$$\begin{equation}
-​        \begin{aligned}
-​            P(y|\theta)&=\sum_z P(y,z|\theta) \\
-​            &=\sum_z P(z|\theta)P(y|z,\theta) \\
-​            &=\pi p^y (1-p)^{1-y} + (1-\pi)q^y(1-q)^{1-y}
-​        \end{aligned}
-​    \end{equation}
+$$
+\begin{equation}
+        \begin{aligned}
+            P(y|\theta)&=\sum_z P(y,z|\theta) \\
+            &=\sum_z P(z|\theta)P(y|z,\theta) \\
+            &=\pi p^y (1-p)^{1-y} + (1-\pi)q^y(1-q)^{1-y}
+        \end{aligned}
+\end{equation}
 $$
 以上
 
