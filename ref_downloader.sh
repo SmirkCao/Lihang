@@ -13,3 +13,6 @@ wget "https://sci2s.ugr.es/keel/pdf/algorithm/articulo/1999-ML-Improved%20boosti
 wget "https://link.springer.com/content/pdf/10.1023%2FA%3A1013912006537.pdf" -O 0809.pdf 
 # 0901
 wget "http://web.mit.edu/6.435/www/Dempster77.pdf" -O 0901.pdf
+
+# 0906
+wget "http://www.cs.toronto.edu/~fritz/absps/emk.pdf" -O 0906.pdf
