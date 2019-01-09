@@ -11,6 +11,7 @@
 | $\hat {a}$ | \hat{a} | $\check{a}$ | \check{a} | $\tilde{a}$ | \tilde{a} | $\acute{a}$ | \acute{a} |
 | **$\grave{a}$ ** | \grave{a} | **$\dot {a}$ **    | \dot{a}     | **$\bar{a}$ **  | \bar{a} | $\ddot a$ | **\ddot{a}**  |
 | **$\vec {a}$ **  | \vec{a} | **$\widehat{A}$ ** | \widehat{A} | $\widetilde{A}$ | **\widetilde{A}** | $\breve a$  | **\breve{a}** |
+|  |  | $\hat{A}$ | \hat{A} | $\tilde{A}$ | \tilde{A} |  |  |
 
 ### 表2: 小写希腊字母
 
@@ -174,7 +175,7 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
 1. align
 1. \nonumber的使用
 
-#### 矩阵
+### 表X: 矩阵
 
 $$
 \begin{aligned}
@@ -230,9 +231,19 @@ M_3(x)=
 \end{aligned}
 ```
 
+$$
+\overbrace{abcde}\underbrace{fghij}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
+$$
+
+```tex
+\overbrace{abcde}\underbrace{fghij}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
+```
+
+
+
 ## Emoji
 
-### 表X: Emoji
+### 表XI: Emoji
 
 | :smirk: smirk          | :smile:smile | :laughing:laughing | :blush:blush       | :smiley:smiley | :heart_eyes:heart_eyes |
 | ---------------------- | ------------ | ------------------ | ------------------ | -------------- | ---------------------- |
