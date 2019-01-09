@@ -316,6 +316,26 @@ $$
 > $$\hat\mu_k=\frac{\sum_{j=1}^N\hat\gamma_{jk}y_j}{\sum_{j=1}^N\hat\gamma_{jk}}\\
 > \hat\alpha_k=\frac{n_k}{N}$$
 
+#### EM算法导出
+
+书中这部分内容回答为什么EM算法能近似实现对观测数据的极大似然估计？
+$$
+\begin{align}
+L(\theta)-L(\theta^{(i)})&=\log \left(\sum_Z\color{green}P(Y|Z,\theta^{(i)})\color{black}\frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Y|Z,\theta^{(i)})}\color{black}\right)-\log P(Y|\theta^{(i)})\\
+&\ge\sum_Z \color{green}P(Z|Y,\theta^{(i)})\color{black}\log \frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Z|Y,\theta^{(i)})\color{black}}-\log P(Y|\theta^{(i)})\\
+&=\sum_Z P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}-\color{red}\sum_ZP(Z|Y,\theta^{(i)})\color{black}\log P(Y|\theta^{(i)})\\
+&=\sum_ZP(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}
+\end{align}
+$$
+
+以上用于推导迭代过程中两次$L$会变大， 这里面红色部分是后加的方便理解前后两步之间的推导。绿色部分是为了构造期望， 进而应用琴声不等式。在这里凑项应该是凑$P(Z|Y,\theta^{(i)})$
+
+这里也写一下琴声不等式
+$$
+\log \sum_j \lambda_j y_j \ge \sum_j \lambda_j \log y_j, s.t., \lambda_j \ge 0, \sum_j \lambda_j = 1
+$$
+所以，这里的这一项不是随便凑的。
+
 ### 高斯混合模型
 
 **混合模型**, 有多种, 高斯混合模型是最常用的.
@@ -468,6 +488,8 @@ $$
 ### 广义期望极大
 
 广义期望极大(generalized expectation maximization, $GEM$)
+
+广义期望极大是为了解决什么问题？
 
 ## 其他
 
