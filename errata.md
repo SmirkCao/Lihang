@@ -58,3 +58,13 @@
 
 1. $P_{170}$Baum与Welch算法，后面HMM的描述中用的是Baum-Welch算法， 同一本书两个表达方式不统一。其实，这个也不是太重要。
 
+1. $P_{159}$
+$$
+\begin{align}
+L(\theta)-L(\theta^{(i)})&=\log \left(\sum_Z\color{green}P(Y|Z,\theta^{(i)})\color{black}\frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Y|Z,\theta^{(i)})}\color{black}\right)-\log P(Y|\theta^{(i)})\\
+&\ge\sum_Z P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}-\log P(Y|\theta^{(i)})\\
+&=\sum_Z P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}-\color{red}\sum_ZP(Z|Y,\theta^{(i)})\color{black}\log P(Y|\theta^{(i)})\\
+&=\sum_ZP(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}
+\end{align}
+$$
+这里绿色部分应该是$P(Z|Y,\theta^{(i)})$，为了构建期望而凑项，进而应用琴声不等式。
