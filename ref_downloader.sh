@@ -19,3 +19,11 @@ wget "https://projecteuclid.org/download/pdf_1/euclid.aos/1176346060" -O 0905.pd
 
 # 0906
 wget "http://www.cs.toronto.edu/~fritz/absps/emk.pdf" -O 0906.pdf
+
+# 1001
+wget "http://ai.stanford.edu/~pabbeel/depth_qual/Rabiner_Juang_hmms.pdf" -O 1001.pdf
+
+# 1002
+wget "https://www.ece.ucsb.edu/Faculty/Rabiner/ece259/Reprints/tutorial%20on%20hmm%20and%20applications.pdf" -O 1002.pdf
+
+
