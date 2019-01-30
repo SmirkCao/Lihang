@@ -1,5 +1,9 @@
 mkdir refs
 cd refs
+
+echo "ch02"
+wget "https://cs.uwaterloo.ca/~y328yu/classics/novikoff.pdf" -O 0202.pdf
+
 echo "ch08"
 # 0801
 wget https://cseweb.ucsd.edu/~yfreund/papers/IntroToBoosting.pdf -O 0801.pdf
@@ -11,6 +15,7 @@ wget https://statweb.stanford.edu/~jhf/ftp/trebst.pdf -O 0807.pdf
 wget "https://sci2s.ugr.es/keel/pdf/algorithm/articulo/1999-ML-Improved%20boosting%20algorithms%20using%20confidence-rated%20predictions%20(Schapire%20y%20Singer).pdf" -O 0808.pdf
 # 0809
 wget "https://link.springer.com/content/pdf/10.1023%2FA%3A1013912006537.pdf" -O 0809.pdf 
+echo "ch09"
 # 0901
 wget "http://web.mit.edu/6.435/www/Dempster77.pdf" -O 0901.pdf
 
@@ -20,6 +25,7 @@ wget "https://projecteuclid.org/download/pdf_1/euclid.aos/1176346060" -O 0905.pd
 # 0906
 wget "http://www.cs.toronto.edu/~fritz/absps/emk.pdf" -O 0906.pdf
 
+echo "ch10"
 # 1001
 wget "http://ai.stanford.edu/~pabbeel/depth_qual/Rabiner_Juang_hmms.pdf" -O 1001.pdf
 
