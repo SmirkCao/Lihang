@@ -2,7 +2,12 @@ mkdir refs
 cd refs
 
 echo "ch02"
+# 0201
+wget "http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.335.3398&rep=rep1&type=pdf" -O 0201.pdf
+# 0202
 wget "https://cs.uwaterloo.ca/~y328yu/classics/novikoff.pdf" -O 0202.pdf
+# 0207
+wget "https://web.stanford.edu/class/ee373b/30years.pdf" -O 0207.pdf
 
 echo "ch08"
 # 0801
