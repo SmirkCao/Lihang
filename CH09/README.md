@@ -29,7 +29,7 @@
 
 - 一个$m\times n\times k$的矩阵可能可以划分成$n$个$m\times k$的形式, 这点理解下.
 
-- 这部分推导有很多求和, 注意体会是按照**样本**做的, 还是按照**模型**做的
+- 涉及混合模型的部分推导有很多求和, 注意体会是按照**样本**做的, 还是按照**模型**做的
 
 - 如果对PDF, 高斯分布, 边缘概率分布, 协方差矩阵不清楚, 可以在这个章节从GMM的角度扩展阅读下, 一定会有收获.
 
@@ -40,7 +40,7 @@
   > It can be called the **probability of $x$** (given $\theta$),
   > or the **likelihood of $\theta$** (given that $x$  was observed).
 
-- 学习过程中注意**观测数据**在每次EM算法中的意义.
+- 学习过程中注意**观测数据**在EM算法每次迭代中的意义.
 
 - GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异, 直觉上都有一种归属的感觉, $\gamma_{jk}$是二值函数, $\alpha_k$是一种概率的表示. $\gamma_j$是one-hot encoding(also: 1-of-K representation)
 
@@ -144,13 +144,14 @@ while flag_a or flag_b:
 解的过程记录在这里.
 
 三硬币模型可以写作
-$$\begin{equation}
-​        \begin{aligned}
-​            P(y|\theta)&=\sum_z P(y,z|\theta) \\
-​            &=\sum_z P(z|\theta)P(y|z,\theta) \\
-​            &=\pi p^y (1-p)^{1-y} + (1-\pi)q^y(1-q)^{1-y}
-​        \end{aligned}
-​    \end{equation}
+$$
+\begin{equation}
+        \begin{aligned}
+            P(y|\theta)&=\sum_z P(y,z|\theta) \\
+            &=\sum_z P(z|\theta)P(y|z,\theta) \\
+            &=\pi p^y (1-p)^{1-y} + (1-\pi)q^y(1-q)^{1-y}
+        \end{aligned}
+\end{equation}
 $$
 以上
 
@@ -315,6 +316,26 @@ $$
 > $$\hat\mu_k=\frac{\sum_{j=1}^N\hat\gamma_{jk}y_j}{\sum_{j=1}^N\hat\gamma_{jk}}\\
 > \hat\alpha_k=\frac{n_k}{N}$$
 
+#### EM算法导出
+
+书中这部分内容回答为什么EM算法能近似实现对观测数据的极大似然估计？
+$$
+\begin{align}
+L(\theta)-L(\theta^{(i)})&=\log \left(\sum_Z\color{green}P(Y|Z,\theta^{(i)})\color{black}\frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Y|Z,\theta^{(i)})}\color{black}\right)-\log P(Y|\theta^{(i)})\\
+&\ge\sum_Z \color{green}P(Z|Y,\theta^{(i)})\color{black}\log \frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Z|Y,\theta^{(i)})\color{black}}-\log P(Y|\theta^{(i)})\\
+&=\sum_Z P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}-\color{red}\sum_ZP(Z|Y,\theta^{(i)})\color{black}\log P(Y|\theta^{(i)})\\
+&=\sum_ZP(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}
+\end{align}
+$$
+
+以上用于推导迭代过程中两次$L$会变大， 这里面红色部分是后加的方便理解前后两步之间的推导。绿色部分是为了构造期望， 进而应用琴声不等式。在这里凑项应该是凑$P(Z|Y,\theta^{(i)})$
+
+这里也写一下琴声不等式
+$$
+\log \sum_j \lambda_j y_j \ge \sum_j \lambda_j \log y_j, s.t., \lambda_j \ge 0, \sum_j \lambda_j = 1
+$$
+所以，这里的这一项不是随便凑的。
+
 ### 高斯混合模型
 
 **混合模型**, 有多种, 高斯混合模型是最常用的.
@@ -467,6 +488,8 @@ $$
 ### 广义期望极大
 
 广义期望极大(generalized expectation maximization, $GEM$)
+
+广义期望极大是为了解决什么问题？
 
 ## 其他
 

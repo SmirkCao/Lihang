@@ -163,7 +163,32 @@ $$
 
 ## 算法
 
-### 前向与后向算法
+### 观测序列生成算法
+
+> 输入：$\lambda=(A,B,\pi)$ ,观测序列长度$T$
+>
+> 输出：观测序列$O=(o_1,o_2,\dots,o_T)$
+>
+> 1. 按照初始状态分布$\pi$产生$i_1$
+> 1. $t=1​$
+> 1. 按照状态$i_t$的观测概率分布$b_{i_t}(k)$生成$o_t$
+> 1. 按照状态$i_t$的状态转移概率分布$\{a_{i_t, {i_{t+1}}}\}$产生状态$i_{t+1}$,$\color{red}i_{t+1}=1,2,\dots,N$
+> 1. $t=t+1​$ 如果$t<T​$转到3,否则，终止
+
+上面是书中的描述，和本章大参考文献[^5]的描述是一样的， 但这里面有点容易混淆。
+
+书中定义了$I=(i_1,i_2,\dots,i_T), Q=\{q_1,q_2,\dots,q_T\}$根据定义， $i_t$的取值集合应该是$Q$，而上面算法描述中说明了$\color{red}i_{t+1}=1,2,\dots,N$
+注意这里面的$i_t$实际上不是状态， 而是对应了前面的$i,j$的含义，实际的状态应该是$q_{i_t}$这个算法中的$a_{i_ti_{t+1}}=P(i_{t+1}=q_{i_{t+1}}|i_t=q_{i_t})$ 这里同样的符号，表示了两个不同的含义。
+
+Rabiner定义的$a_{ij}$是这样的
+$$
+A={a_{ij}},a_{ij}=Pr(q_j at t+1|q_i at t)
+$$
+这里理解就好， 有时候用角标$i​$代表对应的state， 有时候用$q_i​$代表对应的state。
+
+### 学习算法
+
+#### 概率计算算法
 
 #### 前向概率与后向概率
 
@@ -176,11 +201,10 @@ $$
 >$$
 >\beta_t(i)=P(o_{t+1},o_{t+2},\dots,o_T|i_t=q_i, \lambda)
 >$$
->$\color{red} 关于\alpha 和\beta 这两个公式,  仔细看下, 细心理解.$
+>$\color{red} 关于\alpha 和\beta 这两个公式,  仔细看下, 细心理解.$ 前向概率从前往后递推， 后向概率从后向前递推。
 >
 
-
-#### 前向算法
+##### 前向算法
 
 > 输入: $\lambda , O$
 >
@@ -193,16 +217,14 @@ $$
 >    观测值$o_1$, $i$的含义是对应状态$q_i$
 >
 >    这里$\alpha$ 是$N$维向量, 和状态集合$Q$的大小$N$有关系. $\alpha$是个联合概率.
->
-> 1. 递推 
+> 2. 递推 
 >    $$
 >    \color{red}\alpha_{t+1}(i) = \left[\sum\limits_{j=1}^N\alpha_t(j)a_{ji}\right]b_i(o_{t+1})\color{black}, \   i=1,2,\dots,N, \ t = 1,2,\dots,T-1
 >    $$
 >    转移矩阵$A$维度$N\times  N$,  观测矩阵$B$维度$N\times M$, 具体的观测值$o$可以表示成one-hot形式, 维度$M\times1$, 所以$\alpha$的维度是$\alpha = \alpha ABo=1\times N\times N\times N \times N\times M \times M\times N=1\times N$
->
-> 1. 终止
+> 3. 终止
 >    $$
->    P(O|\lambda)=\sum\limits_{i=1}^N\alpha_T(i)
+>    P(O|\lambda)=\sum\limits_{i=1}^N\alpha_T(i)=\color{red}\sum\limits_{i=1}^N\alpha_T(i)\beta_T(i)
 >    $$
 >    注意, 这里$O\rightarrow (o_1, o_2, o_3,\dots, o_t)$, $\alpha_i$见前面前向概率的定义$P(o_1,o_2,\dots,o_t,i_t=q_i|\lambda)$, 所以, 对$i$求和能把联合概率中的$I$消掉.
 >
@@ -214,45 +236,40 @@ $$
 
 前向算法计算$P(O|\lambda)$的复杂度是$O(N^2T)$阶的, 直接计算的复杂度是$O(TN^T)$阶, 所以$T=2$时候并没什么改善.
 
+红色部分为后补充了$\beta_T(i)$项，这项为1,此处注意和后面的后向概率对比。
 
 
-#### 后向算法
+
+##### 后向算法
 
 > 输入: $\lambda , O$
->
 > 输出:$P(O|\lambda)$
->
+> 
 > 1. 终值
->    $$
->    \beta_T(i)=1, i=1,2,\dots,N
->    $$
->    在$t=T$时刻, 观测序列已经确定.
+> $$
+> \beta_T(i)=1, i=1,2,\dots,N
+> $$
+> 在$t=T$时刻, 观测序列已经确定.
+> 
+> 2. 递推
+> $$
+> \color{red}\beta_t(i)=\sum\limits_{j=1}^Na_{ij}b_j(o_{t+1})\beta_{t+1}(j)\color{black}, i=1,2,\dots,N, t=T-1, T-2,\dots,1
+> $$
+> 从后往前推
+>  $\beta = ABo\beta = N \times N \times N \times M \times M \times N \times N \times 1 = N \times 1$
 >
-> 1. 递推
->    $$
->    \color{red}\beta_t(i)=\sum\limits_{j=1}^Na_{ij}b_j(o_{t+1})\beta_{t+1}(j)\color{black}, i=1,2,\dots,N, t=T-1, T-2,\dots,1
->    $$
->    从后往前推
->     $\beta = ABo\beta = N \times N \times N \times M \times M \times N \times N \times 1 = N \times 1$
+> 3. 
 >
-> 1. 
->    $$
->    P(O|\lambda)=\sum\limits_{i=1}^N\pi_ib_i(o_1)\beta_1(i)
->    $$
->
->
->
->
->
->
->
->
+> $$
+> P(O|\lambda)=\sum\limits_{i=1}^N\pi_ib_i(o_1)\beta_1(i)=\color{red}\sum\limits_{i=1}\alpha_1(i)\beta_1(i)
+> $$
 >
 
 - 这里需要**注意**下, 按照后向算法, $\beta$在递推过程中会越来越小, 如果层数较多, 怕是$P(O|\lambda)$会消失
 - 另外一个要注意的点$\color{red}o_{t+1}\beta_{t+1}$
+- 注意，红色部分为后补充，结合前面的前向概率最后的红色部分一起理解。
 
-#### 小结
+##### 小结
 
 
 >求解的都是**观测序列概率**
@@ -277,17 +294,21 @@ $$
 1. 输入模型$\lambda$与观测$O$, 输出在时刻$t$处于状态$q_i$且在时刻$t+1$处于状态$q_j$的概率$\xi_t(i,j)$
 1. 在观测$O$下状态$i$出现的期望值
 1. 在观测$O$下状态$i$转移的期望值
-1. 在观测$O$下状态$i$转移到状态$j$的期望值
+1. 在观测$O​$下状态$i​$转移到状态$j​$的期望值
 
-### Baum-Welch算法
+#### 监督学习方法
+
+效果好，费钱，如果有钱能拿到标注数据，不用犹豫，去干吧。
+
+#### Baum-Welch算法
 
 马尔可夫模型实际上是一个含有隐变量的概率模型
 $$
 P(O|\lambda)=\sum\limits_IP(O|I,\lambda)P(I|\lambda)
 $$
-关于EM算法可以参考[第九章](../CH09/README.md), 对隐变量求期望, Q函数极大化
+关于EM算法可以参考[第九章](../CH09/README.md), 对隐变量求期望, $Q$函数极大化
 
-> 输入: 观测数据$O=(o_1, o_2, \dots, o_T)$
+> 输入: 观测数据$O=(o_1, o_2, \dots, o_T)​$
 >
 > 输出: 隐马尔可夫模型参数
 >
@@ -295,7 +316,7 @@ $$
 >    对$n=0$, 选取$a_{ij}^{(0)}, b_j(k)^{(0)}, \pi_i^{(0)}$, 得到模型参数$\lambda^{(0)}=(A^{(0)}, B^{(0)},\pi^{(0)})$
 >
 > 1. 递推
->    对$n=1,2,\dots,$
+>    对$n=1,2,\dots,​$
 >    $$
 >    a_{ij}^{(n+1)}=\frac{\sum\limits_{t=1}^{T-1}\xi_t(i,j)}{\sum\limits_{t=1}^{T-1}\gamma_t(i)}
 >    $$
@@ -311,11 +332,13 @@ $$
 > 1. 终止
 >    得到模型参数$\lambda^{(n+1)}=(A^{(n+1)}, B^{(n+1)},\pi^{(n+1)})$
 
-#### $b_j(k)$的理解
+##### $b_j(k)$的理解
 
-单独说一下这个问题, 公式里面求和有个$o_t=v_k$, 什么意思?
+单独说一下这个问题, 公式里面求和有个$o_t=v_k​$, 什么意思?
 
-$\gamma$的维度应该是$N\times T$, 通过$\sum\limits_{t=1}^T$可以降维到$N$, 但是实际上$B$的维度是$N\times M$, 所以有了这个表达, 窃以为这里可以表示成$b_{jk}$, 书中对应部分的表达在$P_{172}的10.3$, 也说明了$b_j(k)$的具体定义. 
+$\gamma$的维度应该是$N\times T$, 通过$\sum\limits_{t=1}^T$可以降维到$N$, 但是实际上$B$的维度是$N\times M$, 所以有了这个表达, ~~窃以为这里可以表示成$b_{jk}$~~, 书中对应部分的表达在$P_{172}的10.3$, 也说明了$b_j(k)$的具体定义. 
+
+注意这里$b_j(k)$并不要求是离散的，可以定义为一个连续的函数， 所以书中这样的表达更通用一些，关于这点在本章大参考文献[^5]中有部分内容讨论，见`Special cases of the B parameters`。
 
 这里涉及到实际实现的时候, 可以考虑把观测序列$O​$转换成one-hot的形式, $O_{one\_hot}​$维度为$M\times T​$,$B​$的维度$N\times M​$,  $B\cdot O​$之后, 转换成观测序列对应的发射概率矩阵, 维度为$N\times T​$.
 
@@ -334,8 +357,7 @@ $$
 b_j(k)=\frac{\sum\limits_{t=1,o_t=v_k}^{T}\gamma_t(j)}{\sum\limits_{t=1}^T\gamma_t(j)}=\frac{\sum\limits_{t=1}^{T}\sigma_{o_t,v_k}\gamma_t(j)}{\sum\limits_{t=1}^T\gamma_t(j)}
 $$
 
-
-#### $E$步与$M$步的理解
+##### $E$步与$M$步的理解
 
 Baum-Welch算法是EM算法在隐马尔可夫模型学习中的**具体实现**, 由Baum和Welch提出.
 
@@ -352,6 +374,7 @@ Baum-Welch算法是EM算法在隐马尔可夫模型学习中的**具体实现**,
 看到这里, 感觉书上真的是一句废话都没有...
 
 这部分的理解, 要再结合第九章的内容反复一下, 应该会有新的体会.
+
 
 ### 预测算法
 
@@ -486,5 +509,7 @@ $$
 1. [^3]: [PRML:13.2](## 参考)
 
 1. [Wikipedia: Hidden Markov Model](https://en.wikipedia.org/wiki/Hidden_Markov_model)
+
+1. [^5]: [An introduction to hidden markov Models](http://ai.stanford.edu/~pabbeel/depth_qual/Rabiner_Juang_hmms.pdf)
 
 **[⬆ top](#导读)**
