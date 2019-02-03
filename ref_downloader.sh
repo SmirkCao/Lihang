@@ -9,6 +9,10 @@ wget "https://cs.uwaterloo.ca/~y328yu/classics/novikoff.pdf" -O 0202.pdf
 # 0207
 wget "https://web.stanford.edu/class/ee373b/30years.pdf" -O 0207.pdf
 
+echo "ch07"
+# 0705, 这个也有几个版本，微软这个版本链接也有过变更
+wget "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf" -O 0705.pdf
+
 echo "ch08"
 # 0801
 wget https://cseweb.ucsd.edu/~yfreund/papers/IntroToBoosting.pdf -O 0801.pdf

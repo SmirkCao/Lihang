@@ -75,3 +75,5 @@ $$
 29. $P_{12}$图1.2中的纵坐标， 应该是$y$，在PRML中误差函数是$E(w)=\frac{1}{2}\sum_{n=1}^N\{y(x_n-w)-t_n\}^2$所以纵坐标是$t$
 30. $P_{57}$ 在讲到决策树学习的损失函数部分。`决策树学习的损失函数通常是正则化的极大似然函数。决策树学习的策略是以损失函数为目标函数的最小化`这部分觉得描述有点问题，前面部分理解为正则化的似然函数作为损失函数，这个应该是对数似然，因为作为损失函数应该是越小越好，正则化的似然应该是越大越好。这样才能对应后面的`以损失函数为目标函数的最小化`
 31. $P_{36}$参考文献2, 这个文献应该是On convergence proofs for perceptrons. repo里面参考文献下载脚本可以自动下载该文献， 是一份扫描档。 不过，有其他文献也按照本书的引用方法引用的。
+32. $P_{134}$参考文献5, Platt这个文章最多引用的是J. Platt. *Advances in Kernel Methods -- Support Vector Learning,* *MIT Press,* *Cambridge, MA,* (*1998*)， 可以参考https://www.bibsonomy.org/bibtex/2ad411b41c7af4289282067a770edbdde/telekoma, 原书给的链接也是有效的，微软对这个链接做了转发， 跳转到新地址https://www.microsoft.com/en-us/research/publication/fast-training-of-support-vector-machines-using-sequential-minimal-optimization/?from=http%3A%2F%2Fresearch.microsoft.com%2Fapps%2Fpubs%2F%3Fid%3D68391
+33. 
