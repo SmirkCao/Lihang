@@ -6,6 +6,8 @@ echo "ch02"
 wget "http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.335.3398&rep=rep1&type=pdf" -O 0201.pdf
 # 0202
 wget "https://cs.uwaterloo.ca/~y328yu/classics/novikoff.pdf" -O 0202.pdf
+# 0205
+wget "https://cseweb.ucsd.edu/~yfreund/papers/LargeMarginsUsingPerceptron.pdf" -O 0205.pdf
 # 0206
 wget "https://www.researchgate.net/profile/Yaoyong_Li/publication/37537459_The_Perceptron_Algorithm_with_Uneven_Margins/links/0046351790be7e102e000000/The-Perceptron-Algorithm-with-Uneven-Margins.pdf" -O 0206.pdf
 # 0207
