@@ -133,6 +133,7 @@ $P_{15}$
 
 ## Timeline
 
+1. First pattern recognition althgrithm; Fisher; 1936
 1. Perceptron; Rosenblatt; 1957
 1. KNN; Cover, Hart; 1967
 1. EM; Dempster; 1977

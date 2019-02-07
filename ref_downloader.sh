@@ -14,6 +14,10 @@ wget "https://www.researchgate.net/profile/Yaoyong_Li/publication/37537459_The_P
 wget "https://web.stanford.edu/class/ee373b/30years.pdf" -O 0207.pdf
 
 echo "ch07"
+# 0701
+wget "http://image.diku.dk/imagecanon/material/cortes_vapnik95.pdf" -O 0701.pdf
+# 0704 这个是原书英文第二版
+wget "https://statisticalsupportandresearch.files.wordpress.com/2017/05/vladimir-vapnik-the-nature-of-statistical-learning-springer-2010.pdf" -O 0704.pdf
 # 0705, 这个也有几个版本，微软这个版本链接也有过变更
 wget "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf" -O 0705.pdf
 

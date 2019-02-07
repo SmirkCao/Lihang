@@ -77,4 +77,5 @@ $$
 31. $P_{36}$参考文献2, 这个文献应该是On convergence proofs for perceptrons. repo里面参考文献下载脚本可以自动下载该文献， 是一份扫描档。 不过，有其他文献也按照本书的引用方法引用的。
 32. $P_{134}$参考文献5, Platt这个文章最多引用的是J. Platt. *Advances in Kernel Methods -- Support Vector Learning,* *MIT Press,* *Cambridge, MA,* (*1998*)， 可以参考https://www.bibsonomy.org/bibtex/2ad411b41c7af4289282067a770edbdde/telekoma, 原书给的链接也是有效的，微软对这个链接做了转发， 跳转到新地址https://www.microsoft.com/en-us/research/publication/fast-training-of-support-vector-machines-using-sequential-minimal-optimization/?from=http%3A%2F%2Fresearch.microsoft.com%2Fapps%2Fpubs%2F%3Fid%3D68391
 33. $P_{36}$参考文献5, 现在比较容易获得的参考文献是1999年在Machine Learning上发表的那个版本，这个不算是错误。在repo的参考文献downloader里面，有对应的链接。
-34. 
+34. $P_{134}$参考文献1,没有标明页码，1995,20:273,297
+35. 

@@ -40,6 +40,9 @@
 - 符号函数, Sign, 0 对应了超平面(hyper plane), >0与<0对应了半空间(half space)
 - 仿射变换是保凸变换
 - `分离超平面将特征空间划分为两部分，一部分是正类，一部分是负类。法向量指向的一侧是正类， 另一侧为负类`
+- 关于SVM的历史可以参考附录2[^2]，Vapnik的1995年的那个文章名字叫Support-vector networks，主要是提出了soft margin，在这篇文章的附录中给出了线性可分支持向量机与线性支持向量机的推导。同年Vapnik将支持向量机推广到支持向量回归，发表了文章统计学习理论的本质， 这个有中译版本，见书中本章参考文献[4]
+- Vapnik全名弗拉基米尔·万普尼克， 出生于苏联， VC理论的主要创建人之一，统计学习理论之父。1990年底移居美国，1991-2001年间，他在AT&T工作。2006年成为美国国家工程院院士。2014年加入Facebook人工智能实验室。
+- 1995年SVN的文章结尾有这样的描述：```The support-vector network combines 3 ideas: the solution technique from optimal hy- perplanes (that allows for an expansion of the solution vector on support vectors), the idea of convolution of the dot-product (that extends the solution surfaces from linear to non-linear), and the notion of soft margins (to allow for errors on the training set).```
 - 
 
 ---
@@ -137,11 +140,15 @@ $$
 # data 2.1
 # x_1 = (3, 3), x_2 = (4, 3), x_3 = (1, 1)
 # ref: [example 16.3](http://www.bioinfo.org.cn/~wangchao/maa/Numerical_Optimization.pdf)
+from scipy import optimize
+import numpy as np
+
 fun = lambda x: ((x[0]) ** 2 + (x[1]) ** 2)/2
 cons = ({'type': 'ineq', 'fun': lambda x: 3 * x[0] + 3 * x[1] + x[2] - 1},
         {'type': 'ineq', 'fun': lambda x: 4 * x[0] + 3 * x[1] + x[2] - 1},
         {'type': 'ineq', 'fun': lambda x: -x[0] - x[1] - x[2] - 1})
 res = optimize.minimize(fun, np.ones(3), method='SLSQP', constraints=cons)
+res
 ```
 
 ### 对偶算法
@@ -149,12 +156,16 @@ res = optimize.minimize(fun, np.ones(3), method='SLSQP', constraints=cons)
 1. 对偶问题往往更容易求解
 1. 自然引入核函数，进而推广到非线性分类问题
 
-定义拉格朗日函数
+针对每个不等式约束，定义拉格朗日乘子$\alpha_i\ge0​$，定义拉格朗日函数
 $$
-L(w,b,\alpha)=\frac{1}{2}\left\|w\right\|^2-\sum_{i=1}^N\alpha_iy_i(w\cdot x_i+b)+\sum_{i=1}^N\alpha_i\\
+\begin{align}
+L(w,b,\alpha)&=\frac{1}{2}w\cdot w-\left[\sum_{i=1}^N\alpha_i[y_i(w\cdot x_i+b)-1]\right]\\
+&=\frac{1}{2}\left\|w\right\|^2-\left[\sum_{i=1}^N\alpha_i[y_i(w\cdot x_i+b)-1]\right]\\
+&=\frac{1}{2}\left\|w\right\|^2-\sum_{i=1}^N\alpha_iy_i(w\cdot x_i+b)+\sum_{i=1}^N\alpha_i
+\end{align}\\
 \alpha_i \geqslant0, i=1,2,\dots,N
 $$
-其中$\alpha=(\alpha_1,\alpha_2,\dots,\alpha N)^T$为拉格朗日乘子向量
+其中$\alpha=(\alpha_1,\alpha_2,\dots,\alpha_N)^T​$为拉格朗日乘子向量
 
 **原始问题是极小极大问题**
 
@@ -181,7 +192,7 @@ $$
 
 对于任意线性可分的两组点，他们在分类超平面上的投影都是线性不可分的。
 
-$\alpha$不为零的点对应的为支持向量，通过支持向量可以求得$b$值
+$\alpha$不为零的点对应的实例为支持向量，通过支持向量可以求得$b$值
 
 核心公式两个
 $$
@@ -446,5 +457,7 @@ TODO:
 ## 参考
 
 1. [^1]: [Fast training of support vector machines using sequential minimal optimization](http://www.cs.utsa.edu/~bylander/cs6243/smo-book.pdf)
+
+2. [^2]: [支持向量机历史](http://www.svms.org/history.html)
 
 **[⬆ top](#导读)**
