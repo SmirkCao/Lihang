@@ -78,4 +78,5 @@ $$
 32. $P_{134}$参考文献5, Platt这个文章最多引用的是J. Platt. *Advances in Kernel Methods -- Support Vector Learning,* *MIT Press,* *Cambridge, MA,* (*1998*)， 可以参考https://www.bibsonomy.org/bibtex/2ad411b41c7af4289282067a770edbdde/telekoma, 原书给的链接也是有效的，微软对这个链接做了转发， 跳转到新地址https://www.microsoft.com/en-us/research/publication/fast-training-of-support-vector-machines-using-sequential-minimal-optimization/?from=http%3A%2F%2Fresearch.microsoft.com%2Fapps%2Fpubs%2F%3Fid%3D68391
 33. $P_{36}$参考文献5, 现在比较容易获得的参考文献是1999年在Machine Learning上发表的那个版本，这个不算是错误。在repo的参考文献downloader里面，有对应的链接。
 34. $P_{134}$参考文献1,没有标明页码，1995,20:273,297
-35. 
+35. $P_{XIII}$符号表说明中有关$||\cdot||_2$的说明， 是二范数，这个应该是对的。后面支持向量机部分$P_{114}$中描述支持向量机损失函数第二项$\lambda ||w||^2$为系数为$\lambda$的$w$的$L_2$范数，是正则化项。应该是二范数的平方。对应了$w\cdot w=||w||^2$， $w \cdot w$是在Vapnik的SVN文章中的表示方法。
+36. 
