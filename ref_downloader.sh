@@ -16,14 +16,24 @@ wget "https://web.stanford.edu/class/ee373b/30years.pdf" -O 0207.pdf
 echo "ch07"
 # 0701
 wget "http://image.diku.dk/imagecanon/material/cortes_vapnik95.pdf" -O 0701.pdf
+# 0702
+wget "http://www.svms.org/training/BOGV92.pdf" -O 0702.pdf
 # 0704 这个是原书英文第二版
 wget "https://statisticalsupportandresearch.files.wordpress.com/2017/05/vladimir-vapnik-the-nature-of-statistical-learning-springer-2010.pdf" -O 0704.pdf
 # 0705, 这个也有几个版本，微软这个版本链接也有过变更
 wget "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf" -O 0705.pdf
+# 0715
+wget "http://www.kernel-machines.org/publications/pdfs/0701907.pdf" -O 0715.pdf
 
 echo "ch08"
 # 0801
 wget https://cseweb.ucsd.edu/~yfreund/papers/IntroToBoosting.pdf -O 0801.pdf
+# 0802 ESLII 
+wget "https://web.stanford.edu/~hastie/Papers/ESLII.pdf" -O 0802.pdf
+# 0803 PAC
+wget "https://people.mpi-inf.mpg.de/~mehlhorn/SeminarEvolvability/ValiantLearnable.pdf" -O 0803.pdf
+# 0804
+wget "http://rob.schapire.net/papers/strengthofweak.pdf" -O 0804.pdf
 # 0805 这个文章很多版本， 96年也有发表
 wget http://www.dklevine.com/archive/refs4570.pdf -O 0805.pdf
 # 0807
