@@ -22,7 +22,7 @@
 ### 导读
 
 - 可能会有疑问，为什么支持向量机前置在这一章之前，可以参考本章的第一个参考文献[^1]，Yoav Freund和Robert Schapire因此获得了[2003年的哥德尔奖](https://en.wikipedia.org/wiki/G%C3%B6del_Prize)， 本书中关于误差率的表述与该文献是一致的， PRML中则对分类误差率进行了归一化。
-- 关于AdaBoost和SVM的联系，主要在**函数间隔**的这个概念上文献[^1]和本书[CH02](../CH02/README.md)[CH07](../CH07/README.md)中内容合并理解，本文后面在算法的解释部分会添加一个和SVM关系的对比摘要一下文献中的理解。
+- 关于AdaBoost和SVM的联系，主要在**函数间隔**的这个概念上文献[^1]和本书[CH02](../CH02/README.md)[CH07](../CH07/README.md)中内容合并理解，本文后面在算法的解释部分会添加一个和SVM关系的对比摘要一下文献中的理解。这篇文章在介绍AdaBoost和SVM的关系的时候， 引用了三篇文献，在[CH07](../CH07/README.md)中都有引用，是经典的SVM文献。
 - 间隔包含了分类正确性与确信度的含义。
 - 如果看过林轩田老师的课程(只需看第一课)，可能对hypothesis这个概念迷糊，没有sense。那可以翻下前面提到的这个文章，可能会对这些概念的理解有帮助。另外文章中有提到VC维，用来度量hypotheses的复杂度。
 - 另外一篇文献，推荐下RE Schapire的文章[^2]关于间隔的理解
@@ -38,6 +38,7 @@
 - 本章最后介绍了提升树， 关于各种树相关的算法关系， 林轩田有页slides， 可以参考。[^5]
 - 算法8.3用来求回归问题的提升树， 注意**拟合残差**这个内容的理解，可以理解例子8.2
 - 关于参考文献9[^6]， 这个文章，简要说两句， 提到了Bregman distance， 这篇文章的编辑是Bengio
+- Boosting不容易过拟合
 
 ###  加法模型+前向分步算法
 
@@ -79,21 +80,23 @@ Adaboost解决方案：
 ### Adaboost算法
 #### 算法8.1
 
-* 输入：训练数据集$T={(x_1,y_1), (x_2,y_2),...,(x_N,y_N)}, x\in  \cal X\sube \R^n$, 弱学习方法
+* 输入：训练数据集$T=\{(x_1,y_1), (x_2,y_2),...,(x_N,y_N)\}, x\in  \cal X\sube \R^n$, 弱学习方法
 * 输出：最终分类器$G(x)$
 
 步骤
-1. 初始化训练数据的权值分布 $D_1=(w_{11},\cdots,w_{1i},\cdots,w_{1N},w_{1i}=\frac{1}{N})$
+1. 初始化训练数据的权值分布 $D_1=(w_{11},\cdots,w_{1i},\cdots,w_{1N},w_{1i}=\frac{1}{N})​$
 1. m = 1,2, M
     1. $G_m(x):X->{-1,+1}$
     1. 求$G_m$在训练集上的分类误差率  $e_m=\sum_{i=1}^{N}P(G_m(x_i)\ne y_i)=\sum_{i=1}^{N}w_{mi}I(G_m(x_i)\ne y_i)$
     1. 计算$G_m(x)$的系数，$\alpha_m=\frac{1}{2}log\frac{1-e_m}{e_m}$，自然对数
-    1. $w_{m+1,i}=\frac{w_{mi}}{Z_m}exp(-\alpha_my_iG_m(x_i))$
+    1. $w_{m+1,i}=\frac{w_{mi}}{Z_m}exp(-\alpha_my_iG_m(x_i))​$
     1. $Z_m=\sum_{i=1}^Nw_{mi}exp(-\alpha_my_iG_m(x_i))$
 1. $f(x)=\sum_{m=1}^M\alpha_mG_m(x)$
-1. 最终分类器$G(x)=sign(f(x))=sign(\sum_{m=1}^M\alpha_mG_m(x))$
+1. 最终分类器$G(x)=sign(f(x))=sign(\sum_{m=1}^M\alpha_mG_m(x))$■
 
-这里面有个描述
+从算法8.1的输入可以看出来，AdaBoost是个集成学习算法， 因为在他的输入中包含了**弱学习算法**。
+
+注意这里面有个描述
 
 > 使用具有权值分布$D_m$的训练数据集
 
@@ -101,12 +104,15 @@ Adaboost解决方案：
 * 这里不是的
 * 弱分类器的分类准则是错误率$e_m=\sum_{i=1}^{N}P(G_m(x_i)\ne y_i)=\sum_{i=1}^{N}w_{mi}I(G_m(x_i)\ne y_i)$
 * 每次学习用到的数据集没有变，划分方式也没有变（比如阈值分类器中的分类点的选取方式），变是评价每个划分错误的结果。
-* 不同的权值分布上，不同样本错分对评价结果的贡献不同，**分类器**中分类错误的会被放大，分类正确的系数会减小，错误和正确的系数比值为$e^{2\alpha_m}=\frac{1-e_m}{e_m}$
+* 不同的权值分布上，不同样本错分对评价结果的贡献不同，**分类器**中分类错误的会被放大，分类正确的系数会减小，错误和正确的系数比值为$e^{2\alpha_m}=\frac{1-e_m}{e_m}$，这个比值是分类器分类正确的**几率**($odds$)，关于几率在[CH06](../CH06/README.md)中有讲到，这也是为什么在1999年的时候Schapire的文章中开篇用Horse racing gambler来引入Boosting，几率就是个源自赌博的概念。
+* 书中对这点也有解释：误分类样本在下一轮学习中起更大的作用。不改变所给的训练数据，而不断改变训练数据权值的分布，似的训练数据在基本分类器的学习中起不同的作用， 这是AdaBoost的一个特点。
 ### AdaBoost例子
 
 #### 例子8.1 
 
-弱分类器选为阈值分类器，通过阈值将数据划分成两部分，标准是分类误差率最低。
+数据见[data_8-1.txt](input/data_8-1.txt)
+
+弱分类器选为阈值分类器，通过阈值将数据划分成两部分，标准是分类误差率最低。其实这个弱分类器就是决策树桩。
 
 需要确定两个参数：
 
@@ -307,9 +313,27 @@ $$
 
 ### AdaBoost与SVM的关系
 
+TODO: 训练数据集与测试数据集的误差率关系。
+
 摘要文献中对AdaBoost和SVM的理解。
 
+$|x|_1=\sum_{i=1}^N|x|$，向量元素绝对值的和
 
+$|x|_\infty=\max\limits_i|x_i|$，向量所有元素绝对值中的最大值
+
+$|x|_{-\infty}=\min\limits_i|x_i|$，向量所有元素绝对值中的最小值
+
+向量和矩阵的范数不同，具体可以参考numpy的帮助文档[^8]
+
+AdaBoost这个方法， 比较迷人的地方就在于训练数据集误差率降为0之后， 依然能继续降低测试误差，看起来，似乎不会过拟合。Schapire给出的解释主要是基于间隔理论， 但是， AdaBoost的间隔和SVM的间隔是不一样的。
+
+关于AdaBoost的间隔理论， Schapire在1998年提出之后，受到过质疑，周志华老师在这个问题上给出了解释，并说明了当间隔分布无法继续提升的时候， 过拟合终将发生。
+
+## 习题
+
+### 8.2
+
+比较SVM，AdaBoost，LR的学习策略与算法
 
 
 
@@ -328,5 +352,7 @@ $$
 6. [^6]: [Logistic regression, AdaBoost and Bregman distances](https://link.springer.com/content/pdf/10.1023%2FA%3A1013912006537.pdf)
 
 7. [^7]: [A decision-theoretic generalization of on-line learning and an application to boosting](http://www.dklevine.com/archive/refs4570.pdf)
+
+8. [^8]:[numpy.linalg.norm](https://docs.scipy.org/doc/numpy-1.15.1/reference/generated/numpy.linalg.norm.html#numpy-linalg-norm)
 
 **[⬆ top](#导读)**
