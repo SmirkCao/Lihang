@@ -13,6 +13,21 @@ wget "https://www.researchgate.net/profile/Yaoyong_Li/publication/37537459_The_P
 # 0207
 wget "https://web.stanford.edu/class/ee373b/30years.pdf" -O 0207.pdf
 
+echo "ch06"
+#0601
+wget "http://www.aclweb.org/anthology/J96-1002" -O 0601.pdf
+#0602
+# http://www.cs.cmu.edu/afs/cs/user/aberger/www/ps/scaling.ps
+wget "http://www.cs.cmu.edu/~aberger/pdf/scaling.pdf" -O 0602.pdf
+#0603
+echo "same with 0704"
+#0604
+echo "a book"
+#0605
+wget "http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.135.1357&rep=rep1&type=pdf" -O 0605.pdf
+#0606
+wget "https://alex.smola.org/papers/2005/CanSmo05.pdf" -O 0606.pdf
+
 echo "ch07"
 # 0701
 wget "http://image.diku.dk/imagecanon/material/cortes_vapnik95.pdf" -O 0701.pdf
