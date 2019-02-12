@@ -51,6 +51,8 @@ wget "https://people.mpi-inf.mpg.de/~mehlhorn/SeminarEvolvability/ValiantLearnab
 wget "http://rob.schapire.net/papers/strengthofweak.pdf" -O 0804.pdf
 # 0805 这个文章很多版本， 96年也有发表
 wget http://www.dklevine.com/archive/refs4570.pdf -O 0805.pdf
+# 0806 这是个特邀文章
+wget "https://web.stanford.edu/~hastie/Papers/AdditiveLogisticRegression/alr.pdf" -O 0806.pdf
 # 0807
 wget https://statweb.stanford.edu/~jhf/ftp/trebst.pdf -O 0807.pdf
 # 0808
