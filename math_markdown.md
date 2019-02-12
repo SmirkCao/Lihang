@@ -108,7 +108,7 @@ $$
 ```latex
 # 代码
 f(x,y) = \begin{cases}
-1 & x与y满足某一事实\
+1 & x与y满足某一事实\\
 0 & 否则
 \end{cases}
 ```
