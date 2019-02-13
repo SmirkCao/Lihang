@@ -130,6 +130,28 @@ class TestSVM(unittest.TestCase):
         logger.info("test_mlia: alpha is %s b is %s" % (str(clf.alpha[clf.alpha > 0.001]), str(clf.b)))
         logger.info("test_mlia: support vector %s "% str(X[clf.alpha > 0.001, :]))
 
+    @unittest.skipIf(skip_flag, "debug")
+    def test_f76(self):
+        # fig 7.6
+        x = np.linspace(-3, 3, 601)
+        # perceptron loss
+        y1 = list(map(lambda x: max(0, -x), x))
+        # hinge loss
+        y2 = list(map(lambda x: max(0, 1 - x), x))
+        # 0-1 loss
+        y3 = list(map(lambda x: 1 if x <= 0 else 0, x))
+
+        plt.plot(x, y1, '--', label='perceptron loss')
+        plt.plot(x, y2, '-', label='hinge loss')
+        plt.plot(x, y3, '-', label='0-1 loss')
+        plt.legend()
+        plt.xlim(-3, 3)
+        plt.ylim(0, 3)
+        plt.xlabel("function margin")
+        plt.ylabel("loss")
+        # plt.savefig("fig76.png")
+        plt.show()
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

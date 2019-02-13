@@ -35,9 +35,15 @@
 - **基本模型**是定义在特征空间上的间隔最大的**线性分类器**
 - 支持向量机还包括**核技巧**， 这使它称为实质上的**非线性分类器**。
 - 支持向量机学习策略是间隔最大化，可形式化为一个求解凸二次规划的问题，也等价于正则化的合页损失函数的最小化问题。
+- 支持向量机：线性可分支持向量机，线性支持向量机假设输入空间和特征空间的**元素一一对应**，并将输入空间中的输入映射为特征空间的特征向量；非线性支持向量机利用一个从输入空间到特征空间的**非线性映射**将输入映射为特征向量。
 - 判别模型
 - 符号函数, Sign, 0 对应了超平面(hyper plane), >0与<0对应了半空间(half space)
 - 仿射变换是保凸变换
+- `分离超平面将特征空间划分为两部分，一部分是正类，一部分是负类。法向量指向的一侧是正类， 另一侧为负类`
+- 关于SVM的历史可以参考附录2[^2]，Vapnik的1995年的那个文章名字叫Support-vector networks，主要是提出了soft margin，在这篇文章的附录中给出了线性可分支持向量机与线性支持向量机的推导。同年Vapnik将支持向量机推广到支持向量回归，发表了文章统计学习理论的本质， 这个有中译版本，见书中本章参考文献[4]
+- Vapnik全名弗拉基米尔·万普尼克， 出生于苏联， VC理论的主要创建人之一，统计学习理论之父。1990年底移居美国，1991-2001年间，他在AT&T工作。2006年成为美国国家工程院院士。2014年加入Facebook人工智能实验室。
+- 1995年SVN的文章结尾有这样的描述：```The support-vector network combines 3 ideas: the solution technique from optimal hy- perplanes (that allows for an expansion of the solution vector on support vectors), the idea of convolution of the dot-product (that extends the solution surfaces from linear to non-linear), and the notion of soft margins (to allow for errors on the training set).```
+- KKT条件是该最优化问题的充分必要条件。
 
 ---
 
@@ -51,7 +57,7 @@
 
 注意前四个算法里面，都没有写该怎么去求解$\alpha$，最后一节**序列最小最优化**讨论了具体实现。也就是算法7.5给出了求解$\hat\alpha$的方法。
 
-另外，注意对比算法7.3和算法7.4，关注输出，关注$b^*$.
+另外，注意对比算法7.3和算法7.4，关注输出，关注$b^*​$.
 
 
 
@@ -85,7 +91,9 @@ $$
 f(x)=sign(w^*\cdot x+b^*)
 $$
 
-### 函数间隔
+### 算法
+
+#### 函数间隔
 
 对于给定数据集$T$和超平面$(w,b)$，定义超平面$(w,b)$关于样本点$(x_i,y_i)$的函数间隔为
 $$
@@ -97,15 +105,15 @@ $$
 $$
 函数间隔可以表示分类预测的**正确性**及**确信度**。
 
-### 几何间隔
+#### 几何间隔
 
 
 
-### 间隔最大化
+#### 间隔最大化
 
 
 
-### 支持向量和间隔边界
+#### 支持向量和间隔边界
 
 由于支持向量在确定分离超平面中起着决定作用，所以将这种分类模型称为支持向量机。
 
@@ -134,11 +142,15 @@ $$
 # data 2.1
 # x_1 = (3, 3), x_2 = (4, 3), x_3 = (1, 1)
 # ref: [example 16.3](http://www.bioinfo.org.cn/~wangchao/maa/Numerical_Optimization.pdf)
+from scipy import optimize
+import numpy as np
+
 fun = lambda x: ((x[0]) ** 2 + (x[1]) ** 2)/2
 cons = ({'type': 'ineq', 'fun': lambda x: 3 * x[0] + 3 * x[1] + x[2] - 1},
         {'type': 'ineq', 'fun': lambda x: 4 * x[0] + 3 * x[1] + x[2] - 1},
         {'type': 'ineq', 'fun': lambda x: -x[0] - x[1] - x[2] - 1})
 res = optimize.minimize(fun, np.ones(3), method='SLSQP', constraints=cons)
+res
 ```
 
 ### 对偶算法
@@ -146,12 +158,16 @@ res = optimize.minimize(fun, np.ones(3), method='SLSQP', constraints=cons)
 1. 对偶问题往往更容易求解
 1. 自然引入核函数，进而推广到非线性分类问题
 
-定义拉格朗日函数
+针对每个不等式约束，定义拉格朗日乘子$\alpha_i\ge0​$，定义拉格朗日函数
 $$
-L(w,b,\alpha)=\frac{1}{2}\left\|w\right\|^2-\sum_{i=1}^N\alpha_iy_i(w\cdot x_i+b)+\sum_{i=1}^N\alpha_i\\
+\begin{align}
+L(w,b,\alpha)&=\frac{1}{2}w\cdot w-\left[\sum_{i=1}^N\alpha_i[y_i(w\cdot x_i+b)-1]\right]\\
+&=\frac{1}{2}\left\|w\right\|^2-\left[\sum_{i=1}^N\alpha_i[y_i(w\cdot x_i+b)-1]\right]\\
+&=\frac{1}{2}\left\|w\right\|^2-\sum_{i=1}^N\alpha_iy_i(w\cdot x_i+b)+\sum_{i=1}^N\alpha_i
+\end{align}\\
 \alpha_i \geqslant0, i=1,2,\dots,N
 $$
-其中$\alpha=(\alpha_1,\alpha_2,\dots,\alpha N)^T$为拉格朗日乘子向量
+其中$\alpha=(\alpha_1,\alpha_2,\dots,\alpha_N)^T​$为拉格朗日乘子向量
 
 **原始问题是极小极大问题**
 
@@ -178,7 +194,7 @@ $$
 
 对于任意线性可分的两组点，他们在分类超平面上的投影都是线性不可分的。
 
-$\alpha$不为零的点对应的为支持向量，通过支持向量可以求得$b$值
+$\alpha$不为零的点对应的实例为支持向量，通过支持向量可以求得$b$值
 
 核心公式两个
 $$
@@ -243,7 +259,11 @@ $$
 
 注意， 书后总结部分，有这样一句描述：**线性支持向量机的解$w^*$唯一但$b^*$不一定唯一**
 
-### 软间隔最大化
+线性支持向量机是线性可分支持向量机的超集。
+
+### 算法
+
+#### 软间隔最大化
 
 >对于线性支持向量机学习来说
 >模型为分离超平面$w^*\cdot x+b^*=0$
@@ -256,43 +276,30 @@ $$
 
 
 
-### 合页损失
+#### 合页损失
 
-另一种解释最优化
+另一种解释，最小化目标函数
 
 $$\min\limits_{w,b} \sum\limits_{i=1}^N\left[1-y_i(w\cdot x+b)\right]_++\lambda\left\|w\right\|^2$$
 
-下面分析最小化的目标函数：
+其中
 
-- 目标函数第一项是经验损失或经验风险，函数$L(y(w\cdot x+b))=[1-y(w\cdot x+b)]_+$称为合页损失，可以表示成$L = \max(1-y(w\cdot x+b), 0)$
-- 目标函数第二项是系数为$\lambda$的$w$的$L_2$范数，是正则化项
+- 第一项是经验损失或经验风险，函数$L(y(w\cdot x+b))=[1-y(w\cdot x+b)]_+$称为合页损失，可以表示成$L = \max(1-y(w\cdot x+b), 0)$
+- 第二项是**系数为$\lambda$的$w$的$L_2$范数的平方**，是正则化项
 
-TODO: 损失函数对比
+![test](assets/fig76.png)
 
+以上：
 
+- 0-1损失函数不是连续可导
+
+- 合页损失认为是0-1损失函数的上界，在[AdaBoost](../CH08/README.md)中也有说明，指数损失也是0-1损失函数的上界，在[感知机](../CH02/README.md)中有提到`损失函数的自然选择是误分类点的个数`，这句在最开始见到的时候，可能不一定有上面图片的直觉。
+
+- 感知机误分类驱动， 选择函数间隔作为损失考虑分类的正确性，合页损失不仅要考虑分类正确， 还要考虑确信度足够高时损失才是0.
+
+  
 
 ## [3]非线性支持向量机
-
-### 问题描述
-
-~~和线性支持向量机的问题描述一样~~，注意，这里是有差异的，将向量内积替换成了核函数，而后续SMO算法求解的问题是该问题。
-$$
-\begin{align}
-\min_\alpha\ &\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i,x_j)-\sum_{i=1}^N\alpha_i\\
-s.t.\ \ \ &\sum_{i=1}^N\alpha_iy_i=0\\
-&0\leqslant \alpha_i \leqslant C,i=1,2,\dots,N
-\end{align}
-$$
-学习算法不一样的在于
-$$
-b^*=y_j-\sum_{i=1}^N\alpha_i^*y_iK(x_i,x_j)
-$$
-决策函数
-$$
-f(x)=sign\left(\sum_{i=1}^N\alpha_i^*y_iK(x,x_i)+b^*\right)
-$$
-
-
 核技巧的想法是在学习和预测中只定义核函数$K(x,z)$，而不是显式的定义映射函数$\phi$
 
 通常，直接计算$K(x,z)$比较容易， 而通过$\phi(x)$和$\phi(z)$计算$K(x,z)$并不容易。
@@ -302,13 +309,65 @@ W(\alpha)=\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i,x_j)-\s
 f(x)=sign\left(\sum_{i=1}^{N_s}\alpha_i^*y_i\phi(x_i)\cdot \phi(x)+b^*\right)=sign\left(\sum_{i=1}^{N_s}\alpha_i^*y_iK(x_i,x)+b^*\right) 
 \end{align}
 $$
-学习是隐式地在特征空间进行的，不需要显式的定义特征空间和映射函数。这样的技巧称为核技巧。
+学习是隐式地在特征空间进行的，不需要显式的定义特征空间和映射函数。这样的技巧称为核技巧，核技巧不仅引用于支持向量机，而且应用于其他统计学习问题。
 
+TODO：字符串核函数
 ### 核函数
 
 例7.3 主要是为了说明
 
 > 对于给定的核$K(x,z)$，特征空间$\mathcal H$和映射函数$\phi(x)$的取法并不唯一，可以取不同的特征空间，即便是同一特征空间里也可以取不同的映射
+
+注意这个例子里面$\phi(x)$实现了从低维空间到高维空间的映射。
+$$
+K(x,z)=(x\cdot z)^2\\
+\cal{X}=\R^2, x=(x^{(1)},x^{(2)})^T\\
+\cal{H}=\R^3, \phi(x)=((x^{(1)})^2, \sqrt2x^{(1)}x^{(2)}, (x^{(2)})^2)^T\\
+\cal{H}=\R^4, \phi(x)=((x^{(1)})^2, x^{(1)}x^{(2)}, x^{(1)}x^{(2)}, (x^{(2)})^2)^T\\
+$$
+
+这里看下：
+
+- 理解下$\R^n$
+- 理解下计算$K$要比通过$\phi$计算$K$要容易
+- 核函数的定义相当于给出了$\phi(x)\cdot\phi(z)$的结果，而没有显式的给出$\phi$的定义，$\phi$实现了从输入空间到特征空间的变换，所以说，学习是隐式的从特征空间中进行的，不需要显式的定义特征空间和映射函数，这样的技巧称为核技巧，通过线性分类学习方法和核函数解决非线性问题。
+
+核具有再生性即满足
+$$
+K(\cdot,x)\cdot f=f(x)\\
+K(\cdot,x)\cdot K(\cdot, z)=K(x,z)
+$$
+称为再生核
+
+
+### 问题描述
+
+~~和线性支持向量机的问题描述一样~~，注意，这里是有差异的，将向量内积替换成了核函数，而后续SMO算法求解的问题是该问题。
+
+构建最优化问题：
+$$
+\begin{align}
+\min_\alpha\ &\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_i,x_j)-\sum_{i=1}^N\alpha_i\\
+s.t.\ \ \ &\sum_{i=1}^N\alpha_iy_i=0\\
+&0\leqslant \alpha_i \leqslant C,i=1,2,\dots,N
+\end{align}
+$$
+
+
+求解得到$\alpha^*=(\alpha_1^*,\alpha_2^*,\cdots,\alpha_N^*)^T$
+
+选择$\alpha^*$的一个正分量计算
+$$
+b^*=y_j-\sum_{i=1}^N\alpha_i^*y_iK(x_i,x_j)
+$$
+构造决策函数
+$$
+f(x)=sign\left(\sum_{i=1}^N\alpha_i^*y_iK(x,x_i)+b^*\right)
+$$
+
+
+
+
 
 
 
@@ -332,7 +391,7 @@ $$
 
 ### KKT 条件
 
-KKT条件是该最优化问题的充分必要条件。
+KKT条件是该最优化问题的充分必要条件。这个参考[附录C](../APP/README.md)
 
 
 
@@ -357,11 +416,11 @@ $$
 
 两变量二次规划求解
 
-选择两个变量$\alpha_1,\alpha_2$
+选择两个变量$\alpha_1,\alpha_2​$
 
 由等式约束可以得到
 
-$\alpha_1=-y_1\sum\limits_{i=2}^N\alpha_iy_i$
+$\alpha_1=-y_1\sum\limits_{i=2}^N\alpha_iy_i​$
 
 所以这个问题实质上是单变量优化问题。
 $$
@@ -434,12 +493,31 @@ TODO:
 
 ### 对比支持向量机和提升方法
 
+参考下[CH08](../CH08/README.md)
+
+
+
 ### 对比二次规划求解工具和SMO
 
+## 习题
 
+### 7.3
+
+线性支持向量机还可以定义成以下形式：
+$$
+\begin{aligned}
+\min_{w,b,\xi}\ &\frac{1}{2}||w||^2+C\sum_{i=1}^{N}\xi_i^2\\
+s.t.\ &y_i(w\cdot x_i+b)\ge1-\xi_i, i=1,2,\cdots,N\\
+&\xi_i\ge 0, i=1,2,\cdots,N
+\end{aligned}
+$$
+
+求其对偶形式。
 
 ## 参考
 
 1. [^1]: [Fast training of support vector machines using sequential minimal optimization](http://www.cs.utsa.edu/~bylander/cs6243/smo-book.pdf)
+
+2. [^2]: [支持向量机历史](http://www.svms.org/history.html)
 
 **[⬆ top](#导读)**

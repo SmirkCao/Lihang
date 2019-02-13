@@ -77,6 +77,7 @@
 | $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} | $\geq \leq$ | \geq \leq |
 | $\bot $ | \bot | $\angle$ | \angle | $\varpropto$ | \varpropto |
+| $\infty$ | \infty |  |  |  |  |
 
 ### 表8: 使用字体
 
@@ -107,7 +108,7 @@ $$
 ```latex
 # 代码
 f(x,y) = \begin{cases}
-1 & x与y满足某一事实\
+1 & x与y满足某一事实\\
 0 & 否则
 \end{cases}
 ```

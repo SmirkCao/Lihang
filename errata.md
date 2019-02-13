@@ -70,8 +70,35 @@ $$
 这里绿色部分应该是$P(Z|Y,\theta^{(i)})$，为了构建期望而凑项，进而应用琴声不等式。
 
 26. $P_{162}$ 关于定理9.2.2的证明，参阅文献[6]， 这个定理的证明应该在参考文献[5]中有提到。
+
 27. $P_{166}$ `将其对  求偏导 ` 这个地方的符号$\widetilde{P}$， 应该是$\tilde{P}$， 和定义9.3中的有差异，一个是widetilde，一个是tilde，统一最好。
+
 28. $P_{189}$ 参考文献[2]的格式， 缺少卷数和页码范围， 77(2):257-186
+
 29. $P_{12}$图1.2中的纵坐标， 应该是$y$，在PRML中误差函数是$E(w)=\frac{1}{2}\sum_{n=1}^N\{y(x_n-w)-t_n\}^2$所以纵坐标是$t$
+
 30. $P_{57}$ 在讲到决策树学习的损失函数部分。`决策树学习的损失函数通常是正则化的极大似然函数。决策树学习的策略是以损失函数为目标函数的最小化`这部分觉得描述有点问题，前面部分理解为正则化的似然函数作为损失函数，这个应该是对数似然，因为作为损失函数应该是越小越好，正则化的似然应该是越大越好。这样才能对应后面的`以损失函数为目标函数的最小化`
+
 31. $P_{36}$参考文献2, 这个文献应该是On convergence proofs for perceptrons. repo里面参考文献下载脚本可以自动下载该文献， 是一份扫描档。 不过，有其他文献也按照本书的引用方法引用的。
+
+32. $P_{134}$参考文献5, Platt这个文章最多引用的是J. Platt. *Advances in Kernel Methods -- Support Vector Learning,* *MIT Press,* *Cambridge, MA,* (*1998*)， 可以参考https://www.bibsonomy.org/bibtex/2ad411b41c7af4289282067a770edbdde/telekoma, 原书给的链接也是有效的，微软对这个链接做了转发， 跳转到新地址https://www.microsoft.com/en-us/research/publication/fast-training-of-support-vector-machines-using-sequential-minimal-optimization/?from=http%3A%2F%2Fresearch.microsoft.com%2Fapps%2Fpubs%2F%3Fid%3D68391
+
+33. $P_{36}$参考文献5, 现在比较容易获得的参考文献是1999年在Machine Learning上发表的那个版本，这个不算是错误。在repo的参考文献downloader里面，有对应的链接。
+
+34. $P_{134}$参考文献1,没有标明页码，1995,20:273,297
+
+35. $P_{XIII}$符号表说明中有关$||\cdot||_2$的说明， 是二范数，这个应该是对的。后面支持向量机部分$P_{114}$中描述支持向量机损失函数第二项$\lambda ||w||^2$为系数为$\lambda$的$w$的$L_2$范数，是正则化项。应该是二范数的平方。对应了$w\cdot w=||w||^2$， $w \cdot w$是在Vapnik的SVN文章中的表示方法。
+
+36. $P_{122}$高斯核函数(Gaussian kernel  function)英文部分kernel和function之间，多了一个空格
+
+37. $P_{118}$支持向量机部分，使用了核函数的分类决策函数拉格朗日乘子变成了$a$，求和范围变成了$N_s$，但是文中没有说明为什么做这种改变。
+
+38. $P_{122}$介绍常用核函数的时候， 分类决策函数也用到了上面的表达方式。这两条， 涉及到的公式有7.68,7.89,7.90,7.91
+
+39. $P_{122}$公式7.91分类决策函数中的$z$应该是$x_i$
+
+    $f(x)=sign\left(\sum_{i=1}^{N_s}a_i^*y_i\exp\left(-\frac{||x_i-x||^2}{2\sigma^2}\right)+b^*\right)$
+
+40. $P_{124}$称为**非线性支持向量**，应该是**非线性支持向量$\color{red}机$**。
+
+41. 
