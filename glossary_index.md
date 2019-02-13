@@ -12,6 +12,8 @@
 
 $P_{34}$，在感知机中第一次提到
 
+$P_{119}$，讲核函数的时候也有用到
+
 
 
 ### 凸优化
@@ -53,6 +55,17 @@ $P_{25}, P_{78}, P_{117}$在感知机、逻辑回归、支持向量机里面都�
 $P_{40}, P_{37}​$
 
 这个函数在不同的教材上有不同的表示方式，比如在<深度学习>中表示为$\mathbf 1_{condition}$
+
+另外， 张潼老师在IBM时候的文章，定义的和书中不是太一样， 注意体会之间的差异。
+$$
+I(f(x),y)=\begin{cases}
+&1\ if\ yf(x)<0,\\
+&1\ if\ f(x)=0\ and\ y=-1,\\
+&0\ otherwise
+\end{cases}
+$$
+
+指示函数还有一种表示空心方括号，这个在LaTeX里面要用个包来引用， 不写了。在AdaBoost参考文献[9]中用了这样的表达。
 
 ### $L_p$距离
 
@@ -131,6 +144,12 @@ $P_{159}$
 
 $P_{15}$
 
+### 代理损失函数
+
+$P_{115}$
+
+ 
+
 ## Timeline
 
 1. First pattern recognition althgrithm; Fisher; 1936
@@ -146,6 +165,8 @@ $P_{15}$
 1. AdaBoost; Freund, Schapire; 1995
 1. SVM: Regression; Drucker; 1996
 1. SMO; Platt; 1998
+1. Margin Theory; Schapire; 1998
+1. Boosted Tree; Friedman; 2000
 1. CRF; Lafferty; 2001
 
 ## Definition, Theory, Algorithm

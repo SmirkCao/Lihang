@@ -34,7 +34,13 @@
 
 ## CH08 提升方法
 
+9. Schapire， 2004
 
+   这个文章里面说明了AdaBoost和LR的关系。
+
+   LR中的feature对应了AdaBoost中的weak或者base hypotheses
+
+   文献中还有包含了多分类问题， 一提到多分类， 有OvO， OvR，但是AdaBoost的多分类形式有好多版本， 跨度两三年。所以， 讲讲道理容易，和具体的实现还是有差异的。
 
 ## CH09 EM算法及其推广
 

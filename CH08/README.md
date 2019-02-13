@@ -174,6 +174,10 @@ m=3
 
 ## AdaBoost 误差分析
 
+这部分可以看下张潼老师的论文。其中提到这样一句， `The basic idea is to minimize a convex upper bound of the classification error function I(p,y).`
+
+这样就自然的过度到了后面的AdaBoost的另外一种解释， 指数损失。
+
 ## AdaBoost 算法的解释
 
 加法模型， 指数损失， 前向分步， 二分类。
@@ -328,6 +332,16 @@ $|x|_{-\infty}=\min\limits_i|x_i|$，向量所有元素绝对值中的最小值
 AdaBoost这个方法， 比较迷人的地方就在于训练数据集误差率降为0之后， 依然能继续降低测试误差，看起来，似乎不会过拟合。Schapire给出的解释主要是基于间隔理论， 但是， AdaBoost的间隔和SVM的间隔是不一样的。
 
 关于AdaBoost的间隔理论， Schapire在1998年提出之后，受到过质疑，周志华老师在这个问题上给出了解释，并说明了当间隔分布无法继续提升的时候， 过拟合终将发生。
+
+### AdaBoost与LR的关系
+
+第一次提到AdaBoost和LR 的关系是本书参考文献[6]， 给出了Boosting和LR损失函数之间的关系， 但是里面用到的损失小二乘。
+
+本书的参考文献[9]，从Bregman散度的角度解释AdaBoost和LR的关系。
+
+文献[9]中有说明，LR的特征对应了AdaBoost中的弱分类器，或者是基分类器，分类器对应了hypotheses。
+
+
 
 ## 习题
 

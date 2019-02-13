@@ -499,7 +499,20 @@ TODO:
 
 ### 对比二次规划求解工具和SMO
 
+## 习题
 
+### 7.3
+
+线性支持向量机还可以定义成以下形式：
+$$
+\begin{aligned}
+\min_{w,b,\xi}\ &\frac{1}{2}||w||^2+C\sum_{i=1}^{N}\xi_i^2\\
+s.t.\ &y_i(w\cdot x_i+b)\ge1-\xi_i, i=1,2,\cdots,N\\
+&\xi_i\ge 0, i=1,2,\cdots,N
+\end{aligned}
+$$
+
+求其对偶形式。
 
 ## 参考
 
