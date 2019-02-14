@@ -289,15 +289,43 @@ $$\min\limits_{w,b} \sum\limits_{i=1}^N\left[1-y_i(w\cdot x+b)\right]_++\lambda\
 
 ![test](assets/fig76.png)
 
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-3,3,601)
+# perceptron loss
+y1 = list(map(lambda x: max(0, -x), x))
+# hinge loss
+y2 = list(map(lambda x: max(0,1-x), x))
+# 0-1 loss
+y3 = list(map(lambda x:1 if x <= 0 else 0, x))
+# lr loss
+y4 = list(map(lambda x:np.log2(1+np.exp(-x)), x))
+# adaboost
+y5 = list(map(lambda x:np.exp(-x), x))
+plt.plot(x,y1,'--',label='perceptron loss')
+plt.plot(x,y2, '-', label='hinge loss' )
+plt.plot(x,y3, '-', label='0-1 loss')
+plt.plot(x,y4, '-', label='lr')
+plt.plot(x,y5, '-', label='adaboost')
+
+plt.legend()
+plt.xlim(-3,3)
+plt.ylim(0,3)
+plt.xlabel("function margin")
+plt.ylabel("loss")
+plt.savefig("test.png")
+plt.show()
+```
+
+
+
 以上：
 
 - 0-1损失函数不是连续可导
-
 - 合页损失认为是0-1损失函数的上界，在[AdaBoost](../CH08/README.md)中也有说明，指数损失也是0-1损失函数的上界，在[感知机](../CH02/README.md)中有提到`损失函数的自然选择是误分类点的个数`，这句在最开始见到的时候，可能不一定有上面图片的直觉。
-
 - 感知机误分类驱动， 选择函数间隔作为损失考虑分类的正确性，合页损失不仅要考虑分类正确， 还要考虑确信度足够高时损失才是0.
-
-  
 
 ## [3]非线性支持向量机
 核技巧的想法是在学习和预测中只定义核函数$K(x,z)$，而不是显式的定义映射函数$\phi$
