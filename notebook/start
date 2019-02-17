@@ -1,0 +1,3 @@
+#! /usr/bin bash
+# start jupyter notebook from current folder
+jupyter notebook --notebook-dir=.
