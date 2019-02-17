@@ -12,20 +12,27 @@ wget "https://cseweb.ucsd.edu/~yfreund/papers/LargeMarginsUsingPerceptron.pdf" -
 wget "https://www.researchgate.net/profile/Yaoyong_Li/publication/37537459_The_Perceptron_Algorithm_with_Uneven_Margins/links/0046351790be7e102e000000/The-Perceptron-Algorithm-with-Uneven-Margins.pdf" -O 0206.pdf
 # 0207
 wget "https://web.stanford.edu/class/ee373b/30years.pdf" -O 0207.pdf
+echo "ch04"
+# 0401
+wget "http://www.cs.cmu.edu/~tom/mlbook/NBayesLogReg.pdf" -O 0401.pdf
+# 0402
+echo "same with 0704"
+# 0403 PRML
+wget "https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" -O 0403.pdf
 
 echo "ch06"
-#0601
+# 0601
 wget "http://www.aclweb.org/anthology/J96-1002" -O 0601.pdf
-#0602
+# 0602
 # http://www.cs.cmu.edu/afs/cs/user/aberger/www/ps/scaling.ps
 wget "http://www.cs.cmu.edu/~aberger/pdf/scaling.pdf" -O 0602.pdf
-#0603
+# 0603
 echo "same with 0704"
-#0604
+# 0604
 echo "a book"
-#0605
+# 0605
 wget "http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.135.1357&rep=rep1&type=pdf" -O 0605.pdf
-#0606
+# 0606
 wget "https://alex.smola.org/papers/2005/CanSmo05.pdf" -O 0606.pdf
 
 echo "ch07"
