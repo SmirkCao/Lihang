@@ -69,6 +69,9 @@ wget "https://link.springer.com/content/pdf/10.1023%2FA%3A1013912006537.pdf" -O 
 echo "ch09"
 # 0901
 wget "http://web.mit.edu/6.435/www/Dempster77.pdf" -O 0901.pdf
+# 0902 ESLII
+echo "same with 0704"
+# 0903 Book 2007 second edition no link
 
 # 0905
 wget "https://projecteuclid.org/download/pdf_1/euclid.aos/1176346060" -O 0905.pdf
