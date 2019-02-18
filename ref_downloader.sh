@@ -86,4 +86,8 @@ wget "http://ai.stanford.edu/~pabbeel/depth_qual/Rabiner_Juang_hmms.pdf" -O 1001
 # 1002
 wget "https://www.ece.ucsb.edu/Faculty/Rabiner/ece259/Reprints/tutorial%20on%20hmm%20and%20applications.pdf" -O 1002.pdf
 
+# 1003 BW Algorithm
+wget "https://projecteuclid.org/download/pdf_1/euclid.aoms/1177697196" -O 1003.pdf
 
+# 1004
+wget "http://101.96.10.64/ssli.ee.washington.edu/people/bilmes/mypapers/em.pdf" -O 1004.pdf

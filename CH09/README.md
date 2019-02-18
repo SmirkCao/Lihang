@@ -309,7 +309,7 @@ $$
 
 注意Q函数的定义，可以帮助理解上面E步中的求和表达式
 
-完全数据的**对数似然函数$\log P(Y, Z|\theta)$关于**给定观测数据$Y$的当前参数$\theta^{(i)}$下对为观测数据$Z$的**条件概率分布$P(Z|Y,\theta^{(i)})$的期望**称为Q函数.
+完全数据的**对数似然函数$\log P(Y, Z|\theta)$关于**给定观测数据$Y$的当前参数$\theta^{(i)}$下对为观测数据$Z$的**条件概率分布$P(Z|Y,\theta^{(i)})​$的期望**称为Q函数。
 
 #### BMM的EM算法
 
@@ -324,9 +324,17 @@ $$
 > $$\hat\mu_k=\frac{\sum_{j=1}^N\hat\gamma_{jk}y_j}{\sum_{j=1}^N\hat\gamma_{jk}}\\
 > \hat\alpha_k=\frac{n_k}{N}$$
 
+#### 目标函数L
+
+$$
+L(\theta)=\log P(Y|\theta)=\log \sum_Z P(Y,Z|\theta)=\log(\sum_Z P(Y|Z,\theta)P(Z|\theta))
+$$
+
+目标函数是不完全数据的对数似然
+
 #### EM算法导出
 
-书中这部分内容回答为什么EM算法能近似实现对观测数据的极大似然估计？
+书中这部分内容回答为什么EM算法能近似实现对观测数据的极大似然估计？si ran
 $$
 \begin{align}
 L(\theta)-L(\theta^{(i)})&=\log \left(\sum_Z\color{green}P(Y|Z,\theta^{(i)})\color{black}\frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Y|Z,\theta^{(i)})}\color{black}\right)-\log P(Y|\theta^{(i)})\\
