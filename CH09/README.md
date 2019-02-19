@@ -46,7 +46,7 @@
 
 - 学习过程中注意**观测数据**在EM算法每次迭代中的意义。
 
-- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异，直觉上都有一种归属的感觉，$\gamma_{jk}$是二值函数，$\alpha_k$是一种概率的表示。$\gamma_j$是one-hot encoding(also: 1-of-K representation)
+- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异，直觉上都有一种归属的感觉，$\gamma_{jk}$是二值函数，$\alpha_k$是一种概率的表示。$\gamma_{jk}$是one-hot encoding(also: 1-of-K representation)，还有$\hat\gamma_{jk}$这个是个估计注意和$\gamma_{jk}$的关系
 
 - GMM这里面实际上还涉及到一个概念叫做凸组合(Convex Combination)[^4]，是凸几何领域的一个概念，点的线性组合，所有系数都非负且和为1。点集的凸包等价于该点集的凸组合。
 
@@ -427,7 +427,7 @@ $$
 $$
   注意, 以上说明有几个假设:
 
-  1. 隐变量和观测变量的数据对应, 每个观测数据，对应了一个隐变量，$\gamma_{jk}$~~是一种one-hot的形式。~~是软的。
+  1. 隐变量和观测变量的数据对应, 每个观测数据，对应了一个隐变量，$\gamma_{jk}$是一种one-hot的形式。
   1. 具体的单一观测数据是混合模型中的某一个模型产生的
 
 - 完全数据为$(y_j,\gamma_{j1},\gamma_{j2},\dots,\gamma_{jK},k=1,2,\dots,N)​$
