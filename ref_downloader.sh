@@ -91,3 +91,18 @@ wget "https://projecteuclid.org/download/pdf_1/euclid.aoms/1177697196" -O 1003.p
 
 # 1004
 wget "http://101.96.10.64/ssli.ee.washington.edu/people/bilmes/mypapers/em.pdf" -O 1004.pdf
+echo "ch11"
+# 1101 PRML
+echo "same with 0403"
+# 1102 PGM, Koller
+echo "visit this link to download pdf file: http://vk.com/doc168073_304660839?hash=39a33dd8aa6b141d8a&dl=b667454bc650f66cc0"
+# 1103
+wget "http://www.cs.cmu.edu/~mccallum/papers/crf-icml2001s.ps.gz" -O 1103.pdf
+# 1104
+wget "http://aclweb.org/anthology/N03-1028" -O 1104.pdf
+# 1105
+wget "http://www.ai.mit.edu/courses/6.891-nlp/READINGS/maxent.pdf" -O 1105.pdf
+# 1106
+wget "https://www.robots.ox.ac.uk/~vgg/rg/papers/maxmarginmarkovnetworks.pdf" -O 1106.pdf
+# 1107
+wget "https://icml.cc/Conferences/2004/proceedings/papers/76.pdf" -O 1107.pdf
