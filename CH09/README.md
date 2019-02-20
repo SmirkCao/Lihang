@@ -515,8 +515,14 @@ $$
 
 ## 其他
 
-1. 关于习题9.3
-   GMM模型的参数($\alpha _k, \mu _k, \sigma^2_k $)应该是$3k$个，题目9.3中提出两个分量的高斯混合模型的5个参数，是因为参数$\alpha_k$满足$\sum_{k=1}^K\alpha _k=1$
+### 习题9.3
+GMM模型的参数($\alpha _k, \mu _k, \sigma^2_k $)应该是$3k$个，题目9.3中提出两个分量的高斯混合模型的5个参数，是因为参数$\alpha_k$满足$\sum_{k=1}^K\alpha _k=1$
+
+### 习题9.4
+
+EM算法用到朴素贝叶斯的非监督学习，就是说没有标注的数据。	
+
+这个题目可以参考https://ttic.uchicago.edu/~suriya/website-intromlss2018/course_material/Day10a.pdf
 
 ## 参考
 
