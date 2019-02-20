@@ -1,5 +1,6 @@
 # 统计学习方法
-[![Gitter chat](https://badges.gitter.im/SmirkCao/StatisticalLearningMethods.png)](https://gitter.im/StatisticalLearningMethods/Book)
+
+[![Gitter chat](https://badges.gitter.im/SmirkCao/StatisticalLearningMethods.png)](https://gitter.im/StatisticalLearningMethods/Book)[![Python](https://img.shields.io/badge/python-3.5|3.6|3.7-blue.svg)](-)[![pull](https://img.shields.io/badge/contributions-welcome-blue.svg)](https://github.com/SmirkCao/Lihang/pulls)
 
 [TOC]
 
