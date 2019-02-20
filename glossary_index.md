@@ -126,11 +126,9 @@ $$
 
 ### One-hot Encoding
 
-$P_{163}$ 注意这里书中没有明确的说明$\gamma_j$是One-hot encoding, 也叫做1-of-K representation
+$P_{163}$ 注意这里书中没有明确的说明$\gamma_{jk}$是One-hot encoding, 也叫做1-of-K representation
 
 $\gamma_j=\sum_{k=1}^K\gamma_{jk}=1, j=1,2,3,\dots, n$
-
-？其实这个不一定是One-hot吧
 
 ### 基函数
 
@@ -154,7 +152,11 @@ $P_{15}$
 
 $P_{115}$
 
- 
+*
+
+$P_{206}$预测最优解，条件概率最大的输出序列(标记序列)$y^*$
+
+
 
 ## Timeline
 

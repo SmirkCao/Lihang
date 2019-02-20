@@ -57,7 +57,9 @@
    书中review了最大似然，这是本章的大参考文献。符号体系不是太一样，这里面我觉得比较好的是状态用了$q$这样不会出现$i_i$的情况。讲解了GMM和HMM中应用EM算法进行参数估计的过程。另外学到了一个关于省略数学推导的金句`we try to emphasize intuition rather than mathematical rigor.`
 3. 
 
+## CH11 条件随机场
 
+1. 
 
 ## 其他
 
