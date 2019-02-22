@@ -69,6 +69,9 @@ wget "https://link.springer.com/content/pdf/10.1023%2FA%3A1013912006537.pdf" -O 
 echo "ch09"
 # 0901
 wget "http://web.mit.edu/6.435/www/Dempster77.pdf" -O 0901.pdf
+# 0902 ESLII
+echo "same with 0704"
+# 0903 Book 2007 second edition no link
 
 # 0905
 wget "https://projecteuclid.org/download/pdf_1/euclid.aos/1176346060" -O 0905.pdf
@@ -83,4 +86,23 @@ wget "http://ai.stanford.edu/~pabbeel/depth_qual/Rabiner_Juang_hmms.pdf" -O 1001
 # 1002
 wget "https://www.ece.ucsb.edu/Faculty/Rabiner/ece259/Reprints/tutorial%20on%20hmm%20and%20applications.pdf" -O 1002.pdf
 
+# 1003 BW Algorithm
+wget "https://projecteuclid.org/download/pdf_1/euclid.aoms/1177697196" -O 1003.pdf
 
+# 1004
+wget "http://101.96.10.64/ssli.ee.washington.edu/people/bilmes/mypapers/em.pdf" -O 1004.pdf
+echo "ch11"
+# 1101 PRML
+echo "same with 0403"
+# 1102 PGM, Koller
+echo "visit this link to download pdf file: http://vk.com/doc168073_304660839?hash=39a33dd8aa6b141d8a&dl=b667454bc650f66cc0"
+# 1103
+wget "http://www.cs.cmu.edu/~mccallum/papers/crf-icml2001s.ps.gz" -O 1103.pdf
+# 1104
+wget "http://aclweb.org/anthology/N03-1028" -O 1104.pdf
+# 1105
+wget "http://www.ai.mit.edu/courses/6.891-nlp/READINGS/maxent.pdf" -O 1105.pdf
+# 1106
+wget "https://www.robots.ox.ac.uk/~vgg/rg/papers/maxmarginmarkovnetworks.pdf" -O 1106.pdf
+# 1107
+wget "https://icml.cc/Conferences/2004/proceedings/papers/76.pdf" -O 1107.pdf

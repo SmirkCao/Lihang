@@ -26,6 +26,12 @@ $P_{100}$
 
 $P_{225}$附录C
 
+### 拉格朗日乘子法
+
+$P_{182}$ BW算法中求Q函数极大化，因为$\pi,A,B$都满足等式约束条件
+
+
+
 
 
 ### KKT 条件
@@ -120,11 +126,9 @@ $$
 
 ### One-hot Encoding
 
-$P_{163}$ 注意这里书中没有明确的说明$\gamma_j$是One-hot encoding, 也叫做1-of-K representation
+$P_{163}$ 注意这里书中没有明确的说明$\gamma_{jk}$是One-hot encoding, 也叫做1-of-K representation
 
 $\gamma_j=\sum_{k=1}^K\gamma_{jk}=1, j=1,2,3,\dots, n$
-
-
 
 ### 基函数
 
@@ -148,7 +152,13 @@ $P_{15}$
 
 $P_{115}$
 
- 
+$P_{213}$也有说明
+
+*
+
+$P_{206}$预测最优解，条件概率最大的输出序列(标记序列)$y^*$
+
+
 
 ## Timeline
 

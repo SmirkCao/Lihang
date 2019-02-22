@@ -53,6 +53,13 @@
 
 1. [Rabiner, 1986](https://www.cs.umb.edu/~rvetro/vetroBioComp/HMM/Rabiner1986%20An%20Introduction%20to%20Hidden%20Markov%20Models.pdf)
    本书HMM部分的符号体系和这个文章是一样的, 参考文件的第一二文章和第九章的最大熵的文章差不多, 经典. 文章较长, 讨论的较全面.
+2. Bilmes, 1997
+   书中review了最大似然，这是本章的大参考文献。符号体系不是太一样，这里面我觉得比较好的是状态用了$q$这样不会出现$i_i$的情况。讲解了GMM和HMM中应用EM算法进行参数估计的过程。另外学到了一个关于省略数学推导的金句`we try to emphasize intuition rather than mathematical rigor.`
+3. 
+
+## CH11 条件随机场
+
+1. 
 
 ## 其他
 
