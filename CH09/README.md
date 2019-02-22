@@ -1,4 +1,4 @@
-# CH09 EM算法及其推广
+# 	CH09 EM算法及其推广
 
 [TOC]
 
@@ -334,7 +334,7 @@ $$
 
 #### EM算法导出
 
-书中这部分内容回答为什么EM算法能近似实现对观测数据的极大似然估计？si ran
+书中这部分内容回答为什么EM算法能近似实现对观测数据的极大似然估计？
 $$
 \begin{align}
 L(\theta)-L(\theta^{(i)})&=\log \left(\sum_Z\color{green}P(Y|Z,\theta^{(i)})\color{black}\frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Y|Z,\theta^{(i)})}\color{black}\right)-\log P(Y|\theta^{(i)})\\
