@@ -77,7 +77,7 @@
 | $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} | $\geq \leq$ | \geq \leq |
 | $\bot $ | \bot | $\angle$ | \angle | $\varpropto$ | \varpropto |
-| $\infty$ | \infty |  |  |  |  |
+| $\infty$ | \infty | $g^\prime$ | g^\prime |  |  |
 
 ### 表8: 使用字体
 
