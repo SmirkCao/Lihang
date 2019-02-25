@@ -102,7 +102,7 @@ Review第一遍的时候， 发现之前很多东西整理的不好。所以， 
 - 逻辑斯谛回归是统计学中的经典分类方法
 - 最大熵是概率模型学习的一个准则, 将其推广到分类问题得到最大熵模型
 
-关于最大熵的学习，推荐阅读该章节的参考文献1，[Berger, 1996](Refs/README.md), 有益于书中例子的理解以及最大熵原理的把握。
+关于最大熵的学习，推荐阅读该章节的参考文献[1]，[Berger, 1996](Refs/README.md), 有益于书中例子的理解以及最大熵原理的把握。
 
 那么, **为什么LR和Maxent要放在一章?**
 - 都属于对数线性模型
@@ -118,6 +118,10 @@ Review第一遍的时候， 发现之前很多东西整理的不好。所以， 
 - 还有[这样的描述](https://www.csie.ntu.edu.tw/~cjlin/papers/maxent_journal.pdf)
 
   >Logistic regression is a special case of maximum entropy with two labels +1 and −1.
+
+  这个章节的推导中用到了$y\in \mathcal{Y}=\{0,1\}$的性质
+
+- 有时候我们会说，逻辑回归在NLP方面叫做Maxent
 
 ## CH07 支持向量机
 
