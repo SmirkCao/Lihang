@@ -172,6 +172,16 @@ $$
 &=\sum_{i=1}^Ny_i(w\cdot x_i)-\log(1+\exp(w\cdot x_i))
 \end{aligned}
 $$
+好像不用这样麻烦，似然函数表示为
+$$
+\prod_{i=1}^NP(y_i=1|x_i,W)=\prod_{i=1}^N\frac{\exp(w\cdot x_i)}{1+\exp(w\cdot x_i)}
+$$
+使用对数技巧
+$$
+\sum_{i=1}^N\log\frac{\exp(w\cdot x_i)}{1+\exp(w\cdot x_i)}=\sum_{i=1}^Nw\cdot x_i-\log(1+\exp(w\cdot x_i))
+$$
+
+
 TODO: Update Deviance
 
 
