@@ -69,7 +69,7 @@ Boosting方法是一种常用的统计学习方法，应用广泛且有效
 
 概率近似正确(PAC, Probably approximately correct)
 
-在PAC学习框架下，一个概念是强可学习的充分必要条件是这个概念是弱可学习的。
+在PAC学习框架下，一个概念是强可学习的**充分必要条件**是这个概念是弱可学习的。
 两个问题
 
 1. 在每一轮如何改变训练数据的权值或者概率分布
@@ -173,11 +173,27 @@ m=3
 - G的宽度代表最终模型中该分类器对应的系数大小，G1➡️G3递增
 - 在模型的最终表示中有个$\sum$
 
+TODO：
+
+增加不同轮次的样本权重的可视化。
+
 ## AdaBoost 误差分析
 
 这部分可以看下张潼老师的论文。其中提到这样一句， `The basic idea is to minimize a convex upper bound of the classification error function I(p,y).`
 
 这样就自然的过度到了后面的AdaBoost的另外一种解释， 指数损失。
+
+注意，张潼老师的论文里面提到了指示函数是error function。
+
+书中的定理8.1如下描述
+
+AdaBoost算法最终分类器的训练误差界为
+$$
+\frac{1}{N}\sum\limits_{i=1}\limits^N I(G(x_i)\neq y_i)\le\frac{1}{N}\sum\limits_i\exp(-y_i f(x_i))=\prod\limits_m Z_m
+$$
+这个的意思就是说指数损失是0-1损失的上界，然后通过递推得到了归一化系数的连乘。
+
+定理8.2后面再看。
 
 ## AdaBoost 算法的解释
 
