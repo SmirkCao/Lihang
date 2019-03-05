@@ -57,7 +57,7 @@ class CRF(object):
         for k in range(self.K):
             for i, y_i in enumerate(self.y):
                 for j, y_j in enumerate(self.y):
-                    self.M[i, j, :] = self.f[k](y_i, y_j, x, j)
+                    self.M[i, j, :] = self.f[k](y_i, y_j, i, j)
 
         return self
 

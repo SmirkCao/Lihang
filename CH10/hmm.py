@@ -149,8 +149,8 @@ class HMM(object):
             self._do_estep(X)
             self._do_mstep(X)
             # convergence check
-            if False:
-                return rst
+        #    if False:
+        #        return rst
         return self
 
     def decode(self, X):
