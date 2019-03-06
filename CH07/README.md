@@ -287,7 +287,7 @@ $$\min\limits_{w,b} \sum\limits_{i=1}^N\left[1-y_i(w\cdot x+b)\right]_++\lambda\
 - 第一项是经验损失或经验风险，函数$L(y(w\cdot x+b))=[1-y(w\cdot x+b)]_+$称为合页损失，可以表示成$L = \max(1-y(w\cdot x+b), 0)$
 - 第二项是**系数为$\lambda$的$w$的$L_2$范数的平方**，是正则化项
 
-书中这里通过定理7.4说明了合页损失和线性支持向量机原始最优化问题，学习算法中的关系。
+书中这里通过定理7.4说明了用合页损失表达的最优化问题和线性支持向量机原始最优化问题的关系。
 $$
 \begin{align}
 \min_{w,b,\xi} &\frac{1}{2}\left\|w\right\|^2+C\sum_{i=1}^N\xi_i\\
