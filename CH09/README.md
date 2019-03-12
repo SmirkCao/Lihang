@@ -360,19 +360,19 @@ TODO:更新下这个图
 
 ### 高斯混合模型
 
-**混合模型**, 有多种, 高斯混合模型是最常用的.
+**混合模型**，有多种，高斯混合模型是最常用的。
 
 高斯混合模型(Gaussian Mixture Model)是具有如下**概率分布**的模型:
 $$
 P(y|\theta)=\sum\limits^{K}_{k=1}\alpha_k\phi(y|\theta_k)
 $$
-其中, $\alpha_k$是系数, $\alpha_k\ge0$, $\sum\limits^{K}_{k=1}\alpha_k=1$, $\phi(y|\theta_k)$ 是**高斯分布密度**, $\theta_k=(\mu,\sigma^2)$
+其中，$\alpha_k$是系数，$\alpha_k\ge0$，$\sum\limits^{K}_{k=1}\alpha_k=1$, $\phi(y|\theta_k)$ 是**高斯分布密度**，$\theta_k=(\mu,\sigma^2)$
 $$
 \phi(y|\theta_k)=\frac{1}{\sqrt{2\pi}\sigma_k}\exp\left(-\frac{(y-\mu_k)^2}{2\sigma_k^2}\right)
 $$
-上式表示第k个**分**模型.
+上式表示第k个**分**模型。
 
-以上, 注意几点:
+以上, 注意几点：
 
 1. GMM的描述是概率分布，形式上可以看成是加权求和
 1. 加权求和的权重$\alpha$满足$\sum_{k=1}^K\alpha_k=1$的约束
@@ -382,13 +382,13 @@ $$
 
 1. 书中描述的是一维的高斯混合模型，d维的形式如下[^2]，被称作多元正态分布，也叫多元高斯分布
 $$
-\phi(y|\theta_k)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}\exp\left(-\frac{(y-\mu_k)^T\Sigma^{-1}(y-\mu_k)}{2}\right)其中,协方差矩阵
+\phi(y|\theta_k)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}\exp\left(-\frac{(y-\mu_k)^T\Sigma^{-1}(y-\mu_k)}{2}\right)
 $$
 其中，协方差矩阵$\Sigma\in \R^{n\times n}$
 
 #### GMM的图模型
 
-这个弄的不咋好看, plate notation
+这个弄的不咋好看，plate notation
 
 ![图模型](assets/gmm_graph_model.png)
 
@@ -492,6 +492,10 @@ $$
 
 1. 这几个公式中待求的变量的维度和角标的关系。
 1. 这里面有求和，前面提到过要注意体会每一步刷的是模型，还是样本
+
+#### GMM在CV中的应用
+
+其实CV中用到了很多统计的方法，GMM在GrabCut方法中用于前景和背景建模。
 
 ### Kmeans
 
