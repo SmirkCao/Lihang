@@ -44,6 +44,7 @@
 - Vapnik全名弗拉基米尔·万普尼克， 出生于苏联， VC理论的主要创建人之一，统计学习理论之父。1990年底移居美国，1991-2001年间，他在AT&T工作。2006年成为美国国家工程院院士。2014年加入Facebook人工智能实验室。
 - 1995年SVN的文章结尾有这样的描述：```The support-vector network combines 3 ideas: the solution technique from optimal hy- perplanes (that allows for an expansion of the solution vector on support vectors), the idea of convolution of the dot-product (that extends the solution surfaces from linear to non-linear), and the notion of soft margins (to allow for errors on the training set).```
 - KKT条件是该最优化问题的充分必要条件。
+- 样本比较多的时候，Boosting和RF往往能得到最好的效果，但是数据集较少的时候，SVM的效果可能会比较好。
 
 ---
 
