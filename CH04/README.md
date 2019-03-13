@@ -60,10 +60,12 @@
 
 #### 条件独立假设
 
+**independent and identically distributed** (*i.i.d.* or *iid* or **IID**)
+
 求$P(Y|X)$，其中$X\in\{X_1,X_2,\dots,X_n\}$，条件独立假设这里给定$Y$的情况下：
 
-1. 每一个$X_i$和其他的每个$X_k$是条件独立的
-1. 每一个$X_i$和其他的每个$X_k$的子集是条件独立的
+1. 每一个$X_i​$和其他的每个$X_k​$是条件独立的
+1. 每一个$X_i​$和其他的每个$X_k​$的子集是条件独立的
 
 条件独立性假设是:
 $$
@@ -80,7 +82,7 @@ P(X|Y)&=P(X_1,X_2|Y)\\
 &=\color{red}P(X_1|Y)\color{black}P(X_2|Y)
 \end{aligned}
 $$
-红色部分从上到下基于I.I.D.
+红色部分从上到下基于IID
 
 条件独立假设等于是说用于分类的**特征**在**类确定**的条件下都是**条件独立**的.
 
@@ -90,18 +92,18 @@ $$
 
 ### 极大似然估计
 
-> 为了估计状态变量的条件分布, 利用贝叶斯法则, 有
+> 为了估计状态变量的条件分布，利用贝叶斯法则，有
 > $$
-> \underbrace{P(X|Y)}_{posterior}=\frac{\overbrace{P(Y|X)}^{likelihood}\overbrace{P(X)}^{prior}}{\underbrace{P(Y)}_{evidence}}=\frac{\overbrace{P(Y|X)}^{likelihood}\overbrace{P(X)}^{prior}}{\underbrace{\sum\limits_x P(Y|X)P(X)}_{evidence}}
+>     \underbrace{P(X|Y)}_{posterior}=\frac{\overbrace{P(Y|X)}^{likelihood}\overbrace{P(X)}^{prior}}{\underbrace{P(Y)}_{evidence}}=\frac{\overbrace{P(Y|X)}^{likelihood}\overbrace{P(X)}^{prior}}{\underbrace{\sum\limits_x P(Y|X)P(X)}_{evidence}}
 > $$
-> 其中$P(X|Y)$为给定$Y$下$X$的后验概率(Posterior)， $P(Y|X)$称为似然，$P(X)$称为先验(Prior)[^1]。
+> 其中$P(X|Y)$为给定$Y$下$X$的后验概率(Posterior)， $P(Y|X)$称为似然(Likelyhood)，$P(X)$称为先验(Prior)[^1]。
 >
 
 - 后验概率最大化的含义
 
   朴素贝叶斯法将实例分到**后验概率最大的类**中， 这等价于**期望风险最小化**。
 
-- 后验，观察到$Y$之后，对$X$的信念
+- 后验，观察到$Y​$之后，对$X​$的信念
 
 ### 贝叶斯估计
 
@@ -125,10 +127,10 @@ $$
 
 这个例子，有两个特征，一个标签，我们看看通过已知的数据表4.1能拿到哪些计算结果
 
-1. 先验Prior，通过统计Y的数据分布可以知道
+1. 先验Prior，通过统计$Y$的数据分布可以知道
 
-2. 不同$X$和$Y$的组合会产生多少参数，$X^{(1)}$可能的取值集合$A_1=\{1,2,3\}$大小为$S_1=3$，$X^{(2)}$可能的取值集合$A_2=\{S,M,L\}$大小为$S_2=3$，$Y\in C=\{1,-1\}$大小为$K=2$
-   参数的数量为$KS_1S_2=18$，具体的空间的分布是一个$3\times 3\times2$的三维矩阵
+2. 不同$X​$和$Y​$的组合会产生多少参数，$X^{(1)}​$可能的取值集合$A_1=\{1,2,3\}​$大小为$S_1=3​$，$X^{(2)}​$可能的取值集合$A_2=\{S,M,L\}​$大小为$S_2=3​$，$Y\in C=\{1,-1\}​$大小为$K=2​$
+   参数的数量为$KS_1S_2=18​$，具体的空间的分布是一个$3\times 3\times2​$的三维矩阵
 2. 每个特征的增加，本来应该在原来的$Y，X$的基础上增加$S_i$倍的维度，但因为做了特征条件独立假设，增加的可能性，是base在给定的标签$Y$上的，也就是说实际上增加了$S_i$个取值
 2. 这个题的解题过程可以考虑为：Groupby Y；Groupby Y，X1；Groupby Y，X2；对于新样本查表连乘。
 
@@ -140,7 +142,7 @@ $$
 
 ### 树增强朴素贝叶斯
 
-I.I.D. 强限制放宽，就是Tree Augmented Naive Bayes, TAN。可以看做是NB到贝叶斯网的过渡。
+IID强限制放宽，就是TAN(Tree Augmented Naive Bayes)。可以看做是NB到贝叶斯网的过渡。
 
 ### 贝叶斯网
 
@@ -156,7 +158,7 @@ I.I.D. 强限制放宽，就是Tree Augmented Naive Bayes, TAN。可以看做是
 
 这里文献[4]和本章的参考文献[^2]同源，都是Mitchell TM的Machine Learning，现在依然是第一版，第二版的更新章节Tom有挂在网上[^3]
 
-这里插一句Mitchell教授的介绍, CMU计算机学院院长，1997年创建自动化学习和探索中心，该中心是全球的高校中首个机器学习系，也是首个开设机器学习博士课程的机构。1997-2016，Mitchell是该中心负责人。
+这里插一句Mitchell教授的介绍，CMU计算机学院院长，1997年创建自动化学习和探索中心，该中心是全球的高校中首个机器学习系，也是首个开设机器学习博士课程的机构。1997-2016，Mitchell是该中心负责人。
 
 这些都还OK，主要是Mitchell教授加入了松鼠AI。
 
