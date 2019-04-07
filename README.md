@@ -4,8 +4,8 @@
 
 [TOC]
 
-- GitHub的markdown公式支持一般，推荐使用Chrome插件[TeX All the Things](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn)来渲染TeX公式,，本地Markdown编辑器推荐[Typora](https://typora.io/)。
-- math_markdown.pdf为math_markdown.md的导出版本， 方便查看使用， markdown版本为最新版本, 基本覆盖了书中用到的数学公式的LaTeX表达方式。
+- GitHub的markdown公式支持一般，推荐使用Chrome插件[TeX All the Things](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn)来渲染TeX公式,，本地Markdown编辑器推荐[Typora](https://typora.io/)，注意Ctrl+, 打开Preferences，Syntax Support部分勾选inline Math。Ubuntu和Windows都正常。
+- math_markdown.pdf为math_markdown.md的导出版本， 方便查看使用， markdown版本为最新版本，基本覆盖了书中用到的数学公式的LaTeX表达方式。
 
 ## 前前言
 
