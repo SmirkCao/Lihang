@@ -20,25 +20,35 @@ class Perceptron(object):
 
     def fit(self, X, y):
         self.w = np.zeros(X.shape[1] + 1)
-        correct_count = 0
+        # correct_count = 0
         n_iter_ = 0
 
         while n_iter_ < self.max_iter_:
             index = random.randint(0, y.shape[0] - 1)
             xx_ = np.hstack([X[index], 1])
+            # for $y \in \Y=\{0, 1\}$ case
             yy_ = 2 * y[index] - 1
+            # logger.info(xx_)
+            # logger.info(yy_)
             wx = np.dot(self.w, xx_)
 
-            if wx * yy_ > 0:
-                correct_count += 1
-                if correct_count > self.max_iter_:
-                    break
-                continue
-
-            self.w += self.eta_ * yy_ * xx_
+            # if wx * yy_ > 0:
+            #     correct_count += 1
+            #     if correct_count > self.max_iter_:
+            #         logger.info(correct_count)
+            #         break
+            #     continue
+            #
+            # self.w += self.eta_ * yy_ * xx_
+            # n_iter_ += 1
+            # if self.verbose:
+            #     print(n_iter_)
+            # 上面这部分换个表达方式，希望更好理解
+            if wx * yy_ <= 0:
+                self.w += self.eta_ * yy_ * xx_
             n_iter_ += 1
             if self.verbose:
-                print(n_iter_)
+                logger.info(n_iter_)
 
     def predict(self, X):
         # for b
@@ -57,3 +67,6 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--path", required=False, help="path to input data file")
     args = vars(ap.parse_args())
+else:
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)

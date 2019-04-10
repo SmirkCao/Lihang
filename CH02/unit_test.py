@@ -20,7 +20,7 @@ class TestPerceptron(unittest.TestCase):
         data_raw = np.loadtxt("Input/data_2-1.txt")
         X = data_raw[:, :2]
         y = data_raw[:, -1]
-        clf = Perceptron(eta=1)
+        clf = Perceptron(eta=1, verbose=False)
         clf.fit(X, y)
         y_pred = clf.predict(X)
         logger.info(clf.w)
@@ -97,7 +97,7 @@ class TestPerceptron(unittest.TestCase):
 
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=2018)
 
-        clf = Perceptron()
+        clf = Perceptron(verbose=False)
         clf.fit(X_train, y_train)
         test_predict = clf.predict(X_test)
         score = accuracy_score(y_test, test_predict)
