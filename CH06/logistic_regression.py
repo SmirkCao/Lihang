@@ -1,5 +1,5 @@
 # -*-coding:utf-8-*-
-# Project: Lihang
+# Project: CH06
 # Filename: logistic_regression
 # Author: 😏 <smirk dot cao at gmail dot com>
 
@@ -33,7 +33,8 @@ class LogisticRegression(object):
 
     def gradient_descent(self, x_, y_, epsilon_=0.00001, n_iter=1500):
         n = x_.shape[len(x_.shape)-1]
-        f_his = []
+        # f_his = []
+        # one-hot encoding
         y_ = pd.get_dummies(y_)
         w_ = np.array([])
         print(n, y_.shape, y_.columns)
@@ -43,7 +44,7 @@ class LogisticRegression(object):
             wck_ = np.zeros(n)
             # k = 0
             for k in np.arange(n_iter):
-                f_xk = self.f(x_, y_.values[:, ck], wck_)
+                # f_xk = self.f(x_, y_.values[:, ck], wck_)
                 g_k = self.g(x_, y_.values[:, ck], wck_)
 
                 if np.average(g_k*g_k) < epsilon_:
@@ -71,8 +72,18 @@ def f(x_, y_, w_):
 
 def g(x_, y_, w_):
     m = y_.size
-    rst_ = (1 / m) * np.dot(x_.T, y_ * sigmoid(np.dot(x_, w_)))
-    # rst_ = np.dot(x_.T, y_ * sigmoid(np.dot(x_, w_)))
+    # y is one-hot form
+    # print(y_)
+    # probe here and check
+    # x_.shape, y_.shape, w_.shape
+    # np.dot(x_, w_).shape
+    # sigmoid(np.dot(x_, w_)).shape
+    # np.dot(x_.T, y_ * sigmoid(np.dot(x_, w_))).shape
+    rst_ = (1 / m) * np.dot(x_.T, y_*sigmoid(np.dot(x_, w_)))
+    
+    # p*1-p 和p只差一个系数
+    # p = sigmoid(np.dot(x_, w_))
+    # rst_ = np.dot(x_.T, y_*p*(1-p))
     return rst_
 
 
@@ -83,6 +94,11 @@ def sigmoid(x_):
 
 
 def load_data(path_='./Input/train.csv'):
+    """
+    data size is 28x28, 784
+    :param path_:
+    :return:
+    """
     raw_data = pd.read_csv(path_)
     y = raw_data["label"].values
     del raw_data["label"]

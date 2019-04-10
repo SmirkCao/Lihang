@@ -712,6 +712,8 @@ $$
 
 ### Demo
 
+这部分代码没有LR的说明。
+
 > 代码来源: https://vimsky.com/article/776.html
 > 相关公式: https://vimsky.com/article/714.html
 
