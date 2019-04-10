@@ -57,7 +57,7 @@ class LogisticRegression(object):
                 # f_his.append(f_xk)
             if k == n_iter-1:
                 w_ = wck_ if w_.size == 0 else np.vstack([w_, wck_])
-            print("progress:", ck, "done")
+            print("progress: %d done" % ck)
         self.coef_ = w_
         self.cols_ = y_.columns.tolist()
         return self.coef_, self.cols_
