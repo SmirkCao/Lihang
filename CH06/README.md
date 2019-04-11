@@ -38,7 +38,7 @@
 
   > 二项逻辑斯谛回归模型是一种分类模型，由条件概率分布$P(Y|X)$表示，**形式为参数化的逻辑斯谛分布**。
 
-  ~~这一句是这两小节唯一的联系，可能不是很好理解。~~ 分类问题, 可以表示成one-hot的形式, 而one-hot可以认为是概率的一种表达, 只是很确定的一种概率表达. 而最大熵模型, 是一种不确定的概率表达, 而这个概率, 是一个条件概率, 是构建的特征函数生成的概率. 他们之间的关系有点像hard 和 soft, 类似的思想还有kmeans和GMM之间的关系.
+  ~~这一句是这两小节唯一的联系，可能不是很好理解。~~ 分类问题，可以表示成one-hot的形式，而one-hot可以认为是概率的一种表达，只是很确定的一种概率表达。而最大熵模型，是一种不确定的概率表达，其中这个概率，是一个条件概率，是构建的特征函数生成的概率。他们之间的关系有点像hard 和 soft，类似的思想还有kmeans和GMM之间的关系。
   因为书中第四章并没有讲到高斯朴素贝叶斯(GNB)，有GNB做类比，这里可能更容易理解一点，这里重新推荐一下第四章的参考文献1[^1]，配合理解NB和LR的关系。
 
 - 在模型参数估计的部分用到了$\pi$，这个应该联想到狄利克雷分布
@@ -73,6 +73,7 @@ $$
 其中第$K$项对应了偏置，对应的$x$=1，所以是一个常数$w_0$，将分子归一化就得到了书中的表达方式，这就是出现个1的原因。
 
 - 对于问题，什么情况下需要归一化，可以考虑下模型是不是要求这个特征要构成一个概率分布。
+- 单纯形法是求解线性规划问题的有效方法，最初是为了解决空军军事规划问题，之后成为了解决线性规划问题的有效方法。这个在运筹学中有介绍，比较经典的参考是胡运权的《运筹学》。
 
 
 
@@ -95,7 +96,7 @@ $$
 $$
 \sigma(z)=\frac{1}{1+\exp(-z)}
 $$
-这个函数把实数域映射到(0, 1)区间，这个范围正好是概率的范围， 而且可导, 对于0输入， 得到的是0.5，可以用来表示等可能性。
+这个函数把实数域映射到(0, 1)区间，这个范围正好是概率的范围， 而且可导，对于0输入， 得到的是0.5，可以用来表示等可能性。
 
  
 
@@ -149,50 +150,13 @@ $$
 $$
 上面红色部分留一下，后面推广到多类时候用到。
 
-#### 模型参数估计
-
-通过监督学习的方法来估计模型参数。
-
-参数估计这里， 似然函数书中的表达
-$$
-\prod^N_{i=1}[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i}
-$$
-这里利用了$y_i\in\{0,1\}$这个特点
-
-更一般的表达
-$$
-\prod_{i=1}^NP(y_i|x_i,W)
-$$
-
-使用对数似然会更简单， 上面连乘的形式会转换成求和的形式。对数函数为单调递增函数， 最大化对数似然等价于最大化似然函数。
-$$
-\begin{aligned}
-\log \prod_{i=1}^N[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i}&=\sum_{i=1}^Ny_i\log(\pi(x_i))+(1-y_i)\log(1-\pi(x_i))\\
-&=\sum_{i=1}^Ny_i\log(\frac{\pi(x_i)}{1-\pi(x_i)})+\log(1-\pi(x_i))\\
-&=\sum_{i=1}^Ny_i(w\cdot x_i)-\log(1+\exp(w\cdot x_i))
-\end{aligned}
-$$
-好像不用这样麻烦，似然函数表示为
-$$
-\prod_{i=1}^NP(y_i=1|x_i,W)=\prod_{i=1}^N\frac{\exp(w\cdot x_i)}{1+\exp(w\cdot x_i)}
-$$
-使用对数技巧
-$$
-\sum_{i=1}^N\log\frac{\exp(w\cdot x_i)}{1+\exp(w\cdot x_i)}=\sum_{i=1}^Nw\cdot x_i-\log(1+\exp(w\cdot x_i))
-$$
-
-
-TODO: Update Deviance
-
-
-
 #### 多项逻辑斯谛回归
 
 假设离散型随机变量$Y$的取值集合是${1,2,\dots,K}$, 多项逻辑斯谛回归模型是
 $$
 \begin{aligned}
 P(Y=k|x)&=\frac{\exp(w_k\cdot x)}{1+\sum_{k=1}^{K-1}\exp(w_k\cdot x)}, k=1,2,\dots,K-1\\
-P(Y=k|x)&=\frac{1}{1+\sum_{k=1}^{K-1}\exp(w_k\cdot x)}\\
+P(Y=K|x)&=\frac{1}{1+\sum_{k=1}^{K-1}\exp(w_k\cdot x)}\\
 \end{aligned}
 $$
 下面看这个多分类模型怎么来的[^4]。
@@ -263,13 +227,55 @@ $$
 $$
 P(Y=k|x)=\frac{1}{Z}\exp(w_k\cdot x)=\frac{\exp(w_k\cdot x)}{\sum_{k=1}^K\exp(w_k\cdot x)}, k=1,2,\dots,K
 $$
-上面这个叫Softmax
+上面这个叫Softmax，针对多项的情况也叫Softmax Regression。
+
+#### 模型参数估计
+
+通过监督学习的方法来估计模型参数[这部分不完整]。
+
+##### Logistic Regression
+
+参数估计这里， 似然函数书中的表达
+$$
+\prod^N_{i=1}[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i}
+$$
+这里利用了$y_i\in\{0,1\}$这个特点
+
+更一般的表达
+$$
+\prod_{i=1}^NP(y_i|x_i,W)
+$$
+使用对数似然会更简单， 会将上面表达式的连乘形式会转换成求和形式。对数函数为单调递增函数， 最大化对数似然等价于最大化似然函数。
+$$
+\begin{aligned}
+\log \prod_{i=1}^N[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i}&=\sum_{i=1}^N[y_i\log(\pi(x_i))+(1-y_i)\log(1-\pi(x_i))]\\
+&=\sum_{i=1}^N[y_i\log(\frac{\pi(x_i)}{1-\pi(x_i)})+\log(1-\pi(x_i))]\\
+&=\sum_{i=1}^N[y_i(w\cdot x_i)-\log(1+\exp(w\cdot x_i))]
+\end{aligned}
+$$
+好像不用这样麻烦，似然函数表示为
+$$
+\prod\limits_{i=1}\limits^NP(y_i|x_i,W)=\prod\limits_{i=1}\limits^N\frac{(\exp(w\cdot x_i))^{y_i}}{1+\exp(w\cdot x_i)}
+$$
+使用对数技巧
+$$
+\sum_{i=1}^N\log\frac{\exp(w\cdot x_i)}{1+\exp(w\cdot x_i)}=\sum_{i=1}^N[y_i(w\cdot x_i)-\log(1+\exp(w\cdot x_i))]
+$$
+
+
+##### Softmax Regression
+
+多类分类的情况这个表达式是什么样的？感觉不能用0，1这样的技巧了。
+$$
+\prod\limits_{i=1}\limits^NP(y_i|x_i,W)=\prod\limits_{i=1}\limits^N\prod\limits_{l=1}^K \left(\frac{\exp(w_k\cdot x_i)}{\sum_{k=1}^K\exp(w_k\cdot x_i)}\right)^{I(y_i=l)}
+$$
+但是可以用指示函数。
 
 ### 最大熵模型
 
 #### 概念
 
-逻辑斯谛回归模型和最大熵模型, 既可以看作是概率模型, 又可以看作是非概率模型. 
+逻辑斯谛回归模型和最大熵模型，既可以看作是概率模型，又可以看作是非概率模型。
 
 ##### 信息量
 
@@ -711,6 +717,8 @@ $$
 
 ### Demo
 
+这部分代码没有LR的说明。
+
 > 代码来源: https://vimsky.com/article/776.html
 > 相关公式: https://vimsky.com/article/714.html
 
@@ -754,6 +762,16 @@ $$
 
 1. 大多数算法都是在刷权重，考虑哪些量(特征)可以用，哪些方法(算法)可以让权重刷的更合理，哪些方法(优化方法)能刷的更快。
 
+### Mnist
+
+有同学问LR实现中的GD，才发现那段代码不是很好读。而且，用到的train.csv已不在。
+
+加了一个mnist_sample.py从Lecun那里下载数据，并按照类别采样300条。用来完成LR的Demo。
+
+有些程序的问题，配合数据来理解。通常用到label乘法都是利用了label的符号，或者one-hot之后为了取到对应的类别的值。
+
+代码更新了下，建议运行logistic_regression.py的时候在注释的位置断点，看下各个数据的shape，希望对理解代码有帮助。
+
 ## 参考
 
 1. [Berger,1995, A Brief Maxent Tutorial](https://www.cs.cmu.edu/afs/cs/user/aberger/www/html/tutorial/tutorial.html)
@@ -786,5 +804,7 @@ $$
 1. [^3]: [ThinkBayes](http://www.greenteapress.com/thinkbayes/thinkbayes.pdf)
 
 1. [^4]: [Multinomial logistic regression](https://en.wikipedia.org/wiki/Multinomial_logistic_regression)
+
+1. https://blog.csdn.net/u012328159/article/details/72155874
 
 **[⬆ top](#导读)**
