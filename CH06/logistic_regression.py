@@ -28,7 +28,7 @@ class LogisticRegression(object):
 
     def predict(self, x_):
         # print(self.cols_, self.coef_)
-        rst = np.array([self.cols_[idx] for idx in [np.argmax(rst) for rst in 1 - sigmoid(np.dot(x_, self.coef_.T))]])
+        rst = np.array([self.cols_[idx] for idx in [np.argmax(rst) for rst in sigmoid(np.dot(x_, self.coef_.T))]])
         return rst
 
     def gradient_descent(self, x_, y_, epsilon_=0.00001, n_iter=1500):
@@ -79,11 +79,7 @@ def g(x_, y_, w_):
     # np.dot(x_, w_).shape
     # sigmoid(np.dot(x_, w_)).shape
     # np.dot(x_.T, y_ * sigmoid(np.dot(x_, w_))).shape
-    rst_ = (1 / m) * np.dot(x_.T, y_*sigmoid(np.dot(x_, w_)))
-    
-    # p*1-p 和p只差一个系数
-    # p = sigmoid(np.dot(x_, w_))
-    # rst_ = np.dot(x_.T, y_*p*(1-p))
+    rst_ = -(1 / m) * np.dot(x_.T, y_-sigmoid(np.dot(x_, w_)))
     return rst_
 
 
