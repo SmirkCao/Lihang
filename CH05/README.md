@@ -34,7 +34,7 @@
 - CART虽然在本书中排在ID3和C4.5后面，但是发表的时间顺序为CART->ID3->C4.5，了解决策树历史可以参考Loh的报告[^5]
 - 熵, 基尼指数衡量的都是集合的不确定性, 应用在推荐的场景, 不确定性越大, 覆盖率可能就越大.
 - 书中有提到，`分类问题中， 决策树表示基于特征对实例进行分类的过程。它可以认为是if-then规则的集合， 也可以认为是定义在特征空间上与类空间的条件概率分布。`书中第一小节对这个问题做了解释。
-- 
+- **剪枝**是模型压缩领域中的经典技术。剪枝可以降低模型复杂度，防止过拟合，提升模型泛化性能。LeCun等在1990年提出OBD[^8]方法对神经网络进行剪枝。
 
 ## 概念
 
@@ -328,5 +328,7 @@ $$
 1. [^6]: [The Top Ten Algorithms in Data Mining](https://www.researchgate.net/publication/265031802_Chapter_10_CART_Classification_and_Regression_Trees)
 
 1. [^7 ]: [Gini Coefficient](https://en.wikipedia.org/wiki/Gini_coefficient#/media/File:Economics_Gini_coefficient2.svg)
+
+1. [^8 ]: [Optimal brain damage](http://yann.lecun.com/exdb/publis/pdf/lecun-90b.pdf)
 
 **[⬆ top](#导读)**
