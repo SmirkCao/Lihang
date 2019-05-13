@@ -2,6 +2,10 @@
 
 [![Gitter chat](https://badges.gitter.im/SmirkCao/StatisticalLearningMethods.png)](https://gitter.im/StatisticalLearningMethods/Book)[![Python](https://img.shields.io/badge/python-3.5|3.6|3.7-blue.svg)](-)[![pull](https://img.shields.io/badge/contributions-welcome-blue.svg)](https://github.com/SmirkCao/Lihang/pulls)
 
+本书已经出第二版，2019年5月之后所有内容更新参考第二版第一次印刷。
+
+[第一版内容见Release first_edition](https://github.com/SmirkCao/Lihang/archive/first_edition.zip)
+
 [TOC]
 
 - GitHub的markdown公式支持一般，推荐使用Chrome插件[TeX All the Things](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn)来渲染TeX公式,，本地Markdown编辑器推荐[Typora](https://typora.io/)，注意Ctrl+, 打开Preferences，Syntax Support部分勾选inline Math。Ubuntu和Windows都正常。
@@ -10,6 +14,8 @@
 ## 前前言
 
 2019年5月，期待许久的第二版发布了，第一时间下了订单，预计母亲节这天可以发货。
+
+5月13日新书到手，第二版配了一张新照片，短发，比之前显得年轻...
 
 有同学问关于笔记引用Ref写在哪比较好， 大量引用说明这个Repo写的不够清晰，惭愧。
 
