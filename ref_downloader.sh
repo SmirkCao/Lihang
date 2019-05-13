@@ -1,5 +1,14 @@
 mkdir refs
 cd refs
+echo "CH01"
+# 0101 ESL
+echo "same with 0704"
+# 0102 PRML
+wget "https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" -O 0102.pdf
+# 0103 PGM
+wget "https://github.com/Zhenye-Na/machine-learning-uiuc/blob/master/docs/Probabilistic%20Graphical%20Models%20-%20Principles%20and%20Techniques.pdf" -O 0103.pdf
+# 0104 DL
+wget "https://github.com/Zhenye-Na/cs446/blob/master/docs/Deep%20Learning.pdf" -O 0104.pdf
 
 echo "ch02"
 # 0201
@@ -18,7 +27,7 @@ wget "http://www.cs.cmu.edu/~tom/mlbook/NBayesLogReg.pdf" -O 0401.pdf
 # 0402
 echo "same with 0704"
 # 0403 PRML
-wget "https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" -O 0403.pdf
+echo "same with 0102"
 
 echo "ch06"
 # 0601
