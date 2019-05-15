@@ -21,6 +21,8 @@ wget "https://cseweb.ucsd.edu/~yfreund/papers/LargeMarginsUsingPerceptron.pdf" -
 wget "https://www.researchgate.net/profile/Yaoyong_Li/publication/37537459_The_Perceptron_Algorithm_with_Uneven_Margins/links/0046351790be7e102e000000/The-Perceptron-Algorithm-with-Uneven-Margins.pdf" -O 0206.pdf
 # 0207
 wget "https://web.stanford.edu/class/ee373b/30years.pdf" -O 0207.pdf
+echo "CH03"
+
 echo "ch04"
 # 0401
 wget "http://www.cs.cmu.edu/~tom/mlbook/NBayesLogReg.pdf" -O 0401.pdf
@@ -100,7 +102,7 @@ wget "https://projecteuclid.org/download/pdf_1/euclid.aoms/1177697196" -O 1003.p
 
 # 1004
 wget "http://101.96.10.64/ssli.ee.washington.edu/people/bilmes/mypapers/em.pdf" -O 1004.pdf
-echo "ch11"
+echo "CH11"
 # 1101 PRML
 echo "same with 0403"
 # 1102 PGM, Koller
@@ -115,3 +117,27 @@ wget "http://www.ai.mit.edu/courses/6.891-nlp/READINGS/maxent.pdf" -O 1105.pdf
 wget "https://www.robots.ox.ac.uk/~vgg/rg/papers/maxmarginmarkovnetworks.pdf" -O 1106.pdf
 # 1107
 wget "https://icml.cc/Conferences/2004/proceedings/papers/76.pdf" -O 1107.pdf
+
+echo "CH14"
+# 1401
+wget "https://homepages.inf.ed.ac.uk/rbf/BOOKS/JAIN/Clustering_Jain_Dubes.pdf" -O 1401.pdf
+# 1402
+# 1403
+wget "https://pdfs.semanticscholar.org/a718/b85520bea702533ca9a5954c33576fd162b0.pdf" -O 1403.pdf
+# 1404
+# 1405
+# 1406
+# 1407
+# 1408
+echo "CH15"
+# 1505
+wget "http://www.kolda.net/publication/TensorReview.pdf" -O 1505.pdf
+
+echo "CH17"
+# 1701 LSA
+wget "http://lsa.colorado.edu/papers/JASIS.lsi.90.pdf" -O 1701.pdf
+# 1702
+# 1703 NMF
+wget "http://www.columbia.edu/~jwp2128/Teaching/E4903/papers/nmf_nature.pdf" -O 1703.pdf
+# 1704 NMF NIPS 2001
+wget "https://papers.nips.cc/paper/1861-algorithms-for-non-negative-matrix-factorization.pdf" -O 1704.pdf
