@@ -133,6 +133,8 @@ echo "CH15"
 # 1505
 wget "http://www.kolda.net/publication/TensorReview.pdf" -O 1505.pdf
 
+echo "CH16"
+wget "https://arxiv.org/pdf/1404.1100.pdf" -O 1604.pdf
 echo "CH17"
 # 1701 LSA
 wget "http://lsa.colorado.edu/papers/JASIS.lsi.90.pdf" -O 1701.pdf
