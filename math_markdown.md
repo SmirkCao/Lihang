@@ -232,6 +232,19 @@ M_3(x)=
 \end{aligned}
 ```
 
+带省略符号的Matrix
+$$
+\left[
+\begin{matrix}
+ x_{11} & \cdots & x_{1N}       \\
+ \vdots &        & \vdots 		\\
+ x_{M1} & \cdots & x_{MN}       \\
+\end{matrix}
+\right]
+$$
+
+
+
 $$
 \overbrace{abcde}\underbrace{fghij}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
 $$
