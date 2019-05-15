@@ -143,3 +143,13 @@ wget "http://lsa.colorado.edu/papers/JASIS.lsi.90.pdf" -O 1701.pdf
 wget "http://www.columbia.edu/~jwp2128/Teaching/E4903/papers/nmf_nature.pdf" -O 1703.pdf
 # 1704 NMF NIPS 2001
 wget "https://papers.nips.cc/paper/1861-algorithms-for-non-negative-matrix-factorization.pdf" -O 1704.pdf
+
+echo "CH18"
+# 1801
+wget "http://www.iro.umontreal.ca/~nie/IFT6255/Hofmann-UAI99.pdf" -O 1801.pdf
+# 1802
+wget "https://sigir.org/wp-content/uploads/2017/06/p211.pdf" -O 1802.pdf
+# 1803
+wget "http://www.cs.bham.ac.uk/~pxt/IDA/plsa.pdf" -O 1803.pdf
+# 1804
+wget "http://ranger.uta.edu/~chqding/papers/NMFpLSIequiv.pdf" -O 1804.pdf
