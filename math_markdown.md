@@ -243,6 +243,15 @@ $$
 \right]
 $$
 
+```latex
+\left[
+\begin{matrix}
+ x_{11} & \cdots & x_{1N}       \\
+ \vdots &        & \vdots 		\\
+ x_{M1} & \cdots & x_{MN}       \\
+\end{matrix}
+\right]
+```
 
 
 $$
