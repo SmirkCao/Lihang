@@ -255,11 +255,11 @@ $$
 
 
 $$
-\overbrace{abcde}\underbrace{fghij}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
+\overbrace{abcde}\underbrace{fghij}_{comment}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
 $$
 
 ```tex
-\overbrace{abcde}\underbrace{fghij}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
+\overbrace{abcde}\underbrace{fghij}_{comment}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
 ```
 
 
