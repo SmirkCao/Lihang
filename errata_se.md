@@ -25,3 +25,6 @@
    
 8. $P_{245}$ $x \in X, z \in Z$这部分在第一章$P_8$的无监督学习部分定义是$x \in \mathcal{X}, z \in \mathcal{Z}$
 
+9. $P_{257}$ 公式14.6中，转置符号用了**斜体**$d_{ij}=\left[(x_i-x_j)^TS^{-1}(x_i-x_j)\right]^{\frac{1}{2}}$
+   转置应该是和其他转置一样，是**正体**$d_{ij}=\left[(x_i-x_j)^\mathrm TS^{-1}(x_i-x_j)\right]^{\frac{1}{2}}$
+
