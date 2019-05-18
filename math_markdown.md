@@ -234,6 +234,7 @@ M_3(x)=
 
 带省略符号的Matrix
 $$
+X^\mathrm T=
 \left[
 \begin{matrix}
  x_{11} & \cdots & x_{1N}       \\
@@ -244,6 +245,9 @@ $$
 $$
 
 ```latex
+% 这里稍微注意下转置符号， 《统计学习方法》中的转置用的是正体的T
+% 可以参考 https://zhuanlan.zhihu.com/p/27490955 中关于转置写法的讨论。
+X^\mathrm T=
 \left[
 \begin{matrix}
  x_{11} & \cdots & x_{1N}       \\
