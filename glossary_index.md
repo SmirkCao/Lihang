@@ -232,6 +232,12 @@ $P_{322}$
 1. CRF; Lafferty; 2001
 1. LDA; Blei; 2002
 
+## 基本想法
+
+### 无监督学习
+
+对给定的数据进行某种”压缩“，从而找到数据的潜在结构。
+
 ## Definition, Theory, Algorithm
 
 ### Definition
