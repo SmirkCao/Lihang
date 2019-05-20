@@ -30,8 +30,8 @@
 
 | 示例 |代码 |示例|代码|示例|代码|示例|代码|
 | - | - | - | - | - | - | - | - |
-| $\Gamma$ | \Gamma | $\Lambda$ | \Lambda | $\Sigma$ | **\Sigma** | $\Psi$ | **\Psi** |
-| $\Delta$ | **\Delta** |$\Xi$ | **\Xi** | $\Upsilon$ | **\Upsilon** | $\Omega$ | **\Omega** |
+| $\Gamma$ | **\Gamma** | $\Lambda$ | **\Lambda** | $\Sigma\mit\Sigma$ | **\Sigma\mit\Sigma** | $\Psi$ | **\Psi** |
+| $\Delta$ | **\Delta** |$\Xi$ | **\Xi** | $\Upsilon$ | **\Upsilon** | $\Omega\mit\Omega$ | **\Omega\mit\Omega** |
 | $\Theta$ | **\Theta** | $\Pi$ | **\Pi** | $\Phi$ | **\Phi** |  | |
 
 ### 表 4: 数学字母
@@ -232,12 +232,38 @@ M_3(x)=
 \end{aligned}
 ```
 
+带省略符号的Matrix
 $$
-\overbrace{abcde}\underbrace{fghij}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
+X^\mathrm T=
+\left[
+\begin{matrix}
+ x_{11} & \cdots & x_{1N}       \\
+ \vdots &        & \vdots 		\\
+ x_{M1} & \cdots & x_{MN}       \\
+\end{matrix}
+\right]
+$$
+
+```latex
+% 这里稍微注意下转置符号， 《统计学习方法》中的转置用的是正体的T
+% 可以参考 https://zhuanlan.zhihu.com/p/27490955 中关于转置写法的讨论。
+X^\mathrm T=
+\left[
+\begin{matrix}
+ x_{11} & \cdots & x_{1N}       \\
+ \vdots &        & \vdots 		\\
+ x_{M1} & \cdots & x_{MN}       \\
+\end{matrix}
+\right]
+```
+
+
+$$
+\overbrace{abcde}\underbrace{fghij}_{comment}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
 $$
 
 ```tex
-\overbrace{abcde}\underbrace{fghij}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
+\overbrace{abcde}\underbrace{fghij}_{comment}\overline{klmn}\underline{opqr}\overleftarrow{stuv}\overrightarrow{wxyz}
 ```
 
 
