@@ -30,8 +30,8 @@
 
 | 示例 |代码 |示例|代码|示例|代码|示例|代码|
 | - | - | - | - | - | - | - | - |
-| $\Gamma$ | \Gamma | $\Lambda$ | \Lambda | $\Sigma$ | **\Sigma** | $\Psi$ | **\Psi** |
-| $\Delta$ | **\Delta** |$\Xi$ | **\Xi** | $\Upsilon$ | **\Upsilon** | $\Omega$ | **\Omega** |
+| $\Gamma$ | **\Gamma** | $\Lambda$ | **\Lambda** | $\Sigma\mit\Sigma$ | **\Sigma\mit\Sigma** | $\Psi$ | **\Psi** |
+| $\Delta$ | **\Delta** |$\Xi$ | **\Xi** | $\Upsilon$ | **\Upsilon** | $\Omega\mit\Omega$ | **\Omega\mit\Omega** |
 | $\Theta$ | **\Theta** | $\Pi$ | **\Pi** | $\Phi$ | **\Phi** |  | |
 
 ### 表 4: 数学字母
