@@ -25,7 +25,7 @@
 
 以下实际上是算法实现过程中的一些属性。
 
-矩阵$X$表示样本集合，$X\in \R^m,x_i,x_j\in X, x_i=(x_{1i},x_{2i},\dots,x_{mi})^{\mathrm T},x_j=(x_{1j},x_{2j},\dots,x_{mj})^\mathrm T$，$n$个样本，每个样本是包含$m$个属性的特征向量，
+矩阵$X$表示样本集合，$X\in \mathrm{R}^m,x_i,x_j\in X, x_i=(x_{1i},x_{2i},\dots,x_{mi})^{\mathrm T},x_j=(x_{1j},x_{2j},\dots,x_{mj})^\mathrm T$，$n$个样本，每个样本是包含$m$个属性的特征向量，
 
 ### 距离或者相似度
 
@@ -138,7 +138,7 @@ $D_{pq}=d_{\bar x_p\bar x_q}$
 1. 计算类的中心。
 1. 如果迭代收敛或符合停止条件，输出$C^*=C^{(t)}$
 
-对于cirlce数据，如果采用kmeans聚类，得到结果如下
+对于Cirlce数据，如果采用kmeans聚类，得到结果如下
 
 ![fig14_2](assets/fig14_2.png)
 
