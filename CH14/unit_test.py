@@ -57,9 +57,20 @@ class TestClusteringMethods(unittest.TestCase):
         self.assertEqual(a-b, 0)
         print(a | b | b | a | b)
 
-    def test_kmeans(self):
+    def test_kmeans_blob(self):
         n_samples = 150
         data = datasets.make_blobs(n_samples=n_samples, centers=2, n_features=2)
+        clustering = ClusterKmeans(k=2)
+        clustering.fit(data[0])
+        plt.scatter(clustering.gs[0].data[:, 0],
+                    clustering.gs[0].data[:, 1])
+        plt.scatter(clustering.gs[1].data[:, 0],
+                    clustering.gs[1].data[:, 1])
+        plt.show()
+    
+    def test_kmeans_circle(self):
+        n_samples = 150
+        data = datasets.make_circles(n_samples=n_samples, factor=.5, noise=.05)
         clustering = ClusterKmeans(k=2)
         clustering.fit(data[0])
         plt.scatter(clustering.gs[0].data[:, 0],
