@@ -178,6 +178,8 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
 
 ### 表X: 矩阵
 
+#### 普通矩阵
+
 $$
 \begin{aligned}
 M_1(x)=
@@ -232,7 +234,8 @@ M_3(x)=
 \end{aligned}
 ```
 
-带省略符号的Matrix
+#### 带省略符号的Matrix
+
 $$
 X^\mathrm T=
 \left[
@@ -256,6 +259,27 @@ X^\mathrm T=
 \end{matrix}
 \right]
 ```
+
+#### 向量
+
+$$
+\left[
+\begin{array}
+\\2
+\\3
+\end{array}
+\right]
+$$
+
+```latex
+\left[
+\begin{array}
+\\2
+\\3
+\end{array}
+\right]
+```
+
 
 
 $$
