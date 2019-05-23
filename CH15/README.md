@@ -22,7 +22,8 @@
 - SVD是线性代数的概念，但在统计学中有广泛应用，PCA和LSA中都有应用，本书定义为基础学习方法。
 - 奇异值分解是在平方损失意义下对矩阵的最优近似，即**数据压缩**。图像存储是矩阵，那么图像也可以用SVD实现压缩。
 - 奇异值分解可以扩展到Tensor
-- 推荐阅读部分推荐了MIT的18.06SC，其实可以推荐下[3Blue1Brown](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)，如果有具体的哪个点不清楚，不形象，可以考虑查下
+- 推荐阅读部分推荐了MIT的18.06SC，这里也推荐下[3Blue1Brown](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)，快速建立线性代数相关定义的几何直观，如果有具体的哪个点不清楚，不形象，也可以考虑查下。其实，还得多用。
+- 接上条，MIT 18.06SC的教材，《Introduction to linear algebra》这个书不错，推荐看。
 - 提到旋转或**反射变换**。关于反射变换，定点或者定直线对称，定点的叫做中心反射，定直线的叫做轴反射。
 
 ## 线性代数回顾
@@ -141,7 +142,7 @@ $$
 1. 行列式可以为负数，说明翻转了。这是二维空间的定向，三维空间的定向是“右手定则”
 
 $$
-det(\left[\begin{array}
+\det(\left[\begin{array}
 \\a&c
 \\b&d
 \end{array}\right])=ad-bc
@@ -169,7 +170,7 @@ $$
 $$
 A^{-1}A\overrightarrow{x}=\overrightarrow{x}=A^{-1}\overrightarrow{v}
 $$
-$det(A)\neq 0\Rightarrow A^{-1} exists$
+$\det(A)\neq 0\Rightarrow A^{-1} exists$
 
 ### 秩
 
@@ -225,7 +226,7 @@ $$
 A\overrightarrow{v}&=(\lambda I )\overrightarrow{v}\\
 A\overrightarrow{v} - (\lambda I )\overrightarrow{v}&=0\\
 (A - \lambda I )\overrightarrow{v}&=0\\
-det(A-\lambda I) &= 0
+\det(A-\lambda I) &= 0
 \end{aligned}
 $$
 这部分，行列式为0的几何意义很重要。如果没有实数解，说明没有特征向量。
@@ -250,15 +251,11 @@ Determinant and eigenvectors don't care about the coordinate system.
 
 只要处理的对象有合理的数乘和相加的概念，只要定义满足公理，就能应用线性代数中的结论。
 
-
-
-
-
-抽象性带来的好处是我们能得到一般性的结论。
+**抽象性**带来的好处是我们能得到一般性的结论。
 
 最后补充一点，关于视频中描述一个变换的中间步骤的过程，可以参考[Chapter 14](https://www.youtube.com/watch?v=PFDu9oVAE-g&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=14)的7:45左右的视频内容体会。
 
-
+虽然，前面的内容很精彩，但是看完之后，再看书中内容，可能依然....懵...吧，没事，继续看就好。
 
 ## 奇异值分解定义与性质
 
@@ -266,6 +263,43 @@ Determinant and eigenvectors don't care about the coordinate system.
 $$
 A=U\mit\Sigma V^\mathrm T
 $$
+
+ 中间有一句，`可以假设正交矩阵$V$的列的排列使得对应的特征值形成降序排列`。这句怎么理解？
+
+列是轴，实际上不同列的排列，对应的是坐标轴的顺序，不同坐标系顺序的选择，和实际上拿到的最后的向量是没有关系的。
+
+完全奇异值分解：$A=U\mit\Sigma V^\mathrm T$
+
+紧奇异值分解：$A=U_r\mit\Sigma_r V_r^\mathrm T$
+
+截断奇异值分解：$A=U_k\mit\Sigma_k V_k^\mathrm T$
+
+几何解释：
+
+$A_{m\times n}$表示了一个从$n$维空间$\mathbf{R}^n$到$m$维空间$\mathbf{R}^m$的一个**线性变换**
+$$
+T:x\rightarrow Ax\\
+x\in\mathbf{R}^n\\
+Ax\in \mathbf{R}^m
+$$
+线性变换可以分解为三个简单的变换：
+1. 坐标系的旋转或反射变换
+1. 坐标轴的缩放变换
+1. 坐标系的旋转或反射变换
+
+这里面注意，$A$其实就是线性变换，关于线性变换的概念，在前面有整理。
+
+主要性质：
+
+1. $AA^\mathrm{T}$和$A^\mathrm{T}A$的特征分解存在，且可由矩阵$A$的奇异值分解的矩阵表示；
+1.  奇异值，左奇异向量，右奇异向量之间的关系
+1. 矩阵$A$的奇异值分解中，奇异值是唯一的，但是矩阵$U$和$V$不是唯一的，所以numpy.linalg.svd中有参数控制是否输出$U$和$V$
+1. Rank
+1. r
+
+## 奇异值分解的计算
+
+
 
 
 
@@ -276,6 +310,16 @@ $$
 矩阵的弗罗贝尼斯范数是向量的$L_2$范数的直接推广，对应着机器学习里面的平方损失函数。矩阵范数(matrix norm)也是一个很大的概念，详细内容可以扩展下[^1]。
 
 ## 习题
+
+### 15.1
+
+numpy中linalg提供了svd函数。
+
+### 15.2
+
+### 15.3
+
+这两个习题主要是看紧奇异值分解和截断奇异值分解。
 
 ### 15.5
 
