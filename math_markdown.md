@@ -4,6 +4,10 @@
 
 ## 数学相关LaTeX表达
 
+## 前言
+
+后面介绍的内容是$\LaTeX$排版的数学符号的内容，不止一次有人强调中文版的Wikipedia并不是英文版内容的翻译，并不是。可以对比下参考部分的两个页面，我觉得中文页面做的不错，这两个页面里面关于垂直，貌似有那么点不同。
+
 ### 表 1: 数学模式重音符
 
 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 |
@@ -312,5 +316,6 @@ $$
 4. [Emoji](https://gist.github.com/rxaviers/7360908)
 5. [Short Math Guide for LaTeX](http://ctan.math.utah.edu/ctan/tex-archive/info/short-math-guide/short-math-guide.pdf)
 6. [List of Mathematical Symbols](https://en.wikipedia.org/wiki/List_of_mathematical_symbols)
-7. [Matplotlib Math Text](https://matplotlib.org/tutorials/text/mathtext.html)
+7. [数学公式]([https://zh.wikipedia.org/wiki/Help:%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F](https://zh.wikipedia.org/wiki/Help:数学公式))
+8. [Matplotlib Math Text](https://matplotlib.org/tutorials/text/mathtext.html)
 
