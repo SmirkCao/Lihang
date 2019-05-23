@@ -81,8 +81,6 @@
 
 ### 表8: 使用字体
 
-{\rm text}
-
 | 示例 | 代码 | 备注 |
 | - | - | - |
 | $\rm {ABCdefxyzXYZ123}$ | \rm {ABCdefXYZ123} | 罗马体 |
@@ -131,7 +129,7 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
 \end{aligned}
 ```
 
-另外注意到前面的分段函数自动变好了, 但是上面多行对齐的公式没有自动编号, 如果需要**自动**编号, 外面嵌入equation
+另外注意到前面的分段函数自动变好了，但是上面多行对齐的公式没有自动编号，如果需要**自动**编号，外面嵌入equation
 $$
 \begin{equation}
 \begin{aligned}
@@ -205,8 +203,6 @@ M_3(x)=
 \end{bmatrix}
 \end{aligned}
 $$
-
-代码
 
 ```latex
 \begin{aligned}
