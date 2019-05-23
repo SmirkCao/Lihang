@@ -56,6 +56,7 @@
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
 | $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  | $\partial$ | \partial |
+| $\det$ | **\det** |  |  |  |  |
 
 ### 表 6: 常用箭头
 
@@ -76,7 +77,7 @@
 | $\thickapprox$ | \thickapprox | $\thicksim \sim$ | \thicksim \sim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
 | $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} | $\geq \leq$ | \geq \leq |
-| $\perp $ | \perp | $\angle$ | \angle | $\varpropto$ | \varpropto |
+| $\perp $ | **\perp** | $\angle$ | \angle | $\varpropto$ | \varpropto |
 | $\infty$ | \infty | $g^\prime$ | g^\prime | $\forall$ | \forall |
 | $\exist$ | \exist | $\bot$ | **\bot** | $\top$ | **\top** |
 
