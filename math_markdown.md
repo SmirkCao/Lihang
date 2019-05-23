@@ -76,9 +76,11 @@
 | $\thickapprox$ | \thickapprox | $\thicksim \sim$ | \thicksim \sim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
 | $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} | $\geq \leq$ | \geq \leq |
-| $\bot $ | \bot | $\angle$ | \angle | $\varpropto$ | \varpropto |
+| $\perp $ | \perp | $\angle$ | \angle | $\varpropto$ | \varpropto |
 | $\infty$ | \infty | $g^\prime$ | g^\prime | $\forall$ | \forall |
-| $\exist$ | \exist |  |  |  |  |
+| $\exist$ | \exist | $\bot$ | **\bot** | $\top$ | **\top** |
+
+注意**\bot**和**\perp**的区别，垂直是**\perp**
 
 ### 表8: 使用字体
 
@@ -86,7 +88,7 @@
 | - | - | - |
 | $\rm {ABCdefxyzXYZ123}$ | \rm {ABCdefXYZ123} | 罗马体 |
 | $\it{ABCdefxyzXYZ123}$ | \it{ABCdefXYZ123} | 意大利体 |
-| $\bf{ABCdefxyzXYZ123}$ | \bf{ABCdefXYZ123} | 黑体 |
+| $\bf{ABCdefxyzXYZ123}$ | \bf{ABCdefXYZ123} | 正粗体，黑体 |
 | $\cal {ABCdefxyzXYZ123}$ | \cal {ABCdefXYZ123} | 花体 |
 | $\sf{ABCdefXYZ123}$ | \sf{ABCdefXYZ123} | 等线体 |
 | $\mit{ABCdefxyzXYZ123}$ | \mit{ABCdefXYZ123} | 数字斜体 |
