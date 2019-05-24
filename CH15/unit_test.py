@@ -246,7 +246,23 @@ class TestSVDMethods(unittest.TestCase):
         print(np.dot(u[:, 0].reshape(-1, 1), vh[0].reshape(1, -1)))
         print(np.dot(u[:, 1].reshape(-1, 1), vh[1].reshape(1, -1)))
         # 非方阵求特征值
+        print(40*"*"+"ATA Eig Vector"+40*"*")
         print(np.linalg.eigh(np.dot(A.T, A)))
+        print(40*"*"+"AAT Eig Vector"+40*"*")
+        print(np.linalg.eigh(np.dot(A, A.T)))
+
+    def test_t_15_5(self):
+        A = np.array([[0, 20, 5, 0, 0],
+                      [10, 0, 0, 3, 0],
+                      [0, 0, 0, 0, 1],
+                      [0, 0, 1, 0, 0]])
+        u, s, vh = np.linalg.svd(A)
+        print("\n")
+        print(u)
+        print(s)
+        print(vh)
+        print(vh.T)
+
 
 if __name__ == "main":
     unittest.main()
