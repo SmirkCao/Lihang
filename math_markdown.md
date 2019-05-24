@@ -96,7 +96,7 @@
 | $\bf{ABCdefxyzXYZ123}$ | \bf{ABCdefXYZ123} | 正粗体，黑体 |
 | $\cal {ABCdefxyzXYZ123}$ | \cal {ABCdefXYZ123} | 花体 |
 | $\sf{ABCdefXYZ123}$ | \sf{ABCdefXYZ123} | 等线体 |
-| $\mit{ABCdefxyzXYZ123}$ | \mit{ABCdefXYZ123} | 数字斜体 |
+| $\mit{ABCdefxyzXYZ123}$ | \mit{ABCdefXYZ123} | **数字斜体** |
 | $\tt{ABCdefxyzXYZ123}$ | \tt{ABCdefXYZ123} | 打印机字体 |
 
 ### 表9: 分段函数与公式对齐
