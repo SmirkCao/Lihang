@@ -231,6 +231,22 @@ class TestSVDMethods(unittest.TestCase):
         print(40*"*"+"Eig Vector"+40*"*")
         print(np.linalg.eig(np.dot(A.T, A)))
 
+    def test_e_15_6(self):
+        A = np.array([[1, 0, 0, 0],
+                      [0, 0, 0, 4],
+                      [0, 3, 0, 0],
+                      [0, 0, 0, 0],
+                      [2, 0, 0, 0]])
+        u, s, vh = np.linalg.svd(A)
+        print(u)
+        print(s)
+        print(vh)
+
+        print(u[:, 0], u[:, 1], vh[0], vh[1])
+        print(np.dot(u[:, 0].reshape(-1, 1), vh[0].reshape(1, -1)))
+        print(np.dot(u[:, 1].reshape(-1, 1), vh[1].reshape(1, -1)))
+        # 非方阵求特征值
+        print(np.linalg.eigh(np.dot(A.T, A)))
 
 if __name__ == "main":
     unittest.main()

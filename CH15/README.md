@@ -311,12 +311,42 @@ $$
 
 ## 奇异值分解与矩阵近似
 
-奇异值分解也是一种矩阵近似的方法，这个近似是在弗罗贝尼斯范数意义下的近似。
+奇异值分解也是一种矩阵近似的方法，这个近似是在**弗罗贝尼斯范数**意义下的近似。
+$$
+\left\|A\right\|_F=\left(\sum_{i=1}^m\sum_{j=1}^n a_{ij}^2\right)^\frac{1}{2}\\
+A\in\mathbf{R}^{m\times n}, A=[a_{ij}]_{m\times n}
+$$
 
 矩阵的弗罗贝尼斯范数是向量的$L_2$范数的直接推广，对应着机器学习里面的平方损失函数。矩阵范数(matrix norm)也是一个很大的概念，详细内容可以扩展下[^1]。
+$$
+A\in\mathbf{R}^{m\times n}\\
+A=U\mit\Sigma V^\mathrm{T}\\
+\mit{\Sigma}\rm=diag(\sigma_1,\sigma_2,\cdots,\sigma_n)\\
+\it\left\|A\right\|_F\rm=(\sigma_1^2+\sigma_2^2+\cdots+\sigma_n^2)^\frac{1}{2}
+$$
+
+### 矩阵的最优近似
+
+$$
+\left\|A-X\right\|_F=\min_{S\in \mathcal M}\left\|A-S\right\|_F\\
+\left\|A-X\right\|_F=(\sigma_{k+1}^2+\sigma_{k+2}^2+\cdots+\sigma_n^2)^\frac{1}{2}
+$$
+
+### 矩阵的外积展开式
+
+$$
+\begin{aligned}
+A&=\sigma_1u_1v_1^\mathrm{T}+\sigma_2u_2v_2^\mathrm{T}+\cdots+\sigma_nu_nv_n^\mathrm{T}\\
+&=\sum_{k=1}^nA_k\\
+&=\sum_{k=1}^n\sigma_ku_kv_k^\mathrm{T}
+\end{aligned}
+$$
+
+其中，$u_kv_k^\mathrm{T}$为$m\times n$矩阵
+
+
 
 ## 例子
-
 
 ### 15.1
 
@@ -335,6 +365,11 @@ numpy中linalg提供了svd函数。
 ### 15.5
 
 这个可以复习下正交矩阵，单位化，正交基， 标准正交基
+
+### 15.6
+
+这个例子看下$v_1$的定义，以及后面的$v_1^\mathrm{T}$，体会一下维度的变化，$u_kv_k^\mathrm{T}$的维度是$m\times n$
+
 
 
 ## 习题
