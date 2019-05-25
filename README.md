@@ -16,7 +16,7 @@
 - math_markdown.pdf为[math_markdown.md](./math_markdown.md)的导出版本， 方便查看使用， markdown版本为最新版本，基本覆盖了书中用到的数学公式的$\LaTeX$表达方式。
 - [ref_downloader](./ref_downloader.sh) 是一个参考文献下载脚本，这本书一定要配合参考文献看，每章的大参考文献一定要看，对书的内容理解会很有帮助。
 - [glossary_index](./glossary_index.md) 是一个非正式的术语索引，这个书后面是有一个的，但是不方便展开，在这个部分添加了部分扩展的内容。
-- [symbol_index](./symbol_index.md) 是一个非正式的符号索引， 第一版中有符号说明，第二版没有了，可能是无监督这部分涉及到的符号真的是太多了，总之，保留这部分，在感觉混淆的时候可以查下，看看是否有帮助。
+- [symbol_index](./symbol_index.md) 是一个非正式的符号索引，第一版中有符号说明，第二版没有了，可能是无监督这部分涉及到的符号真的是太多了，总之，保留这部分，在感觉混淆的时候可以查下，看看是否有帮助。
 - [errata_se](./errata_se.md) 非官方的errata，供参考。如果有内容感觉不清楚，可以参考看看，希望有帮助。
 
 ## 前前言

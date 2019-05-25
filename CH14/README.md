@@ -25,7 +25,7 @@
 
 以下实际上是算法实现过程中的一些属性。
 
-矩阵$X$表示样本集合，$X\in \mathrm{R}^m,x_i,x_j\in X, x_i=(x_{1i},x_{2i},\dots,x_{mi})^{\mathrm T},x_j=(x_{1j},x_{2j},\dots,x_{mj})^\mathrm T$，$n$个样本，每个样本是包含$m$个属性的特征向量，
+矩阵$X$表示样本集合，$X\in \mathbf{R}^m,x_i,x_j\in X, x_i=(x_{1i},x_{2i},\dots,x_{mi})^{\mathrm T},x_j=(x_{1j},x_{2j},\dots,x_{mj})^\mathrm T$，$n$个样本，每个样本是包含$m$个属性的特征向量，
 
 ### 距离或者相似度
 
@@ -121,8 +121,6 @@ $D_{pq}=d_{\bar x_p\bar x_q}$
 
 如图，采用层次聚类实现circle的划分。
 
-
-
 ## Kmeans聚类
 
 注意对于kmeans来说，距离采用的是欧氏距离**平方**，这个是个特点。
@@ -145,8 +143,6 @@ $D_{pq}=d_{\bar x_p\bar x_q}$
 Blob数据采用kmeans结果如下
 
 ![fig14_4](assets/fig14_4.png)
-
-
 
 ## 例子
 
