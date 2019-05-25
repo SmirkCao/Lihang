@@ -4,6 +4,10 @@
 
 ## 数学相关LaTeX表达
 
+## 前言
+
+后面介绍的内容是$\LaTeX$排版的数学符号的内容，不止一次有人强调中文版的Wikipedia并不是英文版内容的翻译，并不是。可以对比下参考部分的两个页面，我觉得中文页面做的不错，这两个页面里面关于垂直，貌似有那么点不同。
+
 ### 表 1: 数学模式重音符
 
 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 |
@@ -51,11 +55,12 @@
 | - | - | - | - | - | - |
 | $\sum$ | \sum | $\prod$ | \prod | $x\cdot{y}$ | x\cdot{y} |
 | $\bigcup$ | \bigcup | $\bigoplus$ | \bigoplus | $x\times {y}$ | x\times {y} |
-| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | \left\|w\right\| |
+| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | **\left\\|w\right\\|** |
 | $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
 | $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  | $\partial$ | \partial |
+| $\det$ | **\det** |  |  |  |  |
 
 ### 表 6: 常用箭头
 
@@ -76,21 +81,22 @@
 | $\thickapprox$ | \thickapprox | $\thicksim \sim$ | \thicksim \sim | $\left(\frac{A}{B}\right)$ | \left(\frac{A}{B}\right) |
 | $\neq$ | \neq | $\in$ | \in | $\hat{=}$ | \hat{=} |
 | $\pm$   | \pm | $\sqrt{a}$ | \sqrt{a} | $\geq \leq$ | \geq \leq |
-| $\bot $ | \bot | $\angle$ | \angle | $\varpropto$ | \varpropto |
-| $\infty$ | \infty | $g^\prime$ | g^\prime |  |  |
+| $\perp $ | **\perp** | $\angle$ | \angle | $\varpropto$ | \varpropto |
+| $\infty$ | \infty | $g^\prime$ | g^\prime | $\forall$ | \forall |
+| $\exist$ | \exist | $\bot$ | **\bot** | $\top$ | **\top** |
+
+注意**\bot**和**\perp**的区别，垂直是**\perp**
 
 ### 表8: 使用字体
-
-{\rm text}
 
 | 示例 | 代码 | 备注 |
 | - | - | - |
 | $\rm {ABCdefxyzXYZ123}$ | \rm {ABCdefXYZ123} | 罗马体 |
 | $\it{ABCdefxyzXYZ123}$ | \it{ABCdefXYZ123} | 意大利体 |
-| $\bf{ABCdefxyzXYZ123}$ | \bf{ABCdefXYZ123} | 黑体 |
+| $\bf{ABCdefxyzXYZ123}$ | \bf{ABCdefXYZ123} | 正粗体，黑体 |
 | $\cal {ABCdefxyzXYZ123}$ | \cal {ABCdefXYZ123} | 花体 |
 | $\sf{ABCdefXYZ123}$ | \sf{ABCdefXYZ123} | 等线体 |
-| $\mit{ABCdefxyzXYZ123}$ | \mit{ABCdefXYZ123} | 数字斜体 |
+| $\mit{ABCdefxyzXYZ123}$ | \mit{ABCdefXYZ123} | **数字斜体** |
 | $\tt{ABCdefxyzXYZ123}$ | \tt{ABCdefXYZ123} | 打印机字体 |
 
 ### 表9: 分段函数与公式对齐
@@ -131,7 +137,7 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
 \end{aligned}
 ```
 
-另外注意到前面的分段函数自动变好了, 但是上面多行对齐的公式没有自动编号, 如果需要**自动**编号, 外面嵌入equation
+另外注意到前面的分段函数自动变好了，但是上面多行对齐的公式没有自动编号，如果需要**自动**编号，外面嵌入equation
 $$
 \begin{equation}
 \begin{aligned}
@@ -178,6 +184,8 @@ L(w)&=\sum\limits^{N}_{i=1}[y_i\log\pi(x_i)+(1-y_i)\log(1-\pi(x_i))]\\
 
 ### 表X: 矩阵
 
+#### 普通矩阵
+
 $$
 \begin{aligned}
 M_1(x)=
@@ -203,8 +211,6 @@ M_3(x)=
 \end{bmatrix}
 \end{aligned}
 $$
-
-代码
 
 ```latex
 \begin{aligned}
@@ -232,7 +238,8 @@ M_3(x)=
 \end{aligned}
 ```
 
-带省略符号的Matrix
+#### 带省略符号的Matrix
+
 $$
 X^\mathrm T=
 \left[
@@ -256,6 +263,27 @@ X^\mathrm T=
 \end{matrix}
 \right]
 ```
+
+#### 向量
+
+$$
+\left[
+\begin{array}
+\\2
+\\3
+\end{array}
+\right]
+$$
+
+```latex
+\left[
+\begin{array}
+\\2
+\\3
+\end{array}
+\right]
+```
+
 
 
 $$
@@ -288,5 +316,6 @@ $$
 4. [Emoji](https://gist.github.com/rxaviers/7360908)
 5. [Short Math Guide for LaTeX](http://ctan.math.utah.edu/ctan/tex-archive/info/short-math-guide/short-math-guide.pdf)
 6. [List of Mathematical Symbols](https://en.wikipedia.org/wiki/List_of_mathematical_symbols)
-7. [Matplotlib Math Text](https://matplotlib.org/tutorials/text/mathtext.html)
+7. [数学公式]([https://zh.wikipedia.org/wiki/Help:%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F](https://zh.wikipedia.org/wiki/Help:数学公式))
+8. [Matplotlib Math Text](https://matplotlib.org/tutorials/text/mathtext.html)
 

@@ -8,8 +8,16 @@
 
 [TOC]
 
+## 工具包
+
+为方便学习，整理一些工具说明。
+
 - GitHub的markdown公式支持一般，推荐使用Chrome插件[TeX All the Things](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn)来渲染TeX公式,，本地Markdown编辑器推荐[Typora](https://typora.io/)，注意Ctrl+, 打开Preferences，Syntax Support部分勾选inline Math。Ubuntu和Windows都正常。
-- math_markdown.pdf为math_markdown.md的导出版本， 方便查看使用， markdown版本为最新版本，基本覆盖了书中用到的数学公式的LaTeX表达方式。
+- math_markdown.pdf为[math_markdown.md](./math_markdown.md)的导出版本， 方便查看使用， markdown版本为最新版本，基本覆盖了书中用到的数学公式的$\LaTeX$表达方式。
+- [ref_downloader](./ref_downloader.sh) 是一个参考文献下载脚本，这本书一定要配合参考文献看，每章的大参考文献一定要看，对书的内容理解会很有帮助。
+- [glossary_index](./glossary_index.md) 是一个非正式的术语索引，这个书后面是有一个的，但是不方便展开，在这个部分添加了部分扩展的内容。
+- [symbol_index](./symbol_index.md) 是一个非正式的符号索引，第一版中有符号说明，第二版没有了，可能是无监督这部分涉及到的符号真的是太多了，总之，保留这部分，在感觉混淆的时候可以查下，看看是否有帮助。
+- [errata_se](./errata_se.md) 非官方的errata，供参考。如果有内容感觉不清楚，可以参考看看，希望有帮助。
 
 ## 前前言
 
@@ -269,4 +277,3 @@
 ## 参考
 
 [^1]: [Matrix Capsules with EM Routing](http://arxiv.org/abs/1710.09829)
-

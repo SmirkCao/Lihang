@@ -33,6 +33,8 @@
 
 - 这章的参考文献和第一章的基本一样，去掉了Sutton的强化学习。
 
+- 降维部分有提到manifold，这个书中应该是没有展开，可以参考scikit-learn中[相关部分](https://scikit-learn.org/stable/modules/manifold.html#manifold)。
+
 ## 无监督学习基本原理
 
 符号说明

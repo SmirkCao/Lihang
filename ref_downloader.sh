@@ -130,6 +130,10 @@ wget "https://pdfs.semanticscholar.org/a718/b85520bea702533ca9a5954c33576fd162b0
 # 1407
 # 1408
 echo "CH15"
+# 1502
+wget "https://github.com/J-Mourad/Introduction-to-Linear-Algebra-5th-Edition---EE16A/raw/master/Ed%205%2C%20Gilbert%20Strang%20-%20Introduction%20to%20Linear%20Algebra%20(2016%2C%20Wellesley-Cambridge%20Press).pdf" -O 1502.pdf
+# 1503
+wget "https://www.cs.utexas.edu/users/inderjit/public_papers/HLA_SVD.pdf" -O 1503.pdf
 # 1505
 wget "http://www.kolda.net/publication/TensorReview.pdf" -O 1505.pdf
 
