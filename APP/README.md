@@ -62,7 +62,7 @@ $N(A)=\{x\in \mathbf{R}^n|Ax=0\}$
 
 ### 子空间的正交补
 
-$Y$是$\mathrm{R}^n$的子空间，则$Y^\bot$也是$\mathrm{R}^n$的子空间。
+$Y$是$\mathbf{R}^n$的子空间，则$Y^\perp$也是$\mathbf{R}^n$的子空间。
 
 ### 矩阵的基本子空间
 
