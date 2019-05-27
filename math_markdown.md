@@ -49,6 +49,7 @@
 | $\mathscr {ABCdefxyzXYZ123}$ | \mathscr {ABCdefxyzXYZ123} |
 | $\mathfrak {ABCdefxyzXYZ123}$ | \mathfrak {ABCdefxyzXYZ123} |
 | $\mathbb {ABCdefxyzXYZ123}$ | \mathbb {ABCdefxyzXYZ123} |
+| $\boldsymbol{ABCdefxyzXYZ123}$ | \boldsymbol{ABCdefxyzXYZ123} |
 
 ### 表 5: 运算符与函数
 
