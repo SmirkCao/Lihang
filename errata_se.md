@@ -52,5 +52,9 @@
 
 21. $P_{293}$ 第6点，从$AA^\mathrm{T}$的特征值这句，虽然$A^\mathrm{T}A$和$AA^\mathrm{T}$的特征值是一样的，但是不太理解这里为什么写成$AA^\mathrm{T}$，不知道是不是笔误。
 
-22. 
+22. $P_{313}$ 求方差贡献率$\sum\limits_{i=1}^k\eta_i$达到预定值的主成分个数$k$，这个应该是累计方差贡献率
+
+23. $P_{316}$ 公式16.52,16.53, 以及$X^{\prime\mathbf{T}}X$,后面$X^{\prime}=\frac{1}{\sqrt{n-1}}X^\mathbf{T}$中的$X^\mathbf{T}$应该是$X^\mathrm{T}$
+
+24. $P_{310}$ 样本矩阵$\mit \boldsymbol{X}$，应该是$X$。或者说，写成$X$才和其他表达是一致的。
 

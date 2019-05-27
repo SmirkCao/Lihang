@@ -24,21 +24,34 @@
 - 所谓线性相关的$x_1$和$x_2$就是说知道$x_1$的值的情况下，$x_2$的预测不是完全随机的。
 - 主成分分析的结果可以作为其他机器学习方法的输入。
 - 参考文献4应该是这本书引用的日期最新的Journal Article了，2014年的，文章来自Google，作者还写过一篇ICA的Tutorial
-- 考虑PCA是通过组合特征的方法来降维，这样用到**线性组合**。因为涉及到线性组合，所以在PCA过程中首先要给数据规范化就好理解了，也比较好理解数据的"结构"这种说法。
+- $y_k=\alpha_k^\mathrm{T}\boldsymbol{x}$考虑PCA是通过组合特征的方法来降维，这样用到**线性组合**。因为涉及到线性组合，所以在PCA过程中首先要给数据规范化就好理解了，也比较好理解数据的"结构"这种说法。
 - 书中有提到在实际问题中，不同变量可能有不同的量纲，直接求主成分有时会产生不合理的结果。**消除这个影响**常对各个随机变量实施规范化，使其均值为0，方差为1。
-- 
+- 关于主成分的性质，规范化的变量总体主成分主要是围绕特征值和特征向量展开的。
 
 ## 内容
 ### 总体主成分分析
-#### 总体主成分分析性质
 
-1. $cov(\mathbf{y})=\Lambda=diag(\lambda_1,\lambda_2,\cdots,\lambda_m)$
+#### 总体主成分性质
+
+1. $\mathrm{cov}(\boldsymbol{y})=\Lambda=\mathrm{diag}(\lambda_1,\lambda_2,\cdots,\lambda_m)$
 2. $\sum\limits_{i=1}^m\lambda_i=\sum\limits_{i=1}^m\sigma_{ii}$
-3. $\sum\limits_{i=1}^m var(x_i)=tr(\mit{\Sigma}^\mathrm{T}\mathrm)=tr\mathrm(A\Lambda A^\mathrm{T}\mathrm)=tr\mathrm(\Lambda\mathrm)=\sum\limits_{i=1}^m\lambda_i=\sum\limits_{i=1}^m var\mathrm(y_i\mathrm)$
-4. 
+3. $\sum\limits_{i=1}^m \mathrm{var}(x_i)=\mathrm{tr}(\mit{\Sigma}^\mathrm{T}\mathrm)=tr\mathrm(A\Lambda A^\mathrm{T}\mathrm)=\mathrm{tr}\mathrm(\Lambda\mathrm)=\sum\limits_{i=1}^m\lambda_i=\sum\limits_{i=1}^m \mathrm{var}\mathrm(y_i\mathrm)$
+
+
+
+两个拉格朗日函数的求导
+
+#### 规范化变量的总体主成分
+这部分内容描述了规范化随机变量的总体主成分的性质，概括下就是：特征值，特征值的和，特征变量，特征变量按行求和，特征变量按列求和。
+1. $\Lambda^*=\mathrm{diag}(\lambda_1^*, \lambda_2^*, \cdots, \lambda_m^*)$
+1. $\sum\limits_{k=1}^m \lambda_k^*=m$
+1. $\rho(y_k^*, x_i^*)=\sqrt{\lambda_k^*}e_{ik}^*, k,i=1,2,\cdots,m$
+1. $\sum\limits_{i=1}^m\rho^2(y_k^*,x_i^*)=\sum\limits_{i=1}^m\lambda_k^*e_{ik}^{*2}=\lambda_k^*,k=1,2,\cdots,m$
+1. $\sum\limits_{k=1}^m\rho^2(y_k^*,x_i^*)=\sum\limits_{k=1}^m\lambda_k^*e_{ik}^{*2}=1,i=1,2,\cdots,m$
+
 ### 样本主成分分析
 
- 观测数据上进行主成分分析就是样本主成分分析。
+观测数据上进行主成分分析就是样本主成分分析。
 
 给定样本矩阵$X$，可以**估计**样本均值以及样本协方差。
 
@@ -47,6 +60,18 @@ $\bar{x}=\frac{1}{n}\sum\limits_{j=1}^nx_j$
 
 
 #### 算法
+
+算法16.1 主成分分析法
+
+
+
+
+### 例16.1
+这个例子，其实从表16.3中拿到的结论通过表16.2也能拿到。$y_1$是原始特征的线性组合，并且，各个原始特征的权重(系数)基本相同，说明大家同样重要。$y_1$和总成绩有关系。
+$y_2$的贡献可能更多的体现在文理科的差异上，他们的作用相反。
+
+
+
 
 ## 参考
 
