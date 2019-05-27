@@ -42,25 +42,27 @@
 
 | 示例 | 代码 |
 | - | - |
-| $\mathrm {ABCdef}$ | \mathrm{ABCdef} |
-| $\mathit {ABCdef}$ | \mathit{ABCdef} |
-| $\mathcal {ABCdef}$ | \mathcal{ABCdef} |
-| $\mathscr {ABCdef}$ | \mathscr{ABCdef} |
-| $\mathfrak {ABCdef}$ | \mathfrak{ABCdef} |
-| $\mathbb{ABCdef}$ | \mathbb{ABCdef} |
+| $\mathbf {ABCdefxyzXYZ123}$ | \mathbf {ABCdefxyzXYZ123} |
+| $\mathrm {ABCdefxyzXYZ123}$ | \mathrm {ABCdefxyzXYZ123} |
+| $\mathit {ABCdefxyzXYZ123}$ | \mathit {ABCdefxyzXYZ123} |
+| $\mathcal {ABCdefxyzXYZ123}$ | \mathcal {ABCdefxyzXYZ123} |
+| $\mathscr {ABCdefxyzXYZ123}$ | \mathscr {ABCdefxyzXYZ123} |
+| $\mathfrak {ABCdefxyzXYZ123}$ | \mathfrak {ABCdefxyzXYZ123} |
+| $\mathbb {ABCdefxyzXYZ123}$ | \mathbb {ABCdefxyzXYZ123} |
 
-### 表 5: 运算符
+### 表 5: 运算符与函数
 
 | 示例 | 代码 | 示例 | 代码 | 示例 | 代码 |
 | - | - | - | - | - | - |
 | $\sum$ | \sum | $\prod$ | \prod | $x\cdot{y}$ | x\cdot{y} |
 | $\bigcup$ | \bigcup | $\bigoplus$ | \bigoplus | $x\times {y}$ | x\times {y} |
-| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | **\left\\|w\right\\|** |
+| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | **\left\\|
 | $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
 | $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  | $\partial$ | \partial |
-| $\det$ | **\det** |  |  |  |  |
+| $\det$ | **\det** | $\max$ | \max | $\min$ | \min |
+|  |  |  |  |  |  |
 
 ### 表 6: 常用箭头
 
