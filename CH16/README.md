@@ -57,16 +57,70 @@
 
 $\bar{x}=\frac{1}{n}\sum\limits_{j=1}^nx_j$
 
+#### 相关矩阵的特征值分解算法
 
+关键词：**相关矩阵**， **特征值分解**
 
-#### 算法
+1. 观测数据规范化处理，得到规范化数据矩阵$X$
+1. 计算相关矩阵$R$
+$$
+R=[r_{ij}]_{m\times m}=\frac{1}{n-1}XX^\mathrm{T}\\
+r_{ij} = \frac{1}{n-1}\sum\limits_{l=1}^nx_{il}x_{lj}, i,j=1,2,\cdots,m
+$$
+3. 求$R$的特征值和特征向量
+$$
+|R-\lambda I|=0\\
+\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_m
+$$
+求累计方差贡献率达到预定值的主成分个数$k$
+$$
+\sum_{i=1}^k\eta_i=\frac{\sum\limits_{i=1}^k\lambda_i}{\sum\limits_{i=1}^m\lambda_i}
+$$
+求前$k$个特征值对应的单位特征向量
+$$
+a_i=(a_{1i},a_{2i},\cdots,a_{mi})^\mathrm{T}
+$$
+4. 求$k$个样本主成分
+$$
+  y_i=a_i^\mathrm{T}\boldsymbol x
+$$
+  其实算法到这就完事了，剩下两部分是输出。**前面是fit部分，后面是transform部分。**具体可以看下$P_{319}$中的关于相关矩阵特征值分解算法部分内容，构造正交矩阵之后就得到了主成分。
+5. 计算$k$个主成分$y_i$与原变量$x_i$的相关系数$\rho(x_i,y_i)$以及$k$个主成分对原变量$x_i$的贡献率$\nu_i$
+$$
+\nu_i=\rho^2(x_i,(y_1, y_2, \cdots,y_k))=\sum_{j=1}^k\rho^2(x_i,y_j)=\sum_{j=1}^k\lambda_ja_{ij}^2\\
+i=1,2,\cdots,m
+$$
+6. 计算$n$个样本的$k$个主成分值
+    第$j$个样本，$\boldsymbol{x}_j=(x_{1j},x_{2j},\cdots, x_{mj})^\mathrm{T}$的第$i$个主成分值是
+$$
+y_{ij}=(a_{1i},a_{2i},\cdots,a_{mi})(x_{1j},x_{2j},\cdots,x_{mj})^\mathrm{T}=\sum\limits_{l=1}^m a_{li}x_{lj}\\
+i=1,2,\cdots,m, j=1,2,\cdots,n
+$$
 
+#### 数据矩阵的奇异值分解算法
+
+关键词：**数据矩阵**，**奇异值分解**
 算法16.1 主成分分析法
-
-
-
+输入：$m\times n$样本矩阵$X$，每一行元素均值为0。`这里每一行是一个特征`
+输出：$k\times n$样本主成分矩阵$Y$
+参数：主成分个数$k$
+1. 构造新的$n\times m$矩阵
+$$
+X^\prime=\frac{1}{\sqrt{n-1}}X^\mathrm{T}
+$$
+$X^\prime$每一列均值为0，其实就是转置了。
+2. 对矩阵$X^\prime$进行截断奇异值分解
+$$
+X^\prime=U\mit{\Sigma}V^\mathrm{T}
+$$
+矩阵$V$的前$k$列构成$k$个样本主成分
+3. 求$k\times n$样本主成分矩阵
+$$
+Y=V^\mathrm{T}X
+$$
 
 ### 例16.1
+
 这个例子，其实从表16.3中拿到的结论通过表16.2也能拿到。$y_1$是原始特征的线性组合，并且，各个原始特征的权重(系数)基本相同，说明大家同样重要。$y_1$和总成绩有关系。
 $y_2$的贡献可能更多的体现在文理科的差异上，他们的作用相反。
 
