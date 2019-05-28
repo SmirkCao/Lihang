@@ -63,7 +63,7 @@
 | $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  | $\partial$ | \partial |
 | $\det$ | **\det** | $\max$ | \max | $\min$ | \min |
-|  |  |  |  |  |  |
+| $\log$ | \log |  |  |  |  |
 
 ### 表 6: 常用箭头
 
