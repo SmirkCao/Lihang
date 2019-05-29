@@ -248,7 +248,7 @@ X^\mathrm T=
 \left[
 \begin{matrix}
  x_{11} & \cdots & x_{1N}       \\
- \vdots &        & \vdots 		\\
+ \vdots & \ddots & \vdots 		\\
  x_{M1} & \cdots & x_{MN}       \\
 \end{matrix}
 \right]
@@ -261,7 +261,7 @@ X^\mathrm T=
 \left[
 \begin{matrix}
  x_{11} & \cdots & x_{1N}       \\
- \vdots &        & \vdots 		\\
+ \vdots & \ddots & \vdots 		\\
  x_{M1} & \cdots & x_{MN}       \\
 \end{matrix}
 \right]
@@ -319,6 +319,6 @@ $$
 4. [Emoji](https://gist.github.com/rxaviers/7360908)
 5. [Short Math Guide for LaTeX](http://ctan.math.utah.edu/ctan/tex-archive/info/short-math-guide/short-math-guide.pdf)
 6. [List of Mathematical Symbols](https://en.wikipedia.org/wiki/List_of_mathematical_symbols)
-7. [数学公式]([https://zh.wikipedia.org/wiki/Help:%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F](https://zh.wikipedia.org/wiki/Help:数学公式))
+7. [数学公式](https://zh.wikipedia.org/wiki/Help:数学公式)
 8. [Matplotlib Math Text](https://matplotlib.org/tutorials/text/mathtext.html)
 
