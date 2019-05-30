@@ -27,8 +27,10 @@
 - $y_k=\alpha_k^\mathrm{T}\boldsymbol{x}$考虑PCA是通过组合特征的方法来降维，这样用到**线性组合**。因为涉及到线性组合，所以在PCA过程中首先要给数据规范化就好理解了，也比较好理解数据的"结构"这种说法。
 - 书中有提到在实际问题中，不同变量可能有不同的量纲，直接求主成分有时会产生不合理的结果。**消除这个影响**常对各个随机变量实施规范化，使其均值为0，方差为1。
 - 关于主成分的性质，规范化的变量总体主成分主要是围绕特征值和特征向量展开的。
+- 关于总体和样本的说明可以参考一下Strang的书[^1]中第十二章部分说明。
 
 ## 内容
+
 ### 总体主成分分析
 
 #### 总体主成分性质
@@ -36,8 +38,6 @@
 1. $\mathrm{cov}(\boldsymbol{y})=\Lambda=\mathrm{diag}(\lambda_1,\lambda_2,\cdots,\lambda_m)$
 2. $\sum\limits_{i=1}^m\lambda_i=\sum\limits_{i=1}^m\sigma_{ii}$
 3. $\sum\limits_{i=1}^m \mathrm{var}(x_i)=\mathrm{tr}(\mit{\Sigma}^\mathrm{T}\mathrm)=tr\mathrm(A\Lambda A^\mathrm{T}\mathrm)=\mathrm{tr}\mathrm(\Lambda\mathrm)=\sum\limits_{i=1}^m\lambda_i=\sum\limits_{i=1}^m \mathrm{var}\mathrm(y_i\mathrm)$
-
-
 
 两个拉格朗日函数的求导
 
@@ -152,3 +152,4 @@ $$
 
 ## 参考
 
+[^1]: [Introduction to Linear Algebra](https://github.com/J-Mourad/Introduction-to-Linear-Algebra-5th-Edition---EE16A/raw/master/Ed%205%2C%20Gilbert%20Strang%20-%20Introduction%20to%20Linear%20Algebra%20(2016%2C%20Wellesley-Cambridge%20Press).pdf)
