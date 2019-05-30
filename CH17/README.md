@@ -23,7 +23,8 @@
 - 潜在语义分析主要用于文本的话题分析，通过矩阵分解发现文本与单词之间的**基于话题**的语义关系。
 - 词向量通常是稀疏的，词向量不考虑同义性，也不考虑多义性。
 - 一个文本(Doc)一般有多个话题(Topic)。涉及到语义分析，要清楚什么是文本，什么是话题，什么是伪文本。
-- NMF那个文章发的是Nature，1999年的，不过他引不高，才9979。
+- NMF那个文章[参考文献3]发的是Nature，1999年的，不过他引不高，才9979。文章中对比了在矩阵分解框架下的VQ，PCA和NMF，说明了NMF和其他两种方法的区别。
+- NMF的推导过程见参考文献4
 - 潜在语义分析使用的是**非概率**的话题分析模型。
 - 潜在语义分析是**构建话题向量空间的方法**(话题分析的方法)
 - 单词向量转化成话题向量。文本在不同空间下的相似度用在不同空间下的向量内积表示。
@@ -229,11 +230,90 @@ $X\thickapprox WH, W\ge 0, H \ge 0$ 称为非负矩阵分解
 非负矩阵分解旨在通过较少的基向量、系数向量来表达较大的数据矩阵。注意这里用到了基向量和数据矩阵，因为这部分内容介绍的是非负矩阵分解，和话题向量空间以及文本在话题向量空间的表示这些还没有联系在一起，是一个抽象的数学描述。
 
 #### 模型定义
+$m\times n$的非负矩阵$X\ge 0$。
+假设文本集合包含$k$个话题，对$X$进行非负矩阵分解。即求$m\times k$的非负矩阵和$k\times n$的非负矩阵满足$X\thickapprox WH$
 
+其中
+$W=\left[\begin{matrix}w_1& w_2& \cdots& w_k\end{matrix}\right]$表示话题向量空间
+$w_1, w_2, \cdots, \w_k$表示文本集合的$k$个话题
+$H=\left[\begin{matrix}h_1& h_2& \cdots& h_k\end{matrix}\right]$表示文本在话题向量空间的表示
+$h_1, h_2, \cdots, \h_k$表示文本集合的$n$个文本
+以上是基于非负矩阵分解的潜在语义分析模型。
+
+非负矩阵分解有很直观的解释，话题向量和文本向量都非负，对应着“伪概率分布”，向量的线性组合表示**局部构成总体**。这个其实和DL里面的意思是一样的。
 
 #### 算法
+可以形式化为最优化问题求解。
+##### 损失函数
+1. 平方损失
+两个非负矩阵$A=[a_{ij}]_{m\times n}$和$B=[b_{ij}]_{m\times n}$的平方损失定义为
+$$
+\left\|A-B\right\|^2=\sum_{i,j}(a_{ij}-b_{ij})^2
+$$
+下界是0
+2. 散度
+$$
+D(A\|B)=\sum_{i,j}\left(a_{ij}\log\frac{a_{ij}}{b_{ij}}-a_{ij}+b_{ij}\right)
+$$
+下界是0
+$A$和$B$不对称。
+当$\sum\limits_{i,j}a_{ij}=\sum\limits_{i,j}b_{ij}=1$时散度损失函数退化为Kullback-Leiber散度或相对熵，这时$A$和$B$是概率分布。
+##### 问题定义
+针对不同的损失函数有不同的问题定义
+1. 平方损失
+$$
+\min_{W,H} \|X-WH\|^2\\
+s.t. W,H\ge 0
+$$
+2. 散度损失
+$$
+\min_{W,H} D(X\|WH)\\
+s.t. W,H\ge 0
+$$
+##### 更新规则
+这里提到目标函数只是对$W$和$H$之一的凸函数，而不是同时两个变量的凸函数，所以通过数值优化求解局部最优解。
 
+1. 平方损失
+$$
+H_{lj}\leftarrow H_{lj}\frac{(W^\mathrm{T}X)_{lj}}{(W^\mathrm{T}WH)_{lj}}\\
+W_{il}\leftarrow W_{il}\frac{(XH^\mathrm{T})_{il}}{(WHH^\mathrm{T})_{il}}
+$$
+2. 散度损失
+$$
+H_{lj}\leftarrow H_{lj}\frac{\sum\limits_i[W_{il}X_{ij}/(WH)_{ij}]}{\sum\limits_iW_{il}}\\
+W_{il}\leftarrow W_{il}\frac{\sum\limits_j[H_{lj}X_{ij}/(WH)_{ij}]}{\sum\limits_jH_{lj}}
+$$
 
+##### NMF
+1. 平方损失
+$$
+J(W,H)=\frac{1}{2}\|X-WH\|^2=\frac{1}{2}\sum_{i,j}[X_{ij}-(WH)_{ij}]^2
+$$
+采用梯度下降法求解
+这里用到了矩阵求导
+$$
+\begin{aligned}
+\frac{\partial J(W,H)}{\partial W_{il}}&=-\sum_j[X_{ij}-(WH)_{ij}]H_{lj}=-[(XH^\mathrm{T})_{il}-(WHH^\mathrm{T})_{il}]\\
+\frac{\partial J(W,H)}{\partial H_{lj}}&=-[(W^\mathrm{T}X)_{lj}-(W^\mathrm{T}WH)_{lj}]
+\end{aligned}
+$$
+根据更新规则有
+$$
+W_{il}=W_{il}+\lambda_{il}[(XH^\mathrm{T})_{il}-(WHH^\mathrm{T})_{il}]\\
+H_{lj}=H_{lj}+\mu_{lj}[(W^\mathrm{T}X)_{lj}-(W^\mathrm{T}WH)_{lj}]\\
+\lambda_{il}=\frac{W_{il}}{(WHH^\mathrm{T})_{il}}\\
+\mu_{lj}=\frac{H_{lj}}{(W^\mathrm{T}WH)_{lj}}
+$$
+##### 算法
+输入：单词-文本矩阵$X\ge 0$，文本集合的话题个数$k$，最大迭代次数$t$；
+输出：话题矩阵$W$，文本表示矩阵$H$
+1. 初始化
+$W\ge 0$，**并对$W$的每一列数据归一化**
+$H\ge 0$
+2. 迭代
+对迭代次数从$1$到$t$执行下列步骤：
+a. 更新$W$的元素，每次迭代对$W$的列向量归一化，**使基向量为单位向量**。
+b. 更新$H$的元素
 
 ## 习题
 
