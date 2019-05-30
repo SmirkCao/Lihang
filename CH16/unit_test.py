@@ -15,12 +15,13 @@ import numpy as np
 
 class TestPCAMethods(unittest.TestCase):
     def test_e_16_1(self):
-        R = np.array([[1, 0.44, 0.29, 0.33],
+        r = np.array([[1, 0.44, 0.29, 0.33],
                       [0.44, 1, 0.35, 0.32],
                       [0.29, 0.35, 1, 0.60],
                       [0.33, 0.32, 0.60, 1]])
-        ev, sigma = np.linalg.eig(R)
+        ev, sigma = np.linalg.eig(r)
         
+        print("\n")
         print(40*"*"+"Engine Values"+40*"*")
         print(ev)
 
@@ -28,11 +29,17 @@ class TestPCAMethods(unittest.TestCase):
         denominator = np.sum(ev)
         for numerator in ev:
             print(np.round(numerator/denominator, 3))
-        
-        for idx in range(ev.shape[0]):
-            print(np.round(ev[idx], 3))
-            print(np.round(sigma[:, idx], 3))
-            print(np.round(np.sqrt(ev[idx])*sigma[:, idx], 3))
-            
-        print(0.678**2+0.701**2+0.770**2+0.791**2)
 
+        for idx in range(ev.shape[0]):
+            print("engine value: ", np.round(ev[idx], 3))
+            print("engine vector: ", np.round(sigma[:, idx], 3))
+            print("factor loading, rho(xi,yj): ",
+                  np.round(np.sqrt(ev[idx])*sigma[:, idx], 3))
+            print("factor loading sum: ",
+                  np.round(np.sum(ev[idx]*sigma[:, idx]**2), 3))
+        print(40*"*"+"svd"+40*"*")
+        u, s, vh = np.linalg.svd(r)
+        print(u)
+        print(s)
+        print(vh)
+        # s 特征值， vh 特征向量
