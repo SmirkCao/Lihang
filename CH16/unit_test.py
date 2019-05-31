@@ -9,6 +9,8 @@
 # Ref to : https://code.visualstudio.com/docs/python/unit-testing
 import unittest
 from sklearn import datasets
+from pca import PCA as smirkpca
+from sklearn.decomposition import PCA as skpca
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -108,3 +110,21 @@ class TestPCAMethods(unittest.TestCase):
         # plt.scatter(rst[:, 0], rst[:, 1])
         # plt.show()
 
+    def test_pca(self):
+        # raw data
+        x = np.array([[2, 3, 3, 4, 5, 7],
+                      [2, 4, 5, 5, 6, 8]])
+        # for sklearn x.shape == (n_samples, n_features)
+        pca_sklearn = skpca(n_components=2)
+        pca_sklearn.fit(x.T)
+        print("\n")
+        print(40*"*"+"sklearn_pca"+40*"*")
+        print(pca_sklearn.explained_variance_ratio_)
+        print(pca_sklearn.singular_values_)
+
+        print(40*"*"+"smirk_pca"+40*"*")
+        pca_test = smirkpca(n_components=2)
+        print(pca_test)
+
+    def test_pca_get_fig(self):
+        pass
