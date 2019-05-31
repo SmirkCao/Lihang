@@ -87,6 +87,7 @@
 | $\perp $ | **\perp** | $\angle$ | \angle | $\varpropto$ | \varpropto |
 | $\infty$ | \infty | $g^\prime$ | g^\prime | $\forall$ | \forall |
 | $\exist$ | \exist | $\bot$ | **\bot** | $\top$ | **\top** |
+| $\#$ | **\\#**需要转义下 |  |  |  |  |
 
 注意**\bot**和**\perp**的区别，垂直是**\perp**
 
