@@ -22,7 +22,7 @@ class TestPCAMethods(unittest.TestCase):
                       [0.29, 0.35, 1, 0.60],
                       [0.33, 0.32, 0.60, 1]])
         ev, sigma = np.linalg.eig(r)
-        
+
         print("\n")
         print(40*"*"+"Engine Values"+40*"*")
         print(ev)
@@ -45,14 +45,15 @@ class TestPCAMethods(unittest.TestCase):
         print(s)
         print(vh)
         # s 特征值， vh 特征向量
-    
+
     def test_ex1601(self):
         # raw data
         x = np.array([[2, 3, 3, 4, 5, 7],
                       [2, 4, 5, 5, 6, 8]])
-                
+
         # normalization
-        x_star = (x-np.mean(x, axis=1).reshape(-1, 1))/np.sqrt(np.var(x, axis=1)).reshape(-1, 1)
+        x_star = (x-np.mean(x, axis=1).reshape(-1, 1)) / \
+            np.sqrt(np.var(x, axis=1)).reshape(-1, 1)
         print(np.mean(x, axis=1))
         print(np.var(x, axis=1))
 
@@ -72,6 +73,8 @@ class TestPCAMethods(unittest.TestCase):
         rst = np.dot(u[:, :2], y)
         print(rst)
 
+        # print("np.dot(u*s, vh) \n")
+        # print(np.dot(u*s, vh))
         # s engine value
         # vh engine vector
 
@@ -116,9 +119,10 @@ class TestPCAMethods(unittest.TestCase):
         PCA分析
         """
         print("\n")
-        # raw data
+        # raw data from ex1601
         x = np.array([[2, 3, 3, 4, 5, 7],
                       [2, 4, 5, 5, 6, 8]])
+        # 去掉均值
         x = x-np.mean(x, axis=1).reshape(-1, 1)
         print(x)
         assert (np.mean(x, axis=1) == np.zeros(2)).all()
@@ -126,19 +130,29 @@ class TestPCAMethods(unittest.TestCase):
         # for sklearn x.shape == (n_samples, n_features)
         pca_sklearn = skpca(n_components=2)
         pca_sklearn.fit(x.T)
+        pca_sklearn_rst = pca_sklearn.fit_transform(x.T).T
 
         print("\n")
         print(40*"*"+"sklearn_pca"+40*"*")
-        print(pca_sklearn.singular_values_)
-        print(pca_sklearn.explained_variance_ratio_)
-        print(pca_sklearn.fit_transform(x.T).T)
+        print("singular values:\n", pca_sklearn.singular_values_)
+        print("explained variance ratio:\n",
+              pca_sklearn.explained_variance_ratio_)
+        print("transform:\n", )
 
         print(40*"*"+"smirk_pca"+40*"*")
         pca_test = smirkpca(n_components=2)
-        rst = pca_test.fit_transform(x)
-        print(pca_test.singular_values_)
-        print(pca_test.explained_variance_ratio_)
-        print(rst)
+        pca_test_rst = pca_test.fit_transform(x)
+        print("singular values:\n",
+              pca_test.singular_values_)
+        print("explained variance ratio:\n",
+              pca_test.explained_variance_ratio_)
+        print("transform:\n", pca_test_rst)
+
+        self.assertTrue(np.allclose(pca_sklearn.singular_values_,
+                                    pca_test.singular_values_))
+        self.assertTrue(np.allclose(pca_sklearn_rst, pca_test_rst))
+        self.assertTrue(np.allclose(pca_sklearn.explained_variance_ratio_,
+                                    pca_test.explained_variance_ratio_))
 
     def test_pca_get_fig(self):
         pass
