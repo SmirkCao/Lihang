@@ -15,6 +15,7 @@ import numpy as np
 
 class TestLSAMethods(unittest.TestCase):
     def test_lsa_puffinwarellc_tutorial(self):
+        #
         x = np.array([[0., 0., 1., 1., 0., 0., 0., 0., 0.],
                       [0., 0., 0., 0., 0., 1., 0., 0., 1.],
                       [0., 1., 0., 0., 0., 0., 0., 1., 0.],
@@ -26,9 +27,18 @@ class TestLSAMethods(unittest.TestCase):
                       [0., 0., 0., 0., 0., 2., 0., 0., 1.],
                       [1., 0., 1., 0., 0., 0., 0., 1., 0.],
                       [0., 0., 0., 1., 1., 0., 0., 0., 0.]])
-        u, s, vh = np.linalg.svd(x, )
+        u, s, vh = np.linalg.svd(x, full_matrices=False)
+        
+        # v based decision
+        max_abs_raws = np.argmax(np.abs(vh), axis=1)
+        signs = np.sign(vh[range(vh.shape[0]), max_abs_raws])
+        u *= signs
+        vh *= signs[:, np.newaxis]
+
+        print("\n")
         print(40*"*"+"u"+40*"*")
         print(np.round(u[:, :3], 2))
+
         print(40*"*"+"s"+40*"*")
         print(np.round(s[:3], 2))
         print(40*"*"+"vh"+40*"*")
@@ -45,7 +55,14 @@ class TestLSAMethods(unittest.TestCase):
                       [0., 0., 0., 1.],
                       [1., 2., 2., 1.]])
 
-        u, s, vh = np.linalg.svd(x, )
+        u, s, vh = np.linalg.svd(x, full_matrices=False)
+
+        # v based decision
+        max_abs_raws = np.argmax(np.abs(vh), axis=1)
+        signs = np.sign(vh[range(vh.shape[0]), max_abs_raws])
+        u *= signs
+        vh *= signs[:, np.newaxis]
+        
         print("\n")
         print(40*"*"+"u"+40*"*")
         print(np.round(u[:, :3], 2))
