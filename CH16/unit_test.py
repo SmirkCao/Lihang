@@ -52,66 +52,82 @@ class TestPCAMethods(unittest.TestCase):
                       [2, 4, 5, 5, 6, 8]])
 
         # normalization
-        x_star = (x-np.mean(x, axis=1).reshape(-1, 1)) / \
-            np.sqrt(np.var(x, axis=1)).reshape(-1, 1)
-        print(np.mean(x, axis=1))
-        print(np.var(x, axis=1))
+        x_star = x-np.mean(x, axis=1).reshape(-1, 1)
+        # x_star = (x-np.mean(x, axis=1).reshape(-1, 1)) / \
+        #     np.sqrt(np.var(x, axis=1)).reshape(-1, 1)
+        print("means:\n", np.mean(x, axis=1))
+        print("variances:\n", np.var(x, axis=1))
+        print("x_star:\n", x_star)
+        print("x_star means:\n", np.mean(x_star, axis=1))
+        print("x_star variances:\n", np.var(x_star, axis=1))
 
-        print(x_star)
+        # x_ = x_star.T/np.sqrt(x_star.shape[0]-1)
+        x_ = x_star.T
+        u, s, vh = np.linalg.svd(x_, full_matrices=False)
+        print("x_:\n", x_)
+        print("u:\n", u)
+        print("s:\n", s)
+        print("vh:\n", vh)
 
-        print(np.var(x_star, axis=1))
-        x_ = x_star.T/np.sqrt(x_star.shape[0]-1)
-        u, s, vh = np.linalg.svd(x_)
-        print(x_)
-        print("\n")
-        print(u)
-        print(s)
-        print(vh)
-        s = s*np.eye(2)
-        # print(vh[:2, :].shape)
-        y = np.dot(s, vh[:2, :])
-        rst = np.dot(u[:, :2], y)
-        print(rst)
+        # full_matrices=True
+        # u, s, vh = np.linalg.svd(x_)
+        # s = s*np.eye(2)
+        # y = np.dot(s, vh[:2, :])
+        # rst = np.dot(u[:, :2], y)
 
-        # print("np.dot(u*s, vh) \n")
-        # print(np.dot(u*s, vh))
-        # s engine value
-        # vh engine vector
+        rst = np.dot(u*s, vh)
+        print("rst: \n", rst)
 
         # 两个特征可以做可视化
         plt.figure(figsize=(5, 5))
         plt.xlim((-5, 5))
         plt.ylim((-5, 5))
         plt.grid()
-        plt.scatter(x_star[0, :], x_star[1, :])
-        plt.scatter(vh[:, 0], vh[:, 1])
+        plt.scatter(x_star[0, :], x_star[1, :], label="raw data", alpha=0.3)
+        rst = np.dot(vh, x_star)
+        plt.scatter(rst[0, :], rst[1, :], label="svd based pca", alpha=0.3)
 
-        # print(rst.shape)
-        # plt.scatter(vh[:, 0]*x_star[0, :], vh[:, 1]*x_star[1, :])
-        plt.plot([0, 0], [1, 0.5], c="black", marker="*")
-        plt.plot([0.5, 1], [0, 0], c="black", marker="*")
-        a = np.array([[0.0, 0.0],
-                      [0.5, 1.0]])
-        b = np.array([[0.7, 1.5],
-                      [0.0, 0.0]])
-        rst = np.dot(vh, a)
-        print(rst)
-        plt.plot(rst[:, 0],
-                 rst[:, 1], c="red", marker="*")
+        # signs handling
+        max_abs_cols = np.argmax(np.abs(u), axis=0)
+        signs = np.sign(u[max_abs_cols, range(u.shape[1])])
+        u *= signs
+        vh_signs = vh*signs[:, np.newaxis]
+        rst = np.dot(vh_signs, x_star)
+        plt.scatter(rst[0, :], rst[1, :], marker="o", s=12, alpha=0.3,
+                    label="svd based pca with signs")
 
-        rst = np.dot(vh, b)
-        print(rst)
-        plt.plot(rst[:, 0],
-                 rst[:, 1], c="red", marker="*")
+        # for sklearn pca comparison
+        from sklearn.decomposition import PCA
+        pca = PCA(n_components=2)
+        # pca in sklearn, (n_samples, n_features)
+        rst = pca.fit_transform(x.T)
+        print("sklearn pca:\n", rst)
 
-        # from sklearn.decomposition import PCA
-        # pca = PCA(n_components=2)
-        # # pca in sklearn, (n_samples, n_features)
-        # rst = pca.fit_transform(x.T)
-        # print(rst)
+        plt.scatter(rst[:, 0], rst[:, 1], label="sklearn_rst", alpha=0.3)
+        plt.legend()
 
-        # plt.scatter(rst[:, 0], rst[:, 1])
-        # plt.show()
+        axis_x = np.array([[0, 2],
+                           [0, 0]])
+        axis_y = np.array([[0, 0],
+                           [0, 2]])
+        plt.plot(axis_x[0, :], axis_x[1, :],
+                 linestyle="-", c="red")
+        plt.plot(axis_y[0, :], axis_y[1, :],
+                 linestyle="-", c="blue")
+
+        plt.plot(np.dot(vh, axis_x)[0, :], np.dot(vh, axis_x)[1, :],
+                 linestyle="--", c="red", alpha=0.3)
+        plt.plot(np.dot(vh, axis_y)[0, :], np.dot(vh, axis_y)[1, :],
+                 linestyle="--", c="blue", alpha=0.3)
+
+        plt.plot(np.dot(vh_signs, axis_x)[0, :],
+                 np.dot(vh_signs, axis_x)[1, :],
+                 linestyle="-.", c="red")
+        plt.plot(np.dot(vh_signs, axis_y)[0, :],
+                 np.dot(vh_signs, axis_y)[1, :],
+                 linestyle="-.", c="blue")
+        plt.savefig("ex1601.png")
+        plt.show()
 
     def test_pca(self):
         """

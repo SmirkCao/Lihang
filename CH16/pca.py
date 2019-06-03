@@ -41,7 +41,7 @@ class PCA(object):
         # sign flip
         # sign of keep largest value is positive
         max_abs_cols = np.argmax(np.abs(u), axis=0)
-        signs = np.sign(u[max_abs_cols, range(vh.shape[0])])
+        signs = np.sign(u[max_abs_cols, range(u.shape[1])])
         u *= signs
         vh *= signs[:, np.newaxis]
         # print(s)
