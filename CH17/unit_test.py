@@ -9,8 +9,11 @@
 # Ref to : https://code.visualstudio.com/docs/python/unit-testing
 import unittest
 from sklearn import datasets
+from lsa import LSA as lsa_test
+from sklearn.decomposition import TruncatedSVD as lsa_sklearn
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 
 class TestLSAMethods(unittest.TestCase):
@@ -73,3 +76,14 @@ class TestLSAMethods(unittest.TestCase):
 
         print(40*"*"+"svh"+40*"*")
         print(np.round(np.dot(s[:3]*np.eye(3), vh[:3, :]), 2))
+
+    def test_lsa_1701(self):
+        base_path = sys.path[0]
+        x = np.genfromtxt(base_path+"/data/data_1701.csv", delimiter=",")
+        # print(x)
+        lsa1 = lsa_sklearn(n_components=3)
+        rst = lsa1.fit_transform(x)
+        print("\n")
+        print("singular_values\n", lsa1.singular_values_)
+        print("components\n", lsa1.components_)
+        print("rst\n", rst)
