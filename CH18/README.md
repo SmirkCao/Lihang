@@ -24,7 +24,7 @@
 - EM算法的核心在是定义$Q$函数
 - 在[第九章](../CH09/README.md)中就有专门小节提到EM算法在无监督学习中的应用，EM算法可以用在生成模型的无监督学习，这一章诠释了这一点。
 - 单词-文本矩阵就是文本-单词共现数据。
-- 参考文献1是1999年发表的，文中有提到data-driven，1999年就数据驱动了，20年过去了。
+- 参考文献1是1999年发表的，文中有提到data-driven，1999年就数据驱动了，20年过去了。参考文献2里面提到了LSA存在一些不足，`mainly due to its unsatisfactory statistical foundation.`然后提到PLSA`has solid statistical foundation.`
 
 ## 内容
 
@@ -83,7 +83,7 @@ $$
 单词集合$W=\{w_1, w_2, \cdots, w_M\}$
 文本集合$D=\{d_1, d_2, \cdots, d_N\}$
 话题集合$Z=\{z_1, z_2, \cdots, z_K\}$
-共现数据$T={n(w_i, d_j)}, i=1,2,\cdots, M, j=1,2,\codts,N$
+共现数据$T={n(w_i, d_j)}, i=1,2,\cdots, M, j=1,2,\cdots,N$
 **求解：**
 概率潜在语义分析模型(生成模型)的参数。
 
