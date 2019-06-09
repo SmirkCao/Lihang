@@ -61,7 +61,10 @@
 
 常见概率密度函数
 1. 均匀分布
-1. 正态分布
+$p(x)=\frac{1}{b-a}$ anywhere within the interval [a, b), and zero elsewhere.
+2. 正态分布
+$p(x)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$
+2. 	
 
 #### 数学期望估计
 
