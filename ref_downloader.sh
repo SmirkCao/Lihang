@@ -157,3 +157,7 @@ wget "https://sigir.org/wp-content/uploads/2017/06/p211.pdf" -O 1802.pdf
 wget "http://www.cs.bham.ac.uk/~pxt/IDA/plsa.pdf" -O 1803.pdf
 # 1804
 wget "http://ranger.uta.edu/~chqding/papers/NMFpLSIequiv.pdf" -O 1804.pdf
+
+echo "CH19"
+# 1901
+wget "http://www.stat.yale.edu/~jtc5/251/readings/Basics%20of%20Applied%20Stochastic%20Processes_Serfozo.pdf" -O 1901.pdf
