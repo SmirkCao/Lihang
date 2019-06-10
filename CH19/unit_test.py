@@ -9,7 +9,7 @@
 # Ref to : https://code.visualstudio.com/docs/python/unit-testing
 import unittest
 from sklearn import datasets
-from mcmc import Rejection, Accept
+from mcmc import Rejection
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -101,17 +101,31 @@ class TestMCMCMethod(unittest.TestCase):
                 np.exp(-(x-mu2)**2/(2*sigma2**2))
             return rst
 
-        def q(x, mu=0.76, sigma=1, c=1.55):
-            rst = c*1/(sigma*np.sqrt(2*np.pi))*np.exp(-(x-mu)**2/(2*sigma**2))
+        def q(x, mu=0.76, sigma=1):
+            rst = 1/(sigma*np.sqrt(2*np.pi))*np.exp(-(x-mu)**2/(2*sigma**2))
             return rst
 
         x = np.arange(-2, 4, 0.01)
         y = cpdf(x)
-        ars = Rejection()
+        ars = Rejection(c=1.5)
         ars.px = cpdf
         ars.qx = q
-        rst = ars.sample(1000)
-        act = Accept()
-        act.sample(1000, 100)
-        
-        print(rst)
+        import time
+
+        t0 = time.time()
+        n_samples = 10000
+        rst, rej_count = ars.sample(n_samples)
+        t1 = time.time()
+        # print("time: ", t1-t0)
+        alpha = 0.7
+        count, bins, ignored = plt.hist(rst, 150, density=True, alpha=alpha,
+                                        label="sample hist", edgecolor="b")
+        plt.plot(bins, cpdf(bins), color="r", linewidth=3, alpha=alpha,
+                 label="p(x)")
+        c = ars.c
+        plt.plot(bins, c*q(bins), color="y", linewidth=3, alpha=alpha,
+                 label=str(c)+"*q(x)")
+        s = "Samples: {}\nRejects: {}\nTimes: {}".format(n_samples, rej_count, np.round(t1-t0, 2))
+        plt.annotate(s, (np.min(bins), np.max(cpdf(bins))))
+        plt.legend()
+        plt.show()
