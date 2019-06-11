@@ -60,7 +60,7 @@
 | $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | **\left\\|
 | $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
-| $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
+| $\int_0^1{x}\mathrm{d}x$ | \int_0^1{x}\mathrm {d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  | $\partial$ | \partial |
 | $\det$ | **\det** | $\max$ | \max | $\min$ | \min |
 |  |  |  |  |  |  |
