@@ -1,5 +1,14 @@
 mkdir refs
 cd refs
+echo "CH01"
+# 0101 ESL
+echo "same with 0704"
+# 0102 PRML
+wget "https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" -O 0102.pdf
+# 0103 PGM
+wget "https://github.com/Zhenye-Na/machine-learning-uiuc/blob/master/docs/Probabilistic%20Graphical%20Models%20-%20Principles%20and%20Techniques.pdf" -O 0103.pdf
+# 0104 DL
+wget "https://github.com/Zhenye-Na/cs446/blob/master/docs/Deep%20Learning.pdf" -O 0104.pdf
 
 echo "ch02"
 # 0201
@@ -12,13 +21,15 @@ wget "https://cseweb.ucsd.edu/~yfreund/papers/LargeMarginsUsingPerceptron.pdf" -
 wget "https://www.researchgate.net/profile/Yaoyong_Li/publication/37537459_The_Perceptron_Algorithm_with_Uneven_Margins/links/0046351790be7e102e000000/The-Perceptron-Algorithm-with-Uneven-Margins.pdf" -O 0206.pdf
 # 0207
 wget "https://web.stanford.edu/class/ee373b/30years.pdf" -O 0207.pdf
+echo "CH03"
+
 echo "ch04"
 # 0401
 wget "http://www.cs.cmu.edu/~tom/mlbook/NBayesLogReg.pdf" -O 0401.pdf
 # 0402
 echo "same with 0704"
 # 0403 PRML
-wget "https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" -O 0403.pdf
+echo "same with 0102"
 
 echo "ch06"
 # 0601
@@ -91,7 +102,7 @@ wget "https://projecteuclid.org/download/pdf_1/euclid.aoms/1177697196" -O 1003.p
 
 # 1004
 wget "http://101.96.10.64/ssli.ee.washington.edu/people/bilmes/mypapers/em.pdf" -O 1004.pdf
-echo "ch11"
+echo "CH11"
 # 1101 PRML
 echo "same with 0403"
 # 1102 PGM, Koller
@@ -106,3 +117,47 @@ wget "http://www.ai.mit.edu/courses/6.891-nlp/READINGS/maxent.pdf" -O 1105.pdf
 wget "https://www.robots.ox.ac.uk/~vgg/rg/papers/maxmarginmarkovnetworks.pdf" -O 1106.pdf
 # 1107
 wget "https://icml.cc/Conferences/2004/proceedings/papers/76.pdf" -O 1107.pdf
+
+echo "CH14"
+# 1401
+wget "https://homepages.inf.ed.ac.uk/rbf/BOOKS/JAIN/Clustering_Jain_Dubes.pdf" -O 1401.pdf
+# 1402
+# 1403
+wget "https://pdfs.semanticscholar.org/a718/b85520bea702533ca9a5954c33576fd162b0.pdf" -O 1403.pdf
+# 1404
+# 1405
+# 1406
+# 1407
+# 1408
+echo "CH15"
+# 1502
+wget "https://github.com/J-Mourad/Introduction-to-Linear-Algebra-5th-Edition---EE16A/raw/master/Ed%205%2C%20Gilbert%20Strang%20-%20Introduction%20to%20Linear%20Algebra%20(2016%2C%20Wellesley-Cambridge%20Press).pdf" -O 1502.pdf
+# 1503
+wget "https://www.cs.utexas.edu/users/inderjit/public_papers/HLA_SVD.pdf" -O 1503.pdf
+# 1505
+wget "http://www.kolda.net/publication/TensorReview.pdf" -O 1505.pdf
+
+echo "CH16"
+wget "https://arxiv.org/pdf/1404.1100.pdf" -O 1604.pdf
+echo "CH17"
+# 1701 LSA
+wget "http://lsa.colorado.edu/papers/JASIS.lsi.90.pdf" -O 1701.pdf
+# 1702
+# 1703 NMF
+wget "http://www.columbia.edu/~jwp2128/Teaching/E4903/papers/nmf_nature.pdf" -O 1703.pdf
+# 1704 NMF NIPS 2001
+wget "https://papers.nips.cc/paper/1861-algorithms-for-non-negative-matrix-factorization.pdf" -O 1704.pdf
+
+echo "CH18"
+# 1801
+wget "http://www.iro.umontreal.ca/~nie/IFT6255/Hofmann-UAI99.pdf" -O 1801.pdf
+# 1802
+wget "https://sigir.org/wp-content/uploads/2017/06/p211.pdf" -O 1802.pdf
+# 1803
+wget "http://www.cs.bham.ac.uk/~pxt/IDA/plsa.pdf" -O 1803.pdf
+# 1804
+wget "http://ranger.uta.edu/~chqding/papers/NMFpLSIequiv.pdf" -O 1804.pdf
+
+echo "CH19"
+# 1901
+wget "http://www.stat.yale.edu/~jtc5/251/readings/Basics%20of%20Applied%20Stochastic%20Processes_Serfozo.pdf" -O 1901.pdf
