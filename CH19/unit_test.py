@@ -16,10 +16,66 @@ import numpy as np
 
 class TestMCMCMethod(unittest.TestCase):
     def test_exa_1901(self):
-        pass
+        def f(x):
+            return np.exp(-x**2/2)
+
+        def p(x):
+            return 1
+
+        x = np.random.uniform(0, 1, 10)
+        y = f(x)
+        x_raw = np.arange(0, 1, 0.01)
+        y_raw = f(x_raw)
+        print(x.shape, y.shape)
+        data = np.concatenate((x_raw[:, np.newaxis], y_raw[:, np.newaxis]),
+                              axis=1)
+        print(data)
+        # data = data[data[:, 0].argsort()]
+        rst = np.mean(y)
+
+        plt.rc('text', usetex=True)
+        plt.rc('font', family='serif')
+
+        plt.figure(figsize=(5, 5))
+        plt.scatter(x, y, marker='*')
+        plt.plot(data[:, 0], data[:, 1], alpha=0.3)
+        bbox = dict(boxstyle="round", fc="0.8")
+        comment = r"$\int_0^1e^{-{x^2}/{2}}\mathrm{d}x=$"+str(round(rst, 2))
+        plt.annotate(comment, (0.2, 0.8), bbox=bbox)
+        plt.ylabel(r'$\exp\left(-\frac{1}{2}x^2\right)$')
+        plt.ylim(-0.02, 1.02)
+        plt.xlim(-0.02, 1.02)
+        plt.show()
 
     def test_exa_1902(self):
-        pass
+        def p(x):
+            return np.sqrt(2*np.pi)*np.exp(-x**2/2)
+
+        def f(x):
+            return x
+
+        x = np.random.normal(0, 1, 10)
+        y = f(x)
+        x_raw = np.arange(-2, 2, 0.1)
+        y_raw = f(x_raw)
+        print(x.shape, y.shape)
+        data = np.concatenate((x_raw[:, np.newaxis], y_raw[:, np.newaxis]),
+                              axis=1)
+        print(data)
+        # data = data[data[:, 0].argsort()]
+        rst = np.mean(y)
+
+        plt.rc('text', usetex=True)
+        plt.rc('font', family='serif')
+
+        plt.figure(figsize=(5, 5))
+        plt.scatter(x, y, marker='*', alpha=0.3)
+        plt.plot(data[:, 0], data[:, 1], alpha=0.3)
+        bbox = dict(boxstyle="round", fc="0.8")
+        comment = r"$\int_{-\infty}^{\infty}x\frac{1}{\sqrt{2\pi}}e^{-{x^2}/{2}}\mathrm{d}x=$"+str(round(rst, 2))
+        plt.annotate(comment, (-2, 2), bbox=bbox)
+
+        plt.show()
 
     def test_exa_1903(self):
         pass
