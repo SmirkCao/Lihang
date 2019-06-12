@@ -99,3 +99,34 @@ class TestLSAMethods(unittest.TestCase):
         print("singular_values\n", lsa1.singular_values_)
         print("components\n", lsa1.components_)
         print("rst\n", rst)
+
+    def test_lsa(self):
+        x = np.array([[0., 0., 1., 1., 0., 0., 0., 0., 0.],
+                      [0., 0., 0., 0., 0., 1., 0., 0., 1.],
+                      [0., 1., 0., 0., 0., 0., 0., 1., 0.],
+                      [0., 0., 0., 0., 0., 0., 1., 0., 1.],
+                      [1., 0., 0., 0., 0., 1., 0., 0., 0.],
+                      [1., 1., 1., 1., 1., 1., 1., 1., 1.],
+                      [1., 0., 1., 0., 0., 0., 0., 0., 0.],
+                      [0., 0., 0., 0., 0., 0., 1., 0., 1.],
+                      [0., 0., 0., 0., 0., 2., 0., 0., 1.],
+                      [1., 0., 1., 0., 0., 0., 0., 1., 0.],
+                      [0., 0., 0., 1., 1., 0., 0., 0., 0.]])
+
+        svd = lsa_sklearn(n_components=3, n_iter=7, random_state=42)
+        svd.fit(x)
+        print("\n")
+        print("lsa sklearn")
+        print("components_\n", svd.components_)
+        print(svd.singular_values_)
+        print(svd.explained_variance_)
+        print(svd.explained_variance_ratio_)
+        print(svd.explained_variance_ratio_.sum())
+
+        svd_1 = lsa_test(n_components=3)
+        svd_1.fit(x)
+        print("lsa test")
+        print(svd_1.components)
+        print(svd_1.singular_values)
+        print(svd_1.explained_variance)
+        print(svd_1.explained_variance_ratio)
