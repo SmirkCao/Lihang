@@ -14,6 +14,7 @@ class LSA(object):
         self.components = None
         self.singular_values = None
         self.explained_variance_ratio = None
+        self.u = None
 
     def fit(self, x):
         u, s, vh = np.linalg.svd(x, full_matrices=False)
@@ -30,5 +31,6 @@ class LSA(object):
         self.explained_variance = np.var(x_transformed, axis=0)
         self.explained_variance_ratio = (self.explained_variance/self.explained_variance.sum())[:k]
         self.explained_variance = self.explained_variance[:k]
+        self.u = u
         return x_transformed
 

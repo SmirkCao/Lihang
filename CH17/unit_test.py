@@ -124,9 +124,29 @@ class TestLSAMethods(unittest.TestCase):
         print(svd.explained_variance_ratio_.sum())
 
         svd_1 = lsa_test(n_components=3)
-        svd_1.fit(x)
+        rst = svd_1.fit(x)
         print("lsa test")
         print(svd_1.components)
         print(svd_1.singular_values)
         print(svd_1.explained_variance)
         print(svd_1.explained_variance_ratio)
+
+        import utils
+        labels = ["A", "B", "C", "D", "E", "F"][:3]
+        feas = ["Book", "Dads", "Dummies", "Estate", "Guide", "Investing",
+                "Market", "Real", "Rich", "Stock", "Value"]
+        radar = utils.Radar(feas=feas, labels=labels)
+        print(svd_1.u[:, :3].shape)
+        radar.plot(svd_1.u[:, :3].T)
+
+    def test_plot_radar(self):
+        import utils
+        import pandas as pd
+        import sys
+
+        base_path = sys.path[0]
+        data = pd.read_csv(base_path+"/data/cities_ranking.csv")
+        print(data.head())
+        feas = ["A", "B", "C", "D", "E", "F"]
+        radar = utils.Radar(feas=feas, labels=["SH", "BJ"])
+        radar.plot(data[feas].values)
