@@ -27,8 +27,11 @@
 - $y_k=\alpha_k^\mathrm{T}\boldsymbol{x}$考虑PCA是通过组合特征的方法来降维，这样用到**线性组合**。因为涉及到线性组合，所以在PCA过程中首先要给数据规范化就好理解了，也比较好理解数据的"结构"这种说法。
 - 书中有提到在实际问题中，不同变量可能有不同的量纲，直接求主成分有时会产生不合理的结果。**消除这个影响**常对各个随机变量实施规范化，使其均值为0，方差为1。
 - 关于主成分的性质，规范化的变量总体主成分主要是围绕特征值和特征向量展开的。
+- 关于总体和样本的说明可以参考一下Strang的书[^1]中第十二章部分说明。
+- 关于$k$的选择，2000年有一个文章自动选择[^2]。
 
 ## 内容
+
 ### 总体主成分分析
 
 #### 总体主成分性质
@@ -36,8 +39,6 @@
 1. $\mathrm{cov}(\boldsymbol{y})=\Lambda=\mathrm{diag}(\lambda_1,\lambda_2,\cdots,\lambda_m)$
 2. $\sum\limits_{i=1}^m\lambda_i=\sum\limits_{i=1}^m\sigma_{ii}$
 3. $\sum\limits_{i=1}^m \mathrm{var}(x_i)=\mathrm{tr}(\mit{\Sigma}^\mathrm{T}\mathrm)=tr\mathrm(A\Lambda A^\mathrm{T}\mathrm)=\mathrm{tr}\mathrm(\Lambda\mathrm)=\sum\limits_{i=1}^m\lambda_i=\sum\limits_{i=1}^m \mathrm{var}\mathrm(y_i\mathrm)$
-
-
 
 两个拉格朗日函数的求导
 
@@ -121,11 +122,41 @@ $$
 
 ### 例16.1
 
-这个例子，其实从表16.3中拿到的结论通过表16.2也能拿到。$y_1$是原始特征的线性组合，并且，各个原始特征的权重(系数)基本相同，说明大家同样重要。$y_1$和总成绩有关系。
+这个例子，其实从表16.3中拿到的结论通过表16.2也能拿到。就是说通过单位特征向量和主成分的方差贡献率可以得到通过主成分的因子负荷量以及贡献率能得到的结论。
+$y_1$是原始特征的线性组合，并且，各个原始特征的权重(系数)基本相同，说明大家同样重要。$y_1$和总成绩有关系。
 $y_2$的贡献可能更多的体现在文理科的差异上，他们的作用相反。
 
+| 类型 | 主成分 | 特征值 | $x_1$ | $x_2$ | $x_3$ | $x_4$ | 方差贡献率 | 备注|
+| --- | --- | --- | --- | --- | --- | --- | --- |---|
+| 特征向量 |$y_1$| 2.17 | 0.460 | 0.476 | 0.523 | 0.537 | 0.543 ||
+| 特征向量 |$y_2$| 0.87 | 0.574 | 0.486 | -0.476 | -0.456 | 0.218 |累计0.761|
+| 因子负荷量|$y_1$|2.17|0.678|0.701|0.770|0.791|$\sqrt{\lambda_1}e_{i1}$|平方和=2.169|
+| 因子负荷量|$y_2$|0.87|0.536|0.697|0.790|0.806|$\sqrt{\lambda_2}e_{i2}$|平方和=0.870|
 
+这部分数值参考书上内容，如果用numpy做，会有一定出入，回头再复核下。
+
+### 习题16.1
+样本数据主成分分析
+$$
+X=
+\left[
+\begin{matrix}
+2& 3& 3& 4& 5& 7\\
+2& 4& 5& 5& 6& 8
+\end{matrix}
+\right]
+$$
+
+这个题，原来就俩特征，然后主成分依然俩特征。俩特征就可以可视化了。
+1. 首先要规范化，参考16.33，注意，规范化并不代表数据取值范围在$[0, 1]$之间。
+
+![e1601](assets/ex1601.png)
+
+这里总共就两个特征，而且从数据的范围上看，差不多。
 
 
 ## 参考
+
+[^1]: [Introduction to Linear Algebra](https://github.com/J-Mourad/Introduction-to-Linear-Algebra-5th-Edition---EE16A/raw/master/Ed%205%2C%20Gilbert%20Strang%20-%20Introduction%20to%20Linear%20Algebra%20(2016%2C%20Wellesley-Cambridge%20Press).pdf)
+[^2]: [Automatic choice of dimensionality for PCA](https://papers.nips.cc/paper/1853-automatic-choice-of-dimensionality-for-pca.pdf)
 
