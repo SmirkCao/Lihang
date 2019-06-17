@@ -57,13 +57,13 @@
 | - | - | - | - | - | - |
 | $\sum$ | \sum | $\prod$ | \prod | $x\cdot{y}$ | x\cdot{y} |
 | $\bigcup$ | \bigcup | $\bigoplus$ | \bigoplus | $x\times {y}$ | x\times {y} |
-| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | **\left\\|
+| $\bigvee$ | \bigvee | $\bigcap$ | \bigcap| $\left\|w\right\|$ | **\left\\|w\right\|** |
 | $\bigwedge$ | \bigwedge  | $\biguplus$ | \biguplus | $\iiint$ | \iiint |
 | $\bigotimes$ | \bigotimes | $\oint$ | \oint | $\iint$ | \iint |
 | $\int x\,{\rm d}x$ | \int x\,\{\rm d}x | $\bigsqcup$ | \bigsqcup | $\lgroup \rgroup$ | \lgroup \rgroup |
 | $\coprod$ | \coprod | $\bigodot$ | \bigodot  | $\partial$ | \partial |
 | $\det$ | **\det** | $\max$ | \max | $\min$ | \min |
-|  |  |  |  |  |  |
+| $\log$ | \log |  |  |  |  |
 
 ### 表 6: 常用箭头
 
@@ -249,7 +249,7 @@ X^\mathrm T=
 \left[
 \begin{matrix}
  x_{11} & \cdots & x_{1N}       \\
- \vdots &        & \vdots 		\\
+ \vdots & \ddots & \vdots 		\\
  x_{M1} & \cdots & x_{MN}       \\
 \end{matrix}
 \right]
@@ -262,7 +262,7 @@ X^\mathrm T=
 \left[
 \begin{matrix}
  x_{11} & \cdots & x_{1N}       \\
- \vdots &        & \vdots 		\\
+ \vdots & \ddots & \vdots 		\\
  x_{M1} & \cdots & x_{MN}       \\
 \end{matrix}
 \right]
@@ -320,6 +320,6 @@ $$
 4. [Emoji](https://gist.github.com/rxaviers/7360908)
 5. [Short Math Guide for LaTeX](http://ctan.math.utah.edu/ctan/tex-archive/info/short-math-guide/short-math-guide.pdf)
 6. [List of Mathematical Symbols](https://en.wikipedia.org/wiki/List_of_mathematical_symbols)
-7. [数学公式]([https://zh.wikipedia.org/wiki/Help:%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F](https://zh.wikipedia.org/wiki/Help:数学公式))
+7. [数学公式](https://zh.wikipedia.org/wiki/Help:数学公式)
 8. [Matplotlib Math Text](https://matplotlib.org/tutorials/text/mathtext.html)
 

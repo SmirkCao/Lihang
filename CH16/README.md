@@ -28,6 +28,7 @@
 - 书中有提到在实际问题中，不同变量可能有不同的量纲，直接求主成分有时会产生不合理的结果。**消除这个影响**常对各个随机变量实施规范化，使其均值为0，方差为1。
 - 关于主成分的性质，规范化的变量总体主成分主要是围绕特征值和特征向量展开的。
 - 关于总体和样本的说明可以参考一下Strang的书[^1]中第十二章部分说明。
+- 关于$k$的选择，2000年有一个文章自动选择[^2]。
 
 ## 内容
 
@@ -148,8 +149,14 @@ $$
 
 这个题，原来就俩特征，然后主成分依然俩特征。俩特征就可以可视化了。
 1. 首先要规范化，参考16.33，注意，规范化并不代表数据取值范围在$[0, 1]$之间。
-1. 
+
+![e1601](assets/ex1601.png)
+
+这里总共就两个特征，而且从数据的范围上看，差不多。
+
 
 ## 参考
 
 [^1]: [Introduction to Linear Algebra](https://github.com/J-Mourad/Introduction-to-Linear-Algebra-5th-Edition---EE16A/raw/master/Ed%205%2C%20Gilbert%20Strang%20-%20Introduction%20to%20Linear%20Algebra%20(2016%2C%20Wellesley-Cambridge%20Press).pdf)
+[^2]: [Automatic choice of dimensionality for PCA](https://papers.nips.cc/paper/1853-automatic-choice-of-dimensionality-for-pca.pdf)
+
