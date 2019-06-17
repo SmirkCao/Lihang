@@ -1,5 +1,6 @@
 #! /usr/bin/env python
-#! -*- coding=utf-8 -*-
+
+# -*- coding:utf-8 -*-
 # Project:  Lihang
 # Filename: unit_test
 # Date: 9/27/18
@@ -28,7 +29,7 @@ class TestSVM(unittest.TestCase):
                 {'type': 'ineq', 'fun': lambda x: 4 * x[0] + 3 * x[1] + x[2] - 1},
                 {'type': 'ineq', 'fun': lambda x: -x[0] - x[1] - x[2] - 1})
         res = optimize.minimize(fun, np.ones(3), method='SLSQP', constraints=cons)
-        logger.info("\n res is \n %s \n x is \n %s\n" % (str(res), res["x"]))
+        print("\n res is \n %s \n x is \n %s\n" % (str(res), res["x"]))
 
         self.assertListEqual(res["x"].round(2).tolist(), [0.5, 0.5, -2])
 
@@ -152,6 +153,32 @@ class TestSVM(unittest.TestCase):
         # plt.savefig("fig76.png")
         plt.show()
 
+    def test_w(self):
+        # support vector
+        alpha = np.array([[0, 0], [1, 3], [2.8, 2]])
+        # hyperplane
+        kb = np.polyfit(alpha[1:].T[0], alpha[1:].T[1], 1)
+        x = np.arange(0, 4, 0.1)
+        y = kb[0]*x + kb[1]
+        y_ = -x/kb[0]
+        plt.figure(figsize=(6, 6))
+        plt.xlim(0, 4)
+        plt.ylim(0, 4)
+        # point
+        plt.scatter(alpha[:, 0], alpha[:, 1],
+                    marker="o", edgecolors="b", c="w", label="p1,p2")
+        # vector
+        plt.plot(alpha[:2].T[0], alpha[:2].T[1], label="o-p1")
+        plt.plot(alpha[[0, 2]].T[0], alpha[[0, 2]].T[1], label="o-p2")
+        # point1 - point2
+        plt.plot(alpha[1:].T[0], alpha[1:].T[1], label="o-p1-p2")
+        # hyperplane
+        plt.plot(x, y, alpha=0.3, linestyle="--", label="hyperplane")
+        # w
+        plt.plot(x, y_, alpha=0.3, label="w")
+        plt.legend()
+        # plt.plot(x, y)
+        plt.show()
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

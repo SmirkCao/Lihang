@@ -124,11 +124,9 @@ $$
 \gamma=\frac{\hat \gamma}{\|w\|}\\
 $$
 
-和感知机相比，支持向量机引入间隔，将距离
+和感知机相比，支持向量机引入间隔，将距离的大小考虑进来，而不只是符号。
 
 #### 间隔最大化
-
-
 
 #### 支持向量和间隔边界
 
@@ -199,15 +197,12 @@ $$
 >
 > In [mathematical optimization](https://en.wikipedia.org/wiki/Mathematical_optimization) theory, **duality** or the **duality principle** is the principle that [optimization problems](https://en.wikipedia.org/wiki/Optimization_problem) may be viewed from either of two perspectives, the **primal problem** or the **dual problem**. The solution to the dual problem provides a lower bound to the solution of the primal (minimization) problem.[[1\]](https://en.wikipedia.org/wiki/Duality_(optimization)#cite_note-Boyd-1) However in general the optimal values of the primal and dual problems need not be equal. Their difference is called the [duality gap](https://en.wikipedia.org/wiki/Duality_gap). For [convex optimization](https://en.wikipedia.org/wiki/Convex_optimization) problems, the duality gap is zero under a [constraint qualification](https://en.wikipedia.org/wiki/Constraint_qualification) condition.
 
-
-
 转换后的对偶问题
 $$
 \min\limits_\alpha \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_{i=1}^N\alpha_i\\
 s.t. \ \ \ \sum_{i=1}^N\alpha_iy_i=0\\
 \alpha_i\geqslant0, i=1,2,\dots,N
 $$
-
 
 对于任意线性可分的两组点，他们在分类超平面上的投影都是线性不可分的。
 
@@ -277,6 +272,11 @@ $$
 注意， 书后总结部分，有这样一句描述：**线性支持向量机的解$w^*$唯一但$b^*$不一定唯一**
 
 线性支持向量机是线性可分支持向量机的超集。
+
+这章单元测试中包含了几个图，可以直接看代码。
+关于$w$是如何绘制的，这个添加了个测试案例，体会一下。
+
+![fig_w](assets/fig_w.png)
 
 ### 算法
 

@@ -1,5 +1,6 @@
 #! /usr/bin/env python
-#! -*- coding=utf-8 -*-
+
+# -*- coding:utf-8 -*-
 # Project:  Lihang
 # Filename: svm
 # Date: 9/27/18
