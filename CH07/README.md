@@ -28,16 +28,16 @@
 
 ### 导读
 
-本章概要部分比较精简, 多刷几遍。
+本章概要部分比较精简，多刷几遍。
 
 支持向量机是一种二类分类模型。
 
-- **基本模型**是定义在特征空间上的间隔最大的**线性分类器**
+- **基本模型**是定义在特征空间上的间隔最大的**线性分类器**，间隔**最大**使它有别于感知机。感知机，只用了符号，而支持向量机，用到了大小。
 - 支持向量机还包括**核技巧**， 这使它称为实质上的**非线性分类器**。
 - 支持向量机学习策略是间隔最大化，可形式化为一个求解凸二次规划的问题，也等价于正则化的合页损失函数的最小化问题。
 - 支持向量机：线性可分支持向量机，线性支持向量机假设输入空间和特征空间的**元素一一对应**，并将输入空间中的输入映射为特征空间的特征向量；非线性支持向量机利用一个从输入空间到特征空间的**非线性映射**将输入映射为特征向量。
 - 判别模型
-- 符号函数, Sign, 0 对应了超平面(hyper plane), >0与<0对应了半空间(half space)
+- 符号函数，Sign: 0 对应了超平面(hyper plane)，>0与<0对应了半空间(half space)
 - 仿射变换是保凸变换
 - `分离超平面将特征空间划分为两部分，一部分是正类，一部分是负类。法向量指向的一侧是正类， 另一侧为负类`
 - 关于SVM的历史可以参考附录2[^2]，Vapnik的1995年的那个文章名字叫Support-vector networks，主要是提出了soft margin，在这篇文章的附录中给出了线性可分支持向量机与线性支持向量机的推导。同年Vapnik将支持向量机推广到支持向量回归，发表了文章统计学习理论的本质， 这个有中译版本，见书中本章参考文献[4]
@@ -58,7 +58,7 @@
 
 注意前四个算法里面，都没有写该怎么去求解$\alpha$，最后一节**序列最小最优化**讨论了具体实现。也就是算法7.5给出了求解$\hat\alpha$的方法。
 
-另外，注意对比算法7.3和算法7.4，关注输出，关注$b^*​$.
+另外，注意对比算法7.3和算法7.4，关注输出，关注$b^*$。
 
 
 
@@ -75,7 +75,7 @@ $$
 
 
 
-这是个凸二次规划问题.
+这是个凸二次规划问题。
 
 如果求出了上述方程的解$w^*, b^*$，就可得到
 
@@ -108,11 +108,25 @@ $$
 
 #### 几何间隔
 
+对于给定的训练数据集$T$和超平面$(w, b)$，定义超平面$(w, b)$和样本点$(w_i, b_i)$之间的几何间隔为
+$$
+\gamma_i=y_i\left(\frac{w}{\|w\|}\cdot x_i+\frac{b}{\|w\|}\right)
+$$
 
+定义**超平面$(w, b)$到训练数据集$T$**的几何间隔为超平面$(w, b)$关于样本点$(x_i, y_i)$的几何间隔之最小值，即
+$$
+\gamma = \min_{i=1,\cdots,N}\gamma_i
+$$
+
+函数间隔和几何间隔之间的关系为
+$$
+\gamma_i=\frac{\hat \gamma_i}{\|w\|}\\
+\gamma=\frac{\hat \gamma}{\|w\|}\\
+$$
+
+和感知机相比，支持向量机引入间隔，将距离的大小考虑进来，而不只是符号。
 
 #### 间隔最大化
-
-
 
 #### 支持向量和间隔边界
 
@@ -159,7 +173,7 @@ res
 1. 对偶问题往往更容易求解
 1. 自然引入核函数，进而推广到非线性分类问题
 
-针对每个不等式约束，定义拉格朗日乘子$\alpha_i\ge0​$，定义拉格朗日函数
+针对每个不等式约束，定义拉格朗日乘子$\alpha_i\ge0$，定义拉格朗日函数
 $$
 \begin{align}
 L(w,b,\alpha)&=\frac{1}{2}w\cdot w-\left[\sum_{i=1}^N\alpha_i[y_i(w\cdot x_i+b)-1]\right]\\
@@ -168,7 +182,7 @@ L(w,b,\alpha)&=\frac{1}{2}w\cdot w-\left[\sum_{i=1}^N\alpha_i[y_i(w\cdot x_i+b)-
 \end{align}\\
 \alpha_i \geqslant0, i=1,2,\dots,N
 $$
-其中$\alpha=(\alpha_1,\alpha_2,\dots,\alpha_N)^T​$为拉格朗日乘子向量
+其中$\alpha=(\alpha_1,\alpha_2,\dots,\alpha_N)^T$为拉格朗日乘子向量
 
 **原始问题是极小极大问题**
 
@@ -183,15 +197,12 @@ $$
 >
 > In [mathematical optimization](https://en.wikipedia.org/wiki/Mathematical_optimization) theory, **duality** or the **duality principle** is the principle that [optimization problems](https://en.wikipedia.org/wiki/Optimization_problem) may be viewed from either of two perspectives, the **primal problem** or the **dual problem**. The solution to the dual problem provides a lower bound to the solution of the primal (minimization) problem.[[1\]](https://en.wikipedia.org/wiki/Duality_(optimization)#cite_note-Boyd-1) However in general the optimal values of the primal and dual problems need not be equal. Their difference is called the [duality gap](https://en.wikipedia.org/wiki/Duality_gap). For [convex optimization](https://en.wikipedia.org/wiki/Convex_optimization) problems, the duality gap is zero under a [constraint qualification](https://en.wikipedia.org/wiki/Constraint_qualification) condition.
 
-
-
 转换后的对偶问题
 $$
 \min\limits_\alpha \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum_{i=1}^N\alpha_i\\
 s.t. \ \ \ \sum_{i=1}^N\alpha_iy_i=0\\
 \alpha_i\geqslant0, i=1,2,\dots,N
 $$
-
 
 对于任意线性可分的两组点，他们在分类超平面上的投影都是线性不可分的。
 
@@ -262,6 +273,11 @@ $$
 
 线性支持向量机是线性可分支持向量机的超集。
 
+这章单元测试中包含了几个图，可以直接看代码。
+关于$w$是如何绘制的，这个添加了个测试案例，体会一下。
+
+![fig_w](assets/fig_w.png)
+
 ### 算法
 
 #### 软间隔最大化
@@ -304,7 +320,7 @@ $$
 
 令合页损失$\left[1-y_i(w\cdot x+b)\right]_+=\xi_i$，合页损失非负，所以有$\xi_i\ge0$，这个对应了原始最优化问题中的**一个约束【1】**。
 
-还是根据合页损失非负，当$1-y_i(w\cdot x+b)\leq\color{red}0​$的时候，有$\left[1-y_i(w\cdot x+b)\right]_+=\color{red}\xi_i=0​$，所以有
+还是根据合页损失非负，当$1-y_i(w\cdot x+b)\leq\color{red}0$的时候，有$\left[1-y_i(w\cdot x+b)\right]_+=\color{red}\xi_i=0$，所以有
 
 $1-y_i(w\cdot x+b)\leq\color{red}0=\xi_i$，这对应了原始最优化问题中的**另一个约束【2】**。
 
@@ -479,11 +495,11 @@ $$
 
 两变量二次规划求解
 
-选择两个变量$\alpha_1,\alpha_2​$
+选择两个变量$\alpha_1,\alpha_2$
 
 由等式约束可以得到
 
-$\alpha_1=-y_1\sum\limits_{i=2}^N\alpha_iy_i​$
+$\alpha_1=-y_1\sum\limits_{i=2}^N\alpha_iy_i$
 
 所以这个问题实质上是单变量优化问题。
 $$
@@ -544,7 +560,7 @@ $y_i\in \mathcal Y=\{+1,-1\}$所以又等式约束导出的关系式中两个变
 >    \end{cases}\\
 >    g(x_i)=\sum_{j=1}^{N}\alpha_jy_jK(x_j,x_i)+b
 >    $$
->    则转4,否则，$k=k+1$转2
+>    则转4，否则，$k=k+1$转2
 >
 > 1. 取$\hat\alpha=\alpha^{(k+1)}$
 
