@@ -1,4 +1,5 @@
 # Markdown Cheat Sheet
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/math_markdown.md)
 
 [TOC]
 

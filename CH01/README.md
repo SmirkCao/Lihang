@@ -1,4 +1,5 @@
 # CH01 统计学习及监督学习概论
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH01/README.md)
 
 [TOC]
 

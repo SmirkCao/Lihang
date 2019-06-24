@@ -1,4 +1,5 @@
 # CH07 支持向量机
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH07/README.md)
 
 [TOC]
 

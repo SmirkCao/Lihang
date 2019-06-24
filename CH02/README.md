@@ -1,4 +1,5 @@
 # CH02 感知机
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH02/README.md)
 
 [TOC]
 

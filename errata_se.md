@@ -1,4 +1,5 @@
 # ERRATA
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/errata_se.md)
 
 参考书版本为**2019年05月第1次印刷**，在这之后的印刷版本有可能进行过修订，愿本书越来越完善。
 

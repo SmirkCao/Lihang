@@ -1,4 +1,5 @@
 # CH22 无监督学习方法总结
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH22/README.md)
 
 [TOC]
 
