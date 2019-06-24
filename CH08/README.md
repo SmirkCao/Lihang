@@ -1,4 +1,5 @@
 # CH08 提升方法
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH08/README.md)
 
 [TOC]
 

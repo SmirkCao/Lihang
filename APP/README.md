@@ -1,4 +1,5 @@
 # 附录
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/APP/README.md)
 
 这部分大概过一下算法，AB针对无约束最优化问题，C对应约束最优化问题。
 

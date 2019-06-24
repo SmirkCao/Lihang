@@ -1,4 +1,5 @@
 # CH11 条件随机场
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH11/README.md)
 
 [TOC]
 

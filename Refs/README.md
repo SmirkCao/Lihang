@@ -1,4 +1,5 @@
 # 参考文献
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/Refs/README.md)
 
 ## 前言
 

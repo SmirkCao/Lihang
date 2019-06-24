@@ -1,4 +1,5 @@
 # CH13 无监督学习概论
+![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH13/README.md)
 
 [TOC]
 
