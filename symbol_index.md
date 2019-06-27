@@ -1,5 +1,5 @@
 # 符号表
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/symbol_index.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/symbol_index.md)
 
 1. $\{\}$ 集合 文本集合$D=\{d_1,d_2,\cdots,d_n\}$，单词集合$W=\{w_1,w_2,\cdots,w_m\}$ $P_{327}$
 1. $A_G$类的样本散布矩阵 $P_{259}$

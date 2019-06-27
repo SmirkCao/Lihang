@@ -1,5 +1,5 @@
 # CH04 朴素贝叶斯法
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH04/README.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/CH04/README.md)
 
 [TOC]
 

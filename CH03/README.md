@@ -1,5 +1,5 @@
 # CH03 k近邻法
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH03/README.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/CH03/README.md)
 
 [TOC]
 

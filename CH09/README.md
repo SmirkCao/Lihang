@@ -1,5 +1,5 @@
 # 	CH09 EM算法及其推广
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH09/README.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/CH09/README.md)
 
 [TOC]
 
