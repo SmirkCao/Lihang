@@ -1,5 +1,5 @@
 # CH05 决策树
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH05/README.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/CH05/README.md)
 
 [TOC]
 

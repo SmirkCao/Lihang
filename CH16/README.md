@@ -1,5 +1,5 @@
 # CH16 主成分分析
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH16/README.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/CH16/README.md)
 
 [TOC]
 

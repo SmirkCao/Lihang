@@ -1,5 +1,5 @@
 # CH06 逻辑斯谛回归与最大熵模型
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH06/README.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/CH06/README.md)
 
 [TOC]
 

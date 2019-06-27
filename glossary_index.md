@@ -1,5 +1,5 @@
 # 索引
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/glossary_index.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/glossary_index.md)
 
 [TOC]
 

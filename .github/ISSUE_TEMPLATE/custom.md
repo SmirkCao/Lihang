@@ -1,5 +1,5 @@
 ---
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/.github/ISSUE_TEMPLATE/custom.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/.github/ISSUE_TEMPLATE/custom.md)
 name: Custom issue template
 about: Describe this issue template's purpose here.
 

@@ -1,5 +1,5 @@
 # CH14 聚类方法
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH14/README.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/CH14/README.md)
 
 [TOC]
 

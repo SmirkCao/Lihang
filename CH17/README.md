@@ -1,5 +1,5 @@
 # CH17 潜在语义分析
-![Hits](http://www.smirkcao.info/hit_gits/Lihang/CH17/README.md)
+![Hits](https://www.smirkcao.info/hit_gits/Lihang/CH17/README.md)
 
 [TOC]
 
