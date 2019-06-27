@@ -175,3 +175,4 @@ IID强限制放宽，就是TAN(Tree Augmented Naive Bayes)。可以看做是NB�
 4. [^4 ]: [An Introduction to Conditional Random Fields for Relational Learning](https://people.cs.umass.edu/~mccallum/papers/crf-tutorial.pdf)
 
 **[⬆ top](#导读)**
+
