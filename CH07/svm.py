@@ -80,7 +80,7 @@ class SVM(object):
                     b2 = self.b - ej - y[i] * (self.alpha[i] - alphaiold) * np.dot(X[i, :], X[j, :]) - \
                          y[j] * (self.alpha[j] - alphajold) * np.dot(X[j, :], X[j, :])
 
-                    if (0 < self.alpha[i]) and (self.C > self.alpha[j]):
+                    if (0 < self.alpha[i]) and (self.C > self.alpha[i]):
                         self.b = b1
                     elif (0 < self.alpha[j]) and (self.C > self.alpha[j]):
                         self.b = b2
