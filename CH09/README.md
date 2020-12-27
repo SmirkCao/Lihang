@@ -1,4 +1,5 @@
-# 	CH09 EM算法及其推广
+# CH09 EM算法及其推广
+
 ![Hits](https://www.smirkcao.info/hit_gits/Lihang/CH09/README.md)
 
 [TOC]
@@ -20,7 +21,7 @@
 
 ### 导读
 
-- **概率模型**有时既含有观测变量，又含有隐变量或潜在变量。这句很重要。
+- **概率模型**有时既含有观测变量，又含有隐变量或潜在变量。这句很重要，有时候我们能拿到最后的观测结果，却拿不到中间的过程记录。
 
 - 这章如果看三硬币有疑问，可以往后继续看，看到高斯混合模型，然后再回头理解三硬币。有不理解的地方，可以重新看对应问题的定义，重新理解各个符号的意义，因为这章开始，需要分析的问题和之前的分类问题有差异，任务不同了要理解需求。希望对学习有帮助。
 
@@ -34,20 +35,25 @@
 
 - 一个$m\times n\times k$的矩阵可能可以划分成$n$个$m\times k$的形式，这点理解下。
 
-- 涉及混合模型的部分推导有很多求和，注意体会是按照**样本**做的，还是按照**模型**做的，也就是操作的域
+- 涉及混合模型的部分推导有很多求和，注意体会是按照**样本**做的，还是按照**模型**做的，也就是操作的域。
 
 - 如果对PDF，高斯分布，边缘概率分布，协方差矩阵不清楚，可以在这个章节从GMM的角度扩展阅读下，一定会有收获。
 
-- 似然和概率的关系可以推广了解，这章关于概率和似然的符号表示，可能会有点看不懂，比如$P_{157}$中的部分表述。可以参考引用内容[^3], 概率和似然是同样的形式描述的都是**可能性**，$P(Y|\theta)$是一个两变量的函数，似然是给定结果，求参数可能性；概率是给定参数求结果可能性。
+- 似然和概率的关系可以推广了解，这章关于概率和似然的符号表示，可能会有点看不懂，比如$P_{157}$（第二版$P_{177}$）中的部分表述。可以参考引用内容[^3]， 概率和似然是同样的形式描述的都是**可能性**，$P(Y|\theta)$是一个两变量的函数，**似然**是给定结果，求参数可能性；**概率**是给定参数求结果可能性。
+  是不是可以认为，似然和概率分别对应了Train和Predict的过程？感受下。
 
   > Suppose you have a probability model with parameters $\theta$.
   > $p(x|\theta)$ has two names.
   > It can be called the **probability of $x$** (given $\theta$),
   > or the **likelihood of $\theta$** (given that $x$  was observed).
 
+  书中对应的描述是
+
+  >假设给定观测数据Y，其概率分布是。。。那么不完全数据Y的似然函数是。。。对数似然函数。。。。就这段，后面符号说明部分有引用。
+
 - 学习过程中注意**观测数据**在EM算法每次迭代中的意义。
 
-- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异，直觉上都有一种归属的感觉，$\gamma_{jk}$是二值函数，$\alpha_k$是一种概率的表示。$\gamma_{jk}$是one-hot encoding(also: 1-of-K representation)，还有$\hat\gamma_{jk}$这个是个估计注意和$\gamma_{jk}$的关系
+- GMM中注意区分$\alpha_k$和$\gamma_{jk}$的差异，直觉上都有一种归属的感觉，$\gamma_{jk}$是二值函数，$\alpha_k$是一种概率的表示。$\gamma_{jk}$是one-hot encoding(also: 1-of-K representation)，还有$\hat\gamma_{jk}$这个是个估计注意和$\gamma_{jk}$的关系。
 
 - GMM这里面实际上还涉及到一个概念叫做凸组合(Convex Combination)[^4]，是凸几何领域的一个概念，点的线性组合，所有系数都非负且和为1。点集的凸包等价于该点集的凸组合。
 
@@ -68,13 +74,15 @@
      1. $MLE \rightarrow B$
      1. $F$函数的极大-极大算法
 
-- 这个repo里面实现了BMM算法和GMM算法两种混合模型
+- 这个repo里面实现了BMM算法和GMM算法两种混合模型。
 
 - HMM也是Discrete **Dynamic Model**，从图模型角度考虑，可以发现HMM和卡尔曼滤波以及粒子滤波深层之间的联系。这部分内容在PRML中有讨论。
 
 - 书中图9.1说一下，可以参考[CH08](../CH08/README.md)的部分内容，关于Bregman distance的那部分说明。
 
 - HMM作了两个基本假设，实际上是在说在图模型中，存在哪些**边**。
+
+- 第二版里面增加了聚类方法的描述
 
 ### 符号说明
 
@@ -95,7 +103,7 @@
 | 不完全数据$Y$ | 概率分布$P(Y|\theta)$ | 似然函数$P(Y|\theta )$ | 对数似然函数$\log P(Y|\theta)$ |
 | 完全数据 $(Y, Z)$ | $Y$和$Z$的联合概率分布$P(Y,Z|\theta )$ | 似然函数$P(Y,Z|\theta)$ | 对数似然函数$\log P(Y,Z|\theta)$|
 
-7hb 观测数据$Y$
+观测数据$Y$
 
 有一点要注意下, 这里没有出现$X$, 在**9.1.3**节中有提到一种理解
 
@@ -130,7 +138,7 @@
 我们通过一段代码来生成这个数据
 
 ```python
-import numpy as np Engine
+import numpy as np
 
 p = 0.6
 n = 10
@@ -245,7 +253,7 @@ $$
 
 ##### p,q 含义
 
-这里面p对应了A =1，B=1，q对应了A=0，C=1
+这里面$p$对应了$A =1$，$B=1$，$q$对应了$A=0$，$C=1$
 
 这三个公式可以改写成如下形式:
 $$
@@ -257,7 +265,7 @@ p^{(i+1)} &= \frac{\sum_{j=1}^{n}\mu_j^{(i+1)}y_j}{\sum_{j=1}^{n}(\mu_j^{(i+1)}y
 q^{(i+1)} &= \frac{\sum_{j=1}^{n}(1-\mu_j^{(i+1)})y_j}{\sum_{j=1}^{n}((1-\mu_j^{(i+1)})y_j+(1-\mu_j^{(i+1)})(1-y_j))}
 \end{align}
 $$
-$\pi$的表达式回答这样一个问题:  刷了这么多样本，拿到一堆数，那么$\pi$应该是多少，均值十个比较好的选择。
+$\pi$的表达式回答这样一个问题:  刷了这么多样本，拿到一堆数，那么$\pi$应该是多少，均值是个比较好的选择。
 
 $p$的表达式回答这样一个问题:  如果我知道每个结果$y_j$以$\mu_j$的可能来自硬币B(A=1)，那么用这些数据刷出来他可能是正面的概率。这里面$\mu_j$对应了$A=1$
 
@@ -276,13 +284,13 @@ $$
 
 [bmm.py](bmm.py)对伯努利混合模型做了实现, 有几点说明一下:
 
-1. $(p^{(i)})^{y_i}(1-p^{(i)})^{1-y_i}$这个表达式对应了伯努利分布的概率密度, 可以表示成矩阵乘法, 尽量不要用for, 效率会差
+1. $(p^{(i)})^{y_i}(1-p^{(i)})^{1-y_i}$这个表达式对应了伯努利分布的概率密度，可以表示成矩阵乘法，尽量不要用for，效率会差
 
-1. 书中$e_{91}$的表达中, 采用了$\pi, p, q$来表示, 注意在题目的说明部分有说明三个符号的含义
+1. 书中$e_{91}$的表达中，采用了$\pi, p, q$来表示，注意在题目的说明部分有说明三个符号的含义
 
-1. 实际上不怎么抛硬币, 但是0-1的伯努利分布很多, 在书中算法9.4部分, 有这样一个说明:
+1. 实际上不怎么抛硬币，但是0-1的伯努利分布很多，在书中算法9.4部分，有这样一个说明:
 
-   > 当参数$\theta$的维数为$d(d\ge2 )$的时候, 可以采用一种特殊的GEM算法, 它将算法的M步分解成d次条件极大化, 每次只改变参数向量的一个分量,其余量不改变.
+   > 当参数$\theta$的维数为$d(d\ge2 )$的时候，可以采用一种特殊的GEM算法，它将算法的M步分解成d次条件极大化，每次只改变参数向量的一个分量，其余量不改变。
 
 ### EM算法另外视角
 
@@ -316,11 +324,11 @@ $$
 
 #### BMM的EM算法
 
-> 输入: 观测变量数据$y_1, y_2, \dots, y_N$, 伯努利混合模型
+> 输入: 观测变量数据$y_1, y_2, \dots, y_N$，伯努利混合模型
 >
 > 输出: 伯努利混合模型参数
 >
-> 1. 选择参数的初始值开始迭代, $2K$ 个参数
+> 1. 选择参数的初始值开始迭代，$2K$ 个参数
 > 1. E步:
 > $$\hat\gamma_{jk}=\frac{\alpha_kBern(y_j|\theta_k)}{\sum_{k=1}^K\alpha_kBern(y_j|\theta_k)}=\frac{\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}{\sum_{k=1}^K\alpha_k\mu_k^{y_j}(1-\mu_k)^{1-y_j}}, j=1,2,\dots,N; k=1,2,\dots,K$$
 > 1. M步:
@@ -340,14 +348,16 @@ $$
 书中这部分内容回答为什么EM算法能近似实现对观测数据的极大似然估计？
 $$
 \begin{align}
-L(\theta)-L(\theta^{(i)})&=\log \left(\sum_Z\color{green}P(Y|Z,\theta^{(i)})\color{black}\frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Y|Z,\theta^{(i)})}\color{black}\right)-\log P(Y|\theta^{(i)})\\
-&\ge\sum_Z \color{green}P(Z|Y,\theta^{(i)})\color{black}\log \frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Z|Y,\theta^{(i)})\color{black}}-\log P(Y|\theta^{(i)})\\
-&=\sum_Z P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}-\color{red}\sum_ZP(Z|Y,\theta^{(i)})\color{black}\log P(Y|\theta^{(i)})\\
+L(\theta)-L(\theta^{(i)})&=\log \left(\sum_Z\color{green}P(Z|Y,\theta^{(i)})\frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Z|Y,\theta^{(i)})}\right)-\log P(Y|\theta^{(i)})\\
+&\ge\sum_Z \color{green}P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{\color{green}P(Z|Y,\theta^{(i)})}-\log P(Y|\theta^{(i)})\\
+&=\sum_Z P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}-\color{red}\sum_Z P(Z|Y,\theta^{(i)})\color{black}\log P(Y|\theta^{(i)})\\
 &=\sum_ZP(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}
 \end{align}
 $$
 
-以上用于推导迭代过程中两次$L$会变大， 这里面红色部分是后加的方便理解前后两步之间的推导。绿色部分是为了构造期望， 进而应用琴声不等式。在这里凑项应该是凑$P(Z|Y,\theta^{(i)})$，书中这部分可能是笔误。
+
+
+以上用于推导迭代过程中两次$L$会变大， 这里面红色部分是后加的方便理解前后两步之间的推导。绿色部分是为了构造期望， 进而应用琴声不等式。~~在这里凑项应该是凑$P(Z|Y,\theta^{(i)})$，书中这部分可能是笔误~~(第二版已经修正)。
 
 这里也写一下琴声不等式
 $$
@@ -355,7 +365,7 @@ $$
 $$
 所以，这里的这一项不是随便凑的。
 
-TODO:更新下这个图
+TODO: 更新下这个图9.1，EM算法的解释。
 
 
 
@@ -375,7 +385,7 @@ $$
 
 以上, 注意几点：
 
-1. GMM的描述是概率分布，形式上可以看成是加权求和
+1. GMM的描述是概率分布，形式上可以看成是加权求和，有啥用？
 1. 加权求和的权重$\alpha$满足$\sum_{k=1}^K\alpha_k=1$的约束
 
 1. 求和符号中除去权重的部分，是高斯分布密度(PDF)。高斯混合模型是一种$\sum(权重\times 分布密度)=分布$的表达
@@ -455,9 +465,14 @@ $$
 ##### 2. E步,确定Q函数
 
 把$Q$ 函数表示成参数形式
-
-$$\begin{aligned}Q(\theta,\theta^{(i)})=&E[\log P(y,\gamma|\theta)|y,\theta^{(i)}]\\=&\color{green}E\color{black}\left\{\sum_{k=1}^K\left\{\color{red}n_k\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\right\}\\=&\color{green}E\color{black}\left\{\sum_{k=1}^K\left\{\color{red}\sum_{j=1}^N\gamma_{jk}\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\right\}\\=&\sum_{k=1}^K\left\{\color{red}\sum_{j=1}^{N}(\color{green}E\color{red}\gamma_{jk})\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N(\color{green}E\color{blue}\gamma _{jk})\color{black}\left[\log \left(\frac{1}{\sqrt{2\pi}}\right)-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}\right]\right\}\\\end{aligned}$$
-
+$$
+\begin{aligned}Q(\theta,\theta^{(i)})
+=&E[\log P(y,\gamma|\theta)|y,\theta^{(i)}]\\
+=&\color{green}E\color{black}{\sum_{k=1}^K{\color{red}n_k\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}[\log(\frac{1}{\sqrt{2\pi}})-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}]}}\\
+=&\color{green}E\color{black}{\sum_{k=1}^K{\color{red}\sum_{j=1}^N\gamma_{jk}\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N\gamma _{jk}\color{black}[\log (\frac{1}{\sqrt{2\pi}})-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}]}}\\
+=&\sum_{k=1}^K{\color{red}\sum_{j=1}^{N}(\color{green}E\color{red}\gamma_{jk})\color{black}\log \alpha_k+\color{blue}\sum_{j=1}^N(\color{green}E\color{blue}\gamma _{jk})\color{black}[\log (\frac{1}{\sqrt{2\pi}})-\log \sigma _k-\frac{1}{2\sigma^2(y_j-\mu_k)^2}]}\\
+\end{aligned}
+$$
 $$\begin{aligned}\hat \gamma _{jk}= &\color{purple}E(\gamma_{jk}|y,\theta)=P(\gamma_{jk}=1|y,\theta)\\=&\frac{P(\gamma_{jk}=1,y_j|\theta)}{\sum_{k=1}^KP(\gamma_{jk}=1,y_j|\theta)}\\=&\frac{P(y_j|\color{red}\gamma_{jk}=1,\theta\color{black})\color{green}P(\gamma_{jk}=1|\theta)}{\sum_{k=1}^KP(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)}\\=&\frac{\color{green}\alpha_k\color{black}\phi(y_j|\color{red}\theta_k)}{\sum_{k=1}^K\alpha_k\phi(y_j|\theta_k)}\end{aligned}$$
 
    这部分内容就是搬运了书上的公式，有几点说明:
@@ -487,6 +502,34 @@ $$
 
 重复以上计算，直到对数似然函数值不再有明显的变化为止。
 
+
+
+#### 如何应用
+
+##### GMM在聚类中的应用
+
+使用EM算法估计了GMM的参数之后，有新的数据点，怎么计算样本的类别的？
+
+在机器学习[^5]中有一些关于聚类的表述，摘录这里：
+
+>Gaussian mixture modeling is among the popular clustering algorithms. The main assumption is that the points, which belong to the same cluster, are distributed according to the same Gaussian distribution(this is how similarity is defined in this case), of unknown mean and covariance matrix.
+>
+>Each mixture component defines a different cluster. Thus, the goal is to run the EM algorithm over the available data points to provide, after convergence, the posterior probabilities $P(k|x_n), k=1,2,...,K, n=1,2,...,N$, where each k corresponds to a cluster. Then each point is assigned to cluster $k$ according to the rule.
+>
+>Assign $x_n$to cluster $k=\arg max P(i|x_n), i =1,2,...,K$
+
+可以参考下scikit-learn的[具体实现](https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html?highlight=gmm)，就是用了argmax，选择概率最大的那个输出。
+
+
+
+这里面，没有介绍如何评价拟合之后的一个模型，文章[Measuring the component overlapping in the Gaussian mixture model](https://link.springer.com/article/10.1007/s10618-011-0212-3)中，有描述OLR的方法，可以参考。
+
+这里还有个[实现](https://blog.csdn.net/jinping_shi/article/details/72471641)。
+
+##### GMM在CV中的应用
+
+其实CV中用到了很多统计的方法，GMM在GrabCut方法中用于前景和背景建模。
+
 #### 算法9.2
 
 这部分摘要总结了前面的公式。
@@ -496,9 +539,7 @@ $$
 1. 这几个公式中待求的变量的维度和角标的关系。
 1. 这里面有求和，前面提到过要注意体会每一步刷的是模型，还是样本
 
-#### GMM在CV中的应用
 
-其实CV中用到了很多统计的方法，GMM在GrabCut方法中用于前景和背景建模。
 
 ### Kmeans
 
@@ -513,6 +554,7 @@ $$
 
 - 手肘法
 - Gap Statistics[^1]
+- 第二版中，有对应的描述。$P_{267}$，一般的类别变大的时候，平均直径会增加，当类别数超过某个值之后，平均直径不会变化，这个值可以是最优的$k$值。
 
 ### 广义期望极大
 
@@ -549,6 +591,7 @@ EM算法用到朴素贝叶斯的非监督学习，就是说没有标注的数据
 
 7. [^3 ]: [probability and likelihood](https://www.quora.com/What-is-the-difference-between-probability-and-likelihood-1/answer/Jason-Eisner)
 
-8. [^4]: [Convex Combination](https://en.wikipedia.org/wiki/Convex_combination)
+8. [^4]: [Convex Combination](https://en.wikipedia.org/wiki/Convex_combination
+9. [^5]: [Machine Learning $P_{618}$](.)
 
 **[⬆ top](#导读)**
