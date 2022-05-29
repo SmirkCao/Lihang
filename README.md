@@ -1,8 +1,10 @@
 # 统计学习方法
+
 ![Hits](https://www.smirkcao.info/hit_gits/Lihang/README.md)
 
 [![Gitter chat](https://badges.gitter.im/SmirkCao/StatisticalLearningMethods.png)](https://gitter.im/StatisticalLearningMethods/Book)[![Python](https://img.shields.io/badge/python-3.5|3.6|3.7-blue.svg)](-)[![pull](https://img.shields.io/badge/contributions-welcome-blue.svg)](https://github.com/SmirkCao/Lihang/pulls)
 
+本书已经出第三版，2022年5月之后的所有内容更新参考第第三版第一次印刷，书名有变更《机器学习方法》
 本书已经出第二版，2019年5月之后所有内容更新参考第二版第一次印刷。
 
 [第一版内容见Release first_edition](https://github.com/SmirkCao/Lihang/archive/first_edition.zip)
@@ -18,8 +20,14 @@
 - [ref_downloader](./ref_downloader.sh) 是一个参考文献下载脚本，这本书一定要配合参考文献看，每章的大参考文献一定要看，对书的内容理解会很有帮助。
 - [glossary_index](./glossary_index.md) 是一个非正式的术语索引，这个书后面是有一个的，但是不方便展开，在这个部分添加了部分扩展的内容。
 - [symbol_index](./symbol_index.md) 是一个非正式的符号索引，第一版中有符号说明，第二版没有了，可能是无监督这部分涉及到的符号真的是太多了，总之，保留这部分，在感觉混淆的时候可以查下，看看是否有帮助。
-- [errata_se](./errata_se.md) 非官方的errata，供参考。如果有内容感觉不清楚，可以参考看看，希望有帮助。
+- [errata_3th](./errata_3th.md) 非官方的errata，供参考。如果有内容感觉不清楚，可以参考看看，希望有帮助。
 
+## 前前前言
+
+- 2022年5月，疫情下的上海物流不是太顺畅，但是京东居然保障了这本书顺利送达，可能赶上了时间窗，也可能就是缘分吧。
+- 这次照片去掉了
+- 在母亲节之前这书发布了，书的第一页**献给我的母亲**
+- 一直很想看看李航老师讲深度学习，这个版本增加了这部分内容
 ## 前前言
 
 - 2019年5月，期待许久的第二版发布了，第一时间下了订单，预计母亲节这天可以发货。
@@ -91,8 +99,6 @@
 
 章节之间彼此又有联系，比如NB和LR，DT和AdaBoost，Perceptron和SVM，HMM和CRF等等，如果有大章节遇到困难，可以回顾前面章节的内容，或查看具体章节的参考文献，一般都给出了对这个问题描述更详细的参考文献，可能会解释你卡住的地方。
 
-
-
 ## CH01 统计学习及监督学习概论
 
 [Introduction](CH01/README.md)
@@ -104,8 +110,6 @@
 - 策略
 
 - 算法
-
-  
 
   第二版对这一章的目录结构重新梳理了，更清晰。
 
@@ -282,6 +286,9 @@
 ## CH21 PageRank算法
 
 ## CH22 无监督学习方法总结
+
+## CH24 卷积神经网络
+
 
 ## 后记
 
